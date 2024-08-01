@@ -130,6 +130,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# Node.js-related
+node_modules/
+
 # Spyder project settings
 .spyderproject
 .spyproject
