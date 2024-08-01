@@ -59,6 +59,10 @@ ROOT_URLCONF = "team_events.urls"
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+# ]
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -130,7 +134,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, images)
 STATIC_URL = "/static/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, "events/static")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "events/static/react"),
