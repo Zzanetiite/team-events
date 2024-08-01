@@ -1,0 +1,14 @@
+{% load static %} {% load static_manifest %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React App</title>
+    <link rel="stylesheet" href="{% get_manifest_file 'main.css' %}" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="{% get_manifest_file 'main.js' %}"></script>
+  </body>
+</html>
