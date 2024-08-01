@@ -1,9 +1,17 @@
-# events/views.py
-
 import json
 import os
 
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
+from django.views import View
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+from .models import Counter
+
+
+@ensure_csrf_cookie
+def get_csrf_token(request):
+    return JsonResponse({"success": "CSRF cookie set"})
 
 
 def get_manifest(file_name):
@@ -18,3 +26,12 @@ def get_manifest(file_name):
 
 def index(request):
     return render(request, "index.html")
+
+
+class IncrementCounterView(View):
+
+    def post(self, request, pk):
+        counter = get_object_or_404(Counter, pk=pk)
+        counter.value += 1
+        counter.save()
+        return JsonResponse({"value": counter.value})

@@ -14,7 +14,6 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -42,6 +41,9 @@
     ]
   },
   "devDependencies": {
-    "react-app-rewired": "^2.2.1"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/jquery": "^3.5.30",
+    "react-app-rewired": "^2.2.1",
+    "typescript": "^4.9.5"
   }
 }

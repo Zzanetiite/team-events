@@ -1,7 +1,14 @@
 from django.urls import path
 
 from . import views
+from .views import IncrementCounterView, get_csrf_token
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path(
+        "api/counter/<int:pk>/increment/",
+        IncrementCounterView.as_view(),
+        name="increment-counter",
+    ),
+    path("api/get-csrf-token/", get_csrf_token),
 ]

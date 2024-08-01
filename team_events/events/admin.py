@@ -1,3 +1,10 @@
-# from django.contrib import admin
+from django.contrib import admin
 
-# Register your models here.
+from .models import Counter
+
+
+class CounterAdmin(admin.ModelAdmin):
+    list_filter = ["value"]
+
+
+admin.site.register(Counter, CounterAdmin)

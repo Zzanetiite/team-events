@@ -1,12 +1,8 @@
 from django.db import models
 
 
-class Student(models.Model):
-    name = models.CharField("Name", max_length=240)
-    email = models.EmailField()
-    document = models.CharField("Document", max_length=20)
-    phone = models.CharField(max_length=20)
-    registrationDate = models.DateField("Registration Date", auto_now_add=True)
+class Counter(models.Model):
+    value = models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.name
+    def __str__(self) -> str:
+        return str(self.value)
