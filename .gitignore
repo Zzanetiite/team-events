@@ -133,12 +133,6 @@ venv.bak/
 # Node.js-related
 node_modules/
 
-# Don't commit static assets for
-# backend tests used for developing
-events/static/react/static/*
-events/static/react/assets-manifest.json
-events/static/react/index.html
-
 # Spyder project settings
 .spyderproject
 .spyproject
