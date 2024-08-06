@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-_zzl7=r=8_\
 DEBUG = True
 
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(",")
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["team-events-cvm0.onrender.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
