@@ -24,4 +24,5 @@ PyYAML==6.0.1
 sqlparse==0.5.1
 tzdata==2024.1
 virtualenv==20.26.3
+whitenoise==6.7.0
 yamllint==1.35.1
