@@ -35,3 +35,7 @@ class IncrementCounterView(View):
         counter.value += 1
         counter.save()
         return JsonResponse({"value": counter.value})
+
+    def get(self, request, pk):
+        counter = get_object_or_404(Counter, pk=pk)
+        return JsonResponse({"value": counter.value})

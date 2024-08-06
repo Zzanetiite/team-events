@@ -10,5 +10,6 @@ urlpatterns = [
         IncrementCounterView.as_view(),
         name="increment-counter",
     ),
+    path("api/counter/<int:pk>/", views.IncrementCounterView.as_view(), name="counter"),
     path("api/get-csrf-token/", get_csrf_token),
 ]

@@ -5,6 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
+import { DOMAIN } from '../constants';
 
 interface CSRFContextType {
   csrfToken: string | null;
@@ -41,7 +42,7 @@ export function useCSRF(): CSRFContextType {
 
 async function fetchCSRFToken(): Promise<string | null> {
   try {
-    const response = await fetch('http://localhost:8000/api/get-csrf-token/', {
+    const response = await fetch(`${DOMAIN}/api/get-csrf-token/`, {
       credentials: 'include',
     });
     if (response.ok) {

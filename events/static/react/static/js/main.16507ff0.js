@@ -1,4 +1,4 @@
-/*! For license information please see main.f4a6a2fe.js.LICENSE.txt */
+/*! For license information please see main.16507ff0.js.LICENSE.txt */
 (() => {
   'use strict';
   var e = {
@@ -9298,10 +9298,11 @@
     })();
   var r = t(43),
     l = t(391);
-  const a = t.p + 'static/media/logo.4bdbcf8396881de06a6723a92fed910b.svg';
-  var o = t(579);
-  const u = (0, r.createContext)(null);
-  function i(e) {
+  const a = t.p + 'static/media/logo.4bdbcf8396881de06a6723a92fed910b.svg',
+    o = 'https://team-events-cvm0.onrender.com';
+  var u = t(579);
+  const i = (0, r.createContext)(null);
+  function s(e) {
     let { children: n } = e;
     const [t, l] = (0, r.useState)(null);
     return (
@@ -9310,7 +9311,7 @@
           try {
             if (
               (
-                await fetch('http://localhost:8000/api/get-csrf-token/', {
+                await fetch(''.concat(o, '/api/get-csrf-token/'), {
                   credentials: 'include',
                 })
               ).ok
@@ -9336,15 +9337,15 @@
           }
         })().then((e) => l(e));
       }, []),
-      (0, o.jsx)(u.Provider, {
+      (0, u.jsx)(i.Provider, {
         value: { csrfToken: t, setCSRFToken: l },
         children: n,
       })
     );
   }
-  function s() {
+  function c() {
     const { csrfToken: e } = (function () {
-      const e = (0, r.useContext)(u);
+      const e = (0, r.useContext)(i);
       if (!e) throw new Error('useCSRF must be used within a CSRFProvider');
       return e;
     })();
@@ -9362,30 +9363,27 @@
         t.body &&
           'object' === typeof t.body &&
           (l.body = JSON.stringify(t.body));
-        const a = await fetch(
-          ''.concat('http://localhost:8000', '/').concat(n),
-          l
-        );
+        const a = await fetch(''.concat(o, '/').concat(n), l);
         if (!a.ok) throw new Error('HTTP error! status: '.concat(a.status));
         return a.json();
       },
     };
   }
-  const c = (e) => {
+  const f = (e) => {
     let { counterId: n } = e;
     const [t, l] = (0, r.useState)(0),
-      { fetchWithCSRF: a } = s();
+      { fetchWithCSRF: a } = c();
     (0, r.useEffect)(() => {
-      a('api/counter/'.concat(n, '/'))
+      a('api/counter/'.concat(n, '/'), { method: 'GET' })
         .then((e) => l(e.value))
         .catch((e) =>
           console.error('Error fetching initial counter value:', e)
         );
     }, [n, a]);
-    return (0, o.jsxs)('div', {
+    return (0, u.jsxs)('div', {
       children: [
-        (0, o.jsxs)('p', { children: ['Current Value: ', t] }),
-        (0, o.jsx)('button', {
+        (0, u.jsxs)('p', { children: ['Current Value: ', t] }),
+        (0, u.jsx)('button', {
           onClick: () => {
             a('api/counter/'.concat(n, '/increment/'), { method: 'POST' })
               .then((e) => {
@@ -9400,34 +9398,34 @@
       ],
     });
   };
-  const f = function () {
-      return (0, o.jsx)(i, {
-        children: (0, o.jsxs)('div', {
+  const d = function () {
+      return (0, u.jsx)(s, {
+        children: (0, u.jsxs)('div', {
           className: 'App',
           children: [
-            (0, o.jsxs)('div', {
+            (0, u.jsxs)('div', {
               className: 'App',
               children: [
-                (0, o.jsx)('h1', { children: 'Counter Example' }),
-                (0, o.jsx)(c, { counterId: 1 }),
+                (0, u.jsx)('h1', { children: 'Counter Example' }),
+                (0, u.jsx)(f, { counterId: 1 }),
               ],
             }),
-            (0, o.jsxs)('header', {
+            (0, u.jsxs)('header', {
               className: 'App-header',
               children: [
-                (0, o.jsx)('img', {
+                (0, u.jsx)('img', {
                   src: a,
                   className: 'App-logo',
                   alt: 'logo',
                 }),
-                (0, o.jsxs)('p', {
+                (0, u.jsxs)('p', {
                   children: [
                     'Edit ',
-                    (0, o.jsx)('code', { children: 'src/App.tsx' }),
+                    (0, u.jsx)('code', { children: 'src/App.tsx' }),
                     ' and save to reload.',
                   ],
                 }),
-                (0, o.jsx)('a', {
+                (0, u.jsx)('a', {
                   className: 'App-link',
                   href: 'https://reactjs.org',
                   target: '_blank',
@@ -9440,7 +9438,7 @@
         }),
       });
     },
-    d = (e) => {
+    p = (e) => {
       e &&
         e instanceof Function &&
         t
@@ -9453,7 +9451,7 @@
     };
   l
     .createRoot(document.getElementById('root'))
-    .render((0, o.jsx)(r.StrictMode, { children: (0, o.jsx)(f, {}) })),
-    d();
+    .render((0, u.jsx)(r.StrictMode, { children: (0, u.jsx)(d, {}) })),
+    p();
 })();
-//# sourceMappingURL=main.f4a6a2fe.js.map
+//# sourceMappingURL=main.16507ff0.js.map

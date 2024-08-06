@@ -1,10 +1,9 @@
+import { DOMAIN } from '../constants';
 import { useCSRF } from '../context/CsrfContext';
 
 interface FetchOptions extends RequestInit {
   body?: any;
 }
-
-const DOMAIN = 'https://team-events-cvm0.onrender.com';
 
 export function useApi() {
   const { csrfToken } = useCSRF();

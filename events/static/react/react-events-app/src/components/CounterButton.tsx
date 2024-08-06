@@ -6,9 +6,8 @@ const CounterButton: React.FC<CounterButtonProps> = ({ counterId }) => {
   const [value, setValue] = useState<number>(0);
   const { fetchWithCSRF } = useApi();
 
-  // TODO: not set up in Django
   useEffect(() => {
-    fetchWithCSRF(`api/counter/${counterId}/`)
+    fetchWithCSRF(`api/counter/${counterId}/`, { method: 'GET' })
       .then((data: Counter) => setValue(data.value))
       .catch((error) =>
         console.error('Error fetching initial counter value:', error)

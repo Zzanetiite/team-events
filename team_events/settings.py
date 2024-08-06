@@ -61,10 +61,14 @@ ROOT_URLCONF = "team_events.urls"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://team-events-cvm0.onrender.com",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "https://team-events-cvm0.onrender.com",
+]
 CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
 CSRF_COOKIE_HTTPONLY = False  # Ensure that the CSRF cookie is not HTTP only
 CSRF_USE_SESSIONS = False  # If using CSRF token from cookies
