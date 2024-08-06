@@ -4,7 +4,7 @@ interface FetchOptions extends RequestInit {
   body?: any;
 }
 
-const DOMAIN = 'http://localhost:8000';
+const DOMAIN = 'https://team-events-cvm0.onrender.com';
 
 export function useApi() {
   const { csrfToken } = useCSRF();
