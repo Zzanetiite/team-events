@@ -1,30 +1,30 @@
-import { useCSRF } from "../context/CsrfContext";
+import { useCSRF } from '../context/CsrfContext';
 
 interface FetchOptions extends RequestInit {
   body?: any;
 }
 
-const DOMAIN = "http://localhost:8000";
+const DOMAIN = 'http://localhost:8000';
 
 export function useApi() {
   const { csrfToken } = useCSRF();
 
   const fetchWithCSRF = async (url: string, options: FetchOptions = {}) => {
     const headers: HeadersInit = {
-      "X-CSRFToken": csrfToken || "",
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      'X-CSRFToken': csrfToken || '',
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
       ...options.headers,
     };
 
     const fetchOptions: RequestInit = {
-      credentials: "include",
-      mode: "cors",
+      credentials: 'include',
+      mode: 'cors',
       ...options,
       headers,
     };
 
-    if (options.body && typeof options.body === "object") {
+    if (options.body && typeof options.body === 'object') {
       fetchOptions.body = JSON.stringify(options.body);
     }
 

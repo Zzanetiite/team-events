@@ -4,7 +4,7 @@ import React, {
   useContext,
   useEffect,
   ReactNode,
-} from "react";
+} from 'react';
 
 interface CSRFContextType {
   csrfToken: string | null;
@@ -34,25 +34,25 @@ export function CSRFProvider({ children }: CSRFProviderProps) {
 export function useCSRF(): CSRFContextType {
   const context = useContext(CSRFContext);
   if (!context) {
-    throw new Error("useCSRF must be used within a CSRFProvider");
+    throw new Error('useCSRF must be used within a CSRFProvider');
   }
   return context;
 }
 
 async function fetchCSRFToken(): Promise<string | null> {
   try {
-    const response = await fetch("http://localhost:8000/api/get-csrf-token/", {
-      credentials: "include",
+    const response = await fetch('http://localhost:8000/api/get-csrf-token/', {
+      credentials: 'include',
     });
     if (response.ok) {
-      const csrfToken = getCookie("csrftoken");
+      const csrfToken = getCookie('csrftoken');
       if (csrfToken) {
         return csrfToken;
       }
     }
-    throw new Error("Failed to fetch CSRF token");
+    throw new Error('Failed to fetch CSRF token');
   } catch (error) {
-    console.error("Error fetching CSRF token:", error);
+    console.error('Error fetching CSRF token:', error);
     return null;
   }
 }
@@ -60,6 +60,6 @@ async function fetchCSRFToken(): Promise<string | null> {
 function getCookie(name: string): string | null {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop()?.split(";").shift() || null;
+  if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
   return null;
 }

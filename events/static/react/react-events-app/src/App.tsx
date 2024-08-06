@@ -1,8 +1,8 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import CounterButton from "./components/CounterButton";
-import { CSRFProvider } from "./context/CsrfContext";
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+import CounterButton from './components/CounterButton';
+import { CSRFProvider } from './context/CsrfContext';
 
 function App() {
   return (
