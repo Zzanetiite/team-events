@@ -13,19 +13,24 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
+# Environment variables
+REACT_BASENAME = os.getenv("REACT_BASENAME", "/static/react")
+DOMAIN = os.getenv("DOMAIN", "http://localhost:8000")
+SECRET_KEY = os.getenv(
+    "SECRET_KEY",
+    "django-insecure-_zzl7=r=8_\
+    *hcxzqrwhu!v(4(6^t@8mg*gyo-cktm%&a#0f0-5",
+)
+DEBUG = os.getenv("DEBUG", "True") == "True"
+CSRF_COOKIE_SECURE = os.getenv("CSRF_COOKIE_SECURE", "False") == "False"
+SESSION_COOKIE_SECURE = os.getenv("SESSION_COOKIE_SECURE", "False") == "False"
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECRET_KEY = os.getenv("SECRET_KEY")
-SECRET_KEY = "django-insecure-_zzl7=r=8_\
-    *hcxzqrwhu!v(4(6^t@8mg*gyo-cktm%&a#0f0-5"
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(",")
 ALLOWED_HOSTS = ["team-events-cvm0.onrender.com", "localhost", "127.0.0.1"]
@@ -61,12 +66,14 @@ ROOT_URLCONF = "team_events.urls"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://127.0.0.1:8000",
     "https://team-events-cvm0.onrender.com",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
+    "http://127.0.0.1:8000",
     "https://team-events-cvm0.onrender.com",
 ]
 CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
@@ -78,6 +85,7 @@ CSRF_COOKIE_SAMESITE = (
 SESSION_COOKIE_SAMESITE = (
     "Lax"  # or 'Strict' if your frontend and backend are on the same domain
 )
+SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
 
 TEMPLATES = [
     {

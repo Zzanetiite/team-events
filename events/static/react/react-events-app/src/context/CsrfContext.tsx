@@ -5,7 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
-import { DOMAIN } from '../constants';
+import { DOMAIN } from '../data/constants';
 
 interface CSRFContextType {
   csrfToken: string | null;

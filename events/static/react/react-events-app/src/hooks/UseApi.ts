@@ -1,4 +1,4 @@
-import { DOMAIN } from '../constants';
+import { DOMAIN } from '../data/constants';
 import { useCSRF } from '../context/CsrfContext';
 
 interface FetchOptions extends RequestInit {

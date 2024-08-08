@@ -1,10 +1,13 @@
 import json
 import os
 
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .models import Counter
 
@@ -39,3 +42,21 @@ class IncrementCounterView(View):
     def get(self, request, pk):
         counter = get_object_or_404(Counter, pk=pk)
         return JsonResponse({"value": counter.value})
+
+
+@api_view(["POST"])
+def create_admin_user(request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+    email = request.data.get("email")
+
+    if not username or not password or not email:
+        return Response(
+            {"error": "Username, password, and email are required."}, status=400
+        )
+
+    try:
+        User.objects.create_superuser(username, email, password)
+        return Response({"success": "Admin user created successfully."}, status=201)
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)

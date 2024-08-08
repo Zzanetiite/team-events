@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Counter, CounterButtonProps } from '../interfaces/types';
-import { useApi } from '../hooks/UseApi';
+import { Counter, CounterButtonProps } from '../../interfaces/types';
+import { useApi } from '../../hooks/useApi';
 
 const CounterButton: React.FC<CounterButtonProps> = ({ counterId }) => {
   const [value, setValue] = useState<number>(0);
@@ -9,7 +9,7 @@ const CounterButton: React.FC<CounterButtonProps> = ({ counterId }) => {
   useEffect(() => {
     fetchWithCSRF(`api/counter/${counterId}/`, { method: 'GET' })
       .then((data: Counter) => setValue(data.value))
-      .catch((error) =>
+      .catch((error: any) =>
         console.error('Error fetching initial counter value:', error)
       );
   }, [counterId, fetchWithCSRF]);
@@ -25,7 +25,7 @@ const CounterButton: React.FC<CounterButtonProps> = ({ counterId }) => {
           console.error('Increment failed:', data);
         }
       })
-      .catch((error) => console.error('Error:', error));
+      .catch((error: any) => console.error('Error:', error));
   };
 
   return (

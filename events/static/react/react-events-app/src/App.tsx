@@ -1,34 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import CounterButton from './components/CounterButton';
+import CounterButton from './components/common/CounterButton';
 import { CSRFProvider } from './context/CsrfContext';
+import CreateUserForm from './components/profile/CreateUserForm';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { REACT_BASENAME } from './data/constants';
 
-function App() {
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <CounterButton counterId={1} />,
+    },
+    {
+      path: 'createadmin',
+      element: <CreateUserForm />,
+    },
+    {
+      path: '*',
+      element: <div>404 Not Found</div>,
+    },
+  ],
+  {
+    basename: REACT_BASENAME,
+  }
+);
+
+const App: React.FC = () => {
   return (
     <CSRFProvider>
-      <div className="App">
-        <div className="App">
-          <h1>Counter Example</h1>
-          <CounterButton counterId={1} />
-        </div>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <RouterProvider router={router} />
     </CSRFProvider>
   );
-}
+};
 
 export default App;
