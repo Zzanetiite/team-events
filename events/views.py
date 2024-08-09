@@ -9,7 +9,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from team_events.team_events import settings
+from team_events.settings import DOMAIN, REACT_BASENAME
 
 from .models import Counter
 
@@ -31,8 +31,8 @@ def get_manifest(file_name):
 
 def global_settings(request):
     return {
-        "REACT_BASENAME": settings.REACT_BASENAME,
-        "DOMAIN": settings.DOMAIN,
+        "REACT_BASENAME": REACT_BASENAME,
+        "DOMAIN": DOMAIN,
     }
 
 
