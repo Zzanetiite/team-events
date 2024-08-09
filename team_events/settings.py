@@ -18,12 +18,13 @@ REACT_BASENAME = os.environ.get("REACT_BASENAME", "/static/react")
 DOMAIN = os.environ.get("DOMAIN", "http://localhost:8000")
 SECRET_KEY = os.environ.get(
     "SECRET_KEY",
-    "django-insecure-_zzl7=r=8_\
-    *hcxzqrwhu!v(4(6^t@8mg*gyo-cktm%&a#0f0-5",
+    "django-insecure-_zzl7=r=8_*hcxzqrwhu!v(4(6^t@8mg*gyo-cktm%&a#0f0-5",
 )
 DEBUG = os.environ.get("DEBUG", "True") == "True"
-CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "False") == "False"
-SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "False") == "False"
+CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "False") == "True"
+SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "False") == "True"
+SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT", "False") == "True"
+
 # ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(",")
 ALLOWED_HOSTS = ["team-events-cvm0.onrender.com", "localhost", "127.0.0.1"]
 
@@ -74,7 +75,6 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "https://team-events-cvm0.onrender.com",
 ]
-CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
 CSRF_COOKIE_HTTPONLY = False  # Ensure that the CSRF cookie is not HTTP only
 CSRF_USE_SESSIONS = False  # If using CSRF token from cookies
 CSRF_COOKIE_SAMESITE = (
@@ -83,7 +83,6 @@ CSRF_COOKIE_SAMESITE = (
 SESSION_COOKIE_SAMESITE = (
     "Lax"  # or 'Strict' if your frontend and backend are on the same domain
 )
-SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
 
 TEMPLATES = [
     {
