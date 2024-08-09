@@ -14,7 +14,6 @@ import os
 from pathlib import Path
 
 # Environment variables
-REACT_BASENAME = os.environ.get("REACT_BASENAME", "/static/react")
 DOMAIN = os.environ.get("DOMAIN", "http://localhost:8000")
 SECRET_KEY = os.environ.get(
     "SECRET_KEY",
