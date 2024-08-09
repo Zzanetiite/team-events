@@ -12,6 +12,12 @@
       window.DOMAIN = '{{ DOMAIN }}';
     </script>
 
+    <script>
+      console.log('CSRF_TOKEN:', '{{ csrf_token }}');
+      console.log('REACT_BASENAME:', '{{ REACT_BASENAME }}');
+      console.log('DOMAIN:', '{{ DOMAIN }}');
+    </script>
+
     <link rel="stylesheet" href="{% get_manifest_file 'main.css' %}" />
   </head>
   <body>

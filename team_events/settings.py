@@ -14,16 +14,18 @@ import os
 from pathlib import Path
 
 # Environment variables
-REACT_BASENAME = os.getenv("REACT_BASENAME", "/static/react")
-DOMAIN = os.getenv("DOMAIN", "http://localhost:8000")
-SECRET_KEY = os.getenv(
+REACT_BASENAME = os.environ.get("REACT_BASENAME", "/static/react")
+DOMAIN = os.environ.get("DOMAIN", "http://localhost:8000")
+SECRET_KEY = os.environ.get(
     "SECRET_KEY",
     "django-insecure-_zzl7=r=8_\
     *hcxzqrwhu!v(4(6^t@8mg*gyo-cktm%&a#0f0-5",
 )
-DEBUG = os.getenv("DEBUG", "True") == "True"
-CSRF_COOKIE_SECURE = os.getenv("CSRF_COOKIE_SECURE", "False") == "False"
-SESSION_COOKIE_SECURE = os.getenv("SESSION_COOKIE_SECURE", "False") == "False"
+DEBUG = os.environ.get("DEBUG", "True") == "True"
+CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "False") == "False"
+SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "False") == "False"
+# ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = ["team-events-cvm0.onrender.com", "localhost", "127.0.0.1"]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,10 +33,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(",")
-ALLOWED_HOSTS = ["team-events-cvm0.onrender.com", "localhost", "127.0.0.1"]
-
 
 # Application definition
 
@@ -99,6 +97,8 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.csrf",
+                # Add env variables to context
+                "events.views.global_settings",
             ],
         },
     },
