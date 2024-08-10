@@ -1,0 +1,23 @@
+[
+  {
+    "model": "events.counter",
+    "pk": 1,
+    "fields": {
+      "value": 10
+    }
+  },
+  {
+    "model": "events.counter",
+    "pk": 2,
+    "fields": {
+      "value": 20
+    }
+  },
+  {
+    "model": "events.counter",
+    "pk": 3,
+    "fields": {
+      "value": 30
+    }
+  }
+]
