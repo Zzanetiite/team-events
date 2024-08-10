@@ -52,6 +52,9 @@ class IncrementCounterView(View):
         return JsonResponse({"value": counter.value})
 
 
+# SECURITY WARNING! Only enable this to create the first admin user.
+# This creates a page that allows anyone to create admin.
+# It is, however, necessary because free plan doesn't provide SSH access.
 @api_view(["POST"])
 def create_admin_user(request):
     username = request.data.get("username")
