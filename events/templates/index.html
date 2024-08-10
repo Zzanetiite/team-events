@@ -11,6 +11,13 @@
       content="Web site that suggests team event places"
     />
     <title>Team Events</title>
+
+    <script>
+      window.CSRF_TOKEN = '{{ csrf_token }}';
+      window.REACT_BASENAME = '{{ REACT_BASENAME }}';
+      window.DOMAIN = '{{ DOMAIN }}';
+    </script>
+
     <script defer="defer" src="{% get_manifest_file 'main.js' %}"></script>
     <link href="{% get_manifest_file 'main.css' %}" rel="stylesheet" />
   </head>
