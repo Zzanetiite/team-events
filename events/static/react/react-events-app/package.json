@@ -2,11 +2,8 @@
   "name": "react-events-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/static/react/",
   "dependencies": {
-    "@emotion/react": "^11.13.0",
-    "@emotion/styled": "^11.13.0",
-    "@jridgewell/gen-mapping": "^0.3.5",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@mui/material": "^5.16.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -46,9 +43,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@types/jquery": "^3.5.30",
-    "react-app-rewired": "^2.2.1",
-    "typescript": "^4.9.5"
+    "react-app-rewired": "^2.2.1"
   }
 }

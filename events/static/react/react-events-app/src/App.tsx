@@ -4,27 +4,21 @@ import CounterButton from './components/common/CounterButton';
 import { CSRFProvider } from './context/CsrfContext';
 import CreateUserForm from './components/profile/CreateUserForm';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { REACT_BASENAME } from './data/constants';
 
-const router = createBrowserRouter(
-  [
-    {
-      path: '/',
-      element: <CounterButton counterId={1} />,
-    },
-    {
-      path: 'createadmin',
-      element: <CreateUserForm />,
-    },
-    {
-      path: '*',
-      element: <div>404 Not Found</div>,
-    },
-  ],
+const router = createBrowserRouter([
   {
-    basename: REACT_BASENAME,
-  }
-);
+    path: '/',
+    element: <CounterButton counterId={1} />,
+  },
+  {
+    path: 'createadmin',
+    element: <CreateUserForm />,
+  },
+  {
+    path: '*',
+    element: <div>404 Not Found</div>,
+  },
+]);
 
 const App: React.FC = () => {
   return (

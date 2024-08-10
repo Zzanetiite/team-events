@@ -13,13 +13,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
+import environ
+
 # Environment variables
+environ.Env.read_env()
 DOMAIN = os.environ.get("DOMAIN", "http://localhost:8000")
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "django-insecure-_zzl7=r=8_*hcxzqrwhu!v(4(6^t@8mg*gyo-cktm%&a#0f0-5",
-)
-REACT_BASENAME = os.environ.get("REACT_BASENAME", "/static/react")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "False") == "True"
 SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "False") == "True"
@@ -160,10 +159,10 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "events/static/react"),
+    os.path.join(BASE_DIR, "events/static/"),
 ]
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
