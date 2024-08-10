@@ -13,5 +13,5 @@ urlpatterns = [
     path("api/counter/<int:pk>/", views.IncrementCounterView.as_view(), name="counter"),
     path("api/get-csrf-token/", get_csrf_token),
     # SECURITY WARNING! See view create_admin_user for info.
-    # path("api/create-admin-user/", views.create_admin_user, name="create-admin-user"),
+    path("api/create-admin-user/", views.create_admin_user, name="create-admin-user"),
 ]
