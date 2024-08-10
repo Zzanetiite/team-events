@@ -19,6 +19,7 @@ SECRET_KEY = os.environ.get(
     "SECRET_KEY",
     "django-insecure-_zzl7=r=8_*hcxzqrwhu!v(4(6^t@8mg*gyo-cktm%&a#0f0-5",
 )
+REACT_BASENAME = os.environ.get("REACT_BASENAME", "/static/react")
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "False") == "True"
 SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "False") == "True"

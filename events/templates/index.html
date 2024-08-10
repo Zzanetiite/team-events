@@ -1,4 +1,4 @@
-{% load static %} {% csrf_token %}
+{% load static %} {% load static_manifest %} {% csrf_token %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,13 +8,14 @@
 
     <script>
       window.CSRF_TOKEN = '{{ csrf_token }}';
+      window.REACT_BASENAME = '{{ REACT_BASENAME }}';
       window.DOMAIN = '{{ DOMAIN }}';
     </script>
 
-    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" href="{% get_manifest_file 'main.css' %}" />
   </head>
   <body>
     <div id="root"></div>
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% get_manifest_file 'main.js' %}"></script>
   </body>
 </html>
