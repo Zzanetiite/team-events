@@ -4,6 +4,8 @@ import CounterButton from './components/common/CounterButton';
 import { CSRFProvider } from './context/CsrfContext';
 import CreateUserForm from './components/profile/CreateUserForm';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import NotFound from './components/common/NotFound';
+import PrimarySearchAppBar from './components/layout/NavBar';
 
 const router = createBrowserRouter([
   {
@@ -11,18 +13,24 @@ const router = createBrowserRouter([
     element: <CounterButton counterId={1} />,
   },
   {
-    path: 'createadmin',
+    path: '/createadmin',
     element: <CreateUserForm />,
   },
   {
-    path: '*',
-    element: <div>404 Not Found</div>,
+    // Non-existent routes display Not Found page
+    path: '/*',
+    element: (
+      <div>
+        <NotFound />
+      </div>
+    ),
   },
 ]);
 
 const App: React.FC = () => {
   return (
     <CSRFProvider>
+      <PrimarySearchAppBar />
       <RouterProvider router={router} />
     </CSRFProvider>
   );
