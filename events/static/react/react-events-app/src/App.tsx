@@ -5,7 +5,7 @@ import { CSRFProvider } from './context/CsrfContext';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NotFound from './components/common/NotFound';
 import PrimarySearchAppBar from './components/layout/NavBar';
-import CreateUserForm from './components/profile/CreateUserForm';
+import UserForm from './components/profile/UserForm';
 
 const router = createBrowserRouter([
   {
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
   {
     path: '/createadmin',
     element: (
-      <CreateUserForm
+      <UserForm
         title="Create Admin User"
         apiEndpoint="/api/create-admin-user/"
         hasEmail={true}
@@ -24,7 +24,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/signup',
-    element: <CreateUserForm title="Sign Up" apiEndpoint="/api/create-user/" />,
+    element: <UserForm title="Sign Up" apiEndpoint="/api/create-user/" />,
+  },
+  {
+    path: '/login',
+    element: <UserForm title="Login" apiEndpoint="/api/login/" method="POST" />,
   },
   {
     // Non-existent routes display Not Found page

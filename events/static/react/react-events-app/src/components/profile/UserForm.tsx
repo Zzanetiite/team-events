@@ -9,9 +9,11 @@ import { useApi } from '../../hooks/useApi';
 import { CreateUserFormProps } from '../../interfaces/types';
 import { ErrorMessages } from '../../constants';
 
-const CreateUserForm: React.FC<CreateUserFormProps> = ({
+const UserForm: React.FC<CreateUserFormProps> = ({
   title,
   apiEndpoint,
+  buttonText,
+  method,
   hasEmail,
 }) => {
   const [username, setUsername] = useState('');
@@ -36,7 +38,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
 
     try {
       const response = await fetchWithCSRF(apiEndpoint, {
-        method: 'POST',
+        method: method ? method : 'POST',
         body: JSON.stringify({ username, password }),
       });
       console.log('Response:', response);
@@ -136,7 +138,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
             color="primary"
             sx={{ width: '120px' }}
           >
-            Submit
+            {buttonText || 'Submit'}
           </Button>
         </Box>
       </form>
@@ -144,4 +146,4 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
   );
 };
 
-export default CreateUserForm;
+export default UserForm;

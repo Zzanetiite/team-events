@@ -1,15 +1,19 @@
 import json
 import os
 
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import View
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from rest_framework import status
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from team_events.settings import DOMAIN
 
@@ -114,6 +118,41 @@ def create_user(request):
     password = request.data.get("password")
 
     return create_user_internal(username, password)
+
+
+# TODO: Doesn't work
+@csrf_exempt
+@api_view(["POST"])
+def login_user(request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+
+    user = authenticate(request, username=username, password=password)
+
+    if user is not None:
+        login(request, user)
+        return Response(
+            {"message": "Login successful", "username": user.username},
+            status=status.HTTP_200_OK,
+        )
+    else:
+        return Response(
+            {"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED
+        )
+
+
+# TODO: Doesn't work
+# https://www.django-rest-framework.org/api-guide/authentication/
+class ExampleView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        content = {
+            "user": str(request.user),  # `django.contrib.auth.User` instance.
+            "auth": str(request.auth),  # None
+        }
+        return Response(content)
 
 
 @api_view(["GET"])
