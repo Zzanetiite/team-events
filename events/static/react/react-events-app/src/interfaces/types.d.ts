@@ -6,3 +6,19 @@ export interface Counter {
 export interface CounterButtonProps {
   counterId: number;
 }
+
+export interface FetchOptions extends RequestInit {
+  body?: any;
+}
+
+export interface ApiResponseBody {
+  ok: boolean;
+  status: number;
+  message: string;
+}
+
+export interface CreateUserFormProps {
+  title: string;
+  apiEndpoint: string;
+  hasEmail?: boolean; // Applicable to Admin only
+}

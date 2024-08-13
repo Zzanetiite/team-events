@@ -1,4 +1,4 @@
-import { DOMAIN } from '../data/constants';
+import { DOMAIN } from '../constants';
 import { useCSRF } from '../context/CsrfContext';
 
 interface FetchOptions extends RequestInit {
@@ -27,10 +27,10 @@ export function useApi() {
       fetchOptions.body = JSON.stringify(options.body);
     }
 
-    const response = await fetch(`${DOMAIN}/${url}`, fetchOptions);
+    const response = await fetch(`${DOMAIN}${url}`, fetchOptions);
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw response;
     }
 
     return response.json();
