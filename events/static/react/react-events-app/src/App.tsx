@@ -17,18 +17,18 @@ const router = createBrowserRouter([
     element: (
       <UserForm
         title="Create Admin User"
-        apiEndpoint="/api/create-admin-user/"
+        apiEndpoint="api/create-admin-user/"
         hasEmail={true}
       />
     ),
   },
   {
     path: '/signup',
-    element: <UserForm title="Sign Up" apiEndpoint="/api/create-user/" />,
+    element: <UserForm title="Sign Up" apiEndpoint="api/create-user/" />,
   },
   {
     path: '/login',
-    element: <UserForm title="Login" apiEndpoint="/api/login/" method="POST" />,
+    element: <UserForm title="Login" apiEndpoint="api/login/" method="POST" />,
   },
   {
     // Non-existent routes display Not Found page

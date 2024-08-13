@@ -27,7 +27,7 @@ export function useApi() {
       fetchOptions.body = JSON.stringify(options.body);
     }
 
-    const response = await fetch(`${DOMAIN}${url}`, fetchOptions);
+    const response = await fetch(`${DOMAIN}/${url}`, fetchOptions);
 
     if (!response.ok) {
       throw response;
