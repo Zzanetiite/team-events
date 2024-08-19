@@ -1,27 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextField, Box, Typography, Button, Alert } from '@mui/material';
 import {
   Key as KeyIcon,
   Person as PersonIcon,
   Email as EmailIcon,
 } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import { useApi } from '../../hooks/useApi';
 import { CreateUserFormProps } from '../../interfaces/types';
 import { ErrorMessages } from '../../constants';
+import { useTokens } from '../../context/TokenContext';
 
 const UserForm: React.FC<CreateUserFormProps> = ({
   title,
   apiEndpoint,
   buttonText,
+  successMessageText,
   method,
   hasEmail,
+  loginPage,
 }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { fetchWithCSRF } = useApi();
+  const { fetchWithTokens } = useApi();
+  const { userToken, setUserToken, loggedIn } = useTokens();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate('/');
+    }
+  }, [loggedIn, navigate]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,36 +49,42 @@ const UserForm: React.FC<CreateUserFormProps> = ({
     }
 
     try {
-      const response = await fetchWithCSRF(apiEndpoint, {
+      const response = await fetchWithTokens(apiEndpoint, {
         method: method ? method : 'POST',
         body: JSON.stringify({ username, password }),
       });
       console.log('Response:', response);
 
       if (response) {
-        setSuccessMessage('User created successfully');
+        setSuccessMessage(successMessageText);
         setErrorMessage(null);
         setUsername('');
         setPassword('');
         setEmail('');
+        if (loginPage) {
+          setUserToken(response.token);
+        }
       }
     } catch (error: any) {
       if (error.status === 409) {
-        setErrorMessage(`${error.status} - ${ErrorMessages.BAD_REQUEST}`);
+        setErrorMessage(ErrorMessages.BAD_REQUEST);
       }
       if (error.status === 401) {
-        setErrorMessage(`${error.status} - ${ErrorMessages.UNAUTHORIZED}`);
+        setErrorMessage(ErrorMessages.UNAUTHORIZED);
       }
       if (error.status === 404) {
-        setErrorMessage(`${error.status} - ${ErrorMessages.NOT_FOUND}`);
+        setErrorMessage(ErrorMessages.NOT_FOUND);
       }
       if (error.status === 409) {
-        setErrorMessage(`${error.status} - ${ErrorMessages.USER_EXISTS}`);
+        setErrorMessage(ErrorMessages.USER_EXISTS);
       }
       if (error.status === 500) {
-        setErrorMessage(`${error.status} - ${ErrorMessages.SERVER_ERROR}`);
+        setErrorMessage(ErrorMessages.SERVER_ERROR);
       }
       setSuccessMessage(null);
+    }
+    if (loginPage) {
+      console.log('User token:', userToken);
     }
   };
   return (

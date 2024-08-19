@@ -1,16 +1,17 @@
 import { DOMAIN } from '../constants';
-import { useCSRF } from '../context/CsrfContext';
+import { useTokens } from '../context/TokenContext';
 
 interface FetchOptions extends RequestInit {
   body?: any;
 }
 
 export function useApi() {
-  const { csrfToken } = useCSRF();
+  const { csrfToken, userToken } = useTokens();
 
-  const fetchWithCSRF = async (url: string, options: FetchOptions = {}) => {
+  const fetchWithTokens = async (url: string, options: FetchOptions = {}) => {
     const headers: HeadersInit = {
       'X-CSRFToken': csrfToken || '',
+      Authorization: userToken ? `Token ${userToken}` : '',
       Accept: 'application/json',
       'Content-Type': 'application/json',
       ...options.headers,
@@ -36,5 +37,5 @@ export function useApi() {
     return response.json();
   };
 
-  return { fetchWithCSRF };
+  return { fetchWithTokens };
 }

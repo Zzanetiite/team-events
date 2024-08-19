@@ -1,23 +1,25 @@
 import json
 import os
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
-from rest_framework import status
-from rest_framework.authentication import BasicAuthentication, SessionAuthentication
-from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework import generics, status
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.serializers import CharField, Serializer
 from rest_framework.views import APIView
 
 from team_events.settings import DOMAIN
 
 from .models import Counter
+from .serializers import UserSerializer
 
 
 # ===========================================================
@@ -104,6 +106,10 @@ class IncrementCounterView(View):
 
 
 @api_view(["POST"])
+@permission_classes([AllowAny])  # Typically, this would be admin only,
+# but since this app is hosted on a free domain, the database gets wiped out
+# on every shutdown, so we need to create a new admin user every time.
+# Therefore, this allows university to easily create an admin to test the app.
 def create_admin_user(request):
     username = request.data.get("username")
     password = request.data.get("password")
@@ -113,6 +119,7 @@ def create_admin_user(request):
 
 
 @api_view(["POST"])
+@permission_classes([AllowAny])
 def create_user(request):
     username = request.data.get("username")
     password = request.data.get("password")
@@ -120,42 +127,55 @@ def create_user(request):
     return create_user_internal(username, password)
 
 
-# TODO: Doesn't work
-@csrf_exempt
 @api_view(["POST"])
-def login_user(request):
-    username = request.data.get("username")
-    password = request.data.get("password")
-
-    user = authenticate(request, username=username, password=password)
-
-    if user is not None:
-        login(request, user)
+@permission_classes([IsAuthenticated])
+def logout_view(request):
+    try:
+        token = Token.objects.get(user=request.user)
+        token.delete()
         return Response(
-            {"message": "Login successful", "username": user.username},
-            status=status.HTTP_200_OK,
+            {"message": "Successfully logged out."}, status=status.HTTP_200_OK
         )
-    else:
-        return Response(
-            {"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED
-        )
+    except Token.DoesNotExist:
+        return Response({"error": "Token not found."}, status=status.HTTP_404_NOT_FOUND)
 
 
-# TODO: Doesn't work
-# https://www.django-rest-framework.org/api-guide/authentication/
-class ExampleView(APIView):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
 
-    def get(self, request, format=None):
-        content = {
-            "user": str(request.user),  # `django.contrib.auth.User` instance.
-            "auth": str(request.auth),  # None
-        }
-        return Response(content)
+
+class AuthTokenSerializer(Serializer):
+    username = CharField(required=True)
+    password = CharField(required=True)
+
+
+class LoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = AuthTokenSerializer(data=request.data)
+
+        if serializer.is_valid():
+            username = serializer.validated_data["username"]
+            password = serializer.validated_data["password"]
+
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                token, created = Token.objects.get_or_create(user=user)
+                return Response({"token": token.key}, status=status.HTTP_200_OK)
+            else:
+                return Response(
+                    {"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST
+                )
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def get_username(request):
     if request.user.is_authenticated:
         return Response({"username": request.user.username}, status=200)

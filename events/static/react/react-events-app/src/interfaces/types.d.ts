@@ -20,7 +20,9 @@ export interface ApiResponseBody {
 export interface CreateUserFormProps {
   title: string;
   apiEndpoint: string;
+  successMessageText: ReactNode;
   buttonText?: string;
   method?: string;
   hasEmail?: boolean; // Applicable to Admin only
+  loginPage?: boolean;
 }

@@ -4,18 +4,18 @@ import { useApi } from '../../hooks/useApi';
 
 const CounterButton: React.FC<CounterButtonProps> = ({ counterId }) => {
   const [value, setValue] = useState<number>(0);
-  const { fetchWithCSRF } = useApi();
+  const { fetchWithTokens } = useApi();
 
   useEffect(() => {
-    fetchWithCSRF(`api/counter/${counterId}/`, { method: 'GET' })
+    fetchWithTokens(`api/counter/${counterId}/`, { method: 'GET' })
       .then((data: Counter) => setValue(data.value))
       .catch((error: any) =>
         console.error('Error fetching initial counter value:', error)
       );
-  }, [counterId, fetchWithCSRF]);
+  }, [counterId, fetchWithTokens]);
 
   const incrementCounter = () => {
-    fetchWithCSRF(`api/counter/${counterId}/increment/`, {
+    fetchWithTokens(`api/counter/${counterId}/increment/`, {
       method: 'POST',
     })
       .then((data: Counter) => {
