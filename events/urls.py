@@ -2,7 +2,6 @@ from django.urls import path
 
 from .utils import Utils
 from .views.counter import IncrementCounterView
-from .views.get_username import GetUsernameView
 from .views.security import SecurityView
 from .views.user_management import UserManagementView
 
@@ -18,5 +17,4 @@ urlpatterns = [
         "api/user/<str:action>/", UserManagementView.as_view(), name="user-management"
     ),
     path("api/security/<str:action>/", SecurityView.as_view(), name="security"),
-    path("api/get-username/", GetUsernameView.as_view(), name="get_username"),
 ]

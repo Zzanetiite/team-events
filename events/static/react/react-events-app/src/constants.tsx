@@ -18,7 +18,7 @@ export enum ApiEndpoints {
   CREATE_USER = 'api/user/create-user/',
   LOGIN = 'api/user/login/',
   LOGOUT = 'api/user/logout/',
-  GET_USERNAME = 'api/get-username/',
+  GET_USERNAME = 'api/user/get-username/',
   CREATE_ADMIN_USER = 'api/user/create-admin/',
   VALIDATE_ADMIN_PAGE_PASSWORD = 'api/security/validate-admin-password/',
 }
