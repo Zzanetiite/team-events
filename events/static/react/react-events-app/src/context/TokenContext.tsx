@@ -5,7 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
-import { DOMAIN } from '../constants';
+import { ApiEndpoints, DOMAIN } from '../constants';
 import Cookies from 'js-cookie';
 
 interface TokenContextType {
@@ -72,7 +72,7 @@ export function useTokens(): TokenContextType {
 
 async function fetchCSRFToken(): Promise<string | null> {
   try {
-    const response = await fetch(`${DOMAIN}/api/get-csrf-token/`, {
+    const response = await fetch(`${DOMAIN}/${ApiEndpoints.GET_CSRF_TOKEN}`, {
       credentials: 'include',
     });
     if (response.ok) {

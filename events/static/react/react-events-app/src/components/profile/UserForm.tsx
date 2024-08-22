@@ -68,18 +68,16 @@ const UserForm: React.FC<CreateUserFormProps> = ({
     } catch (error: any) {
       if (error.status === 409) {
         setErrorMessage(ErrorMessages.BAD_REQUEST);
-      }
-      if (error.status === 401) {
+      } else if (error.status === 401) {
         setErrorMessage(ErrorMessages.UNAUTHORIZED);
-      }
-      if (error.status === 404) {
+      } else if (error.status === 404) {
         setErrorMessage(ErrorMessages.NOT_FOUND);
-      }
-      if (error.status === 409) {
+      } else if (error.status === 409) {
         setErrorMessage(ErrorMessages.USER_EXISTS);
-      }
-      if (error.status === 500) {
+      } else if (error.status === 500) {
         setErrorMessage(ErrorMessages.SERVER_ERROR);
+      } else {
+        setErrorMessage(ErrorMessages.UNKNOWN_ERROR);
       }
       setSuccessMessage(null);
     }

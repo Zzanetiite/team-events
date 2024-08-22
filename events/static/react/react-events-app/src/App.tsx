@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NotFound from './components/common/NotFound';
 import PrimarySearchAppBar from './components/layout/NavBar';
 import UserForm from './components/profile/UserForm';
+import { ApiEndpoints } from './constants';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
     element: (
       <UserForm
         title="Create Admin User"
-        apiEndpoint="api/create-admin-user/"
+        apiEndpoint={ApiEndpoints.CREATE_ADMIN_USER}
         hasEmail={true}
         successMessageText={
           <span>
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
     element: (
       <UserForm
         title="Sign Up"
-        apiEndpoint="api/create-user/"
+        apiEndpoint={ApiEndpoints.CREATE_USER}
         successMessageText={
           <span>
             Success! User created successfully. <a href="/login">Go to Login</a>
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
     element: (
       <UserForm
         title="Login"
-        apiEndpoint="/api/login/"
+        apiEndpoint={ApiEndpoints.LOGIN}
         method="POST"
         successMessageText={<span>Login success! Redirecting ...</span>}
         loginPage={true}

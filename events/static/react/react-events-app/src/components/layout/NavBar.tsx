@@ -12,6 +12,7 @@ import Logout from '@mui/icons-material/Logout';
 import Login from '@mui/icons-material/Login';
 import { useApi } from '../../hooks/useApi';
 import { useTokens } from '../../context/TokenContext';
+import { ApiEndpoints } from '../../constants';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -60,7 +61,7 @@ export default function PrimarySearchAppBar() {
   React.useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const data = await fetchWithTokens('api/get-username/');
+        const data = await fetchWithTokens(ApiEndpoints.GET_USERNAME);
         setUsername(data.username);
       } catch (error) {
         console.error('Error fetching username:', error);
@@ -76,7 +77,7 @@ export default function PrimarySearchAppBar() {
 
   const handleLogout = React.useCallback(async () => {
     try {
-      const response = await fetchWithTokens('api/logout/', {
+      const response = await fetchWithTokens(ApiEndpoints.LOGOUT, {
         method: 'POST',
       });
       if (response) {
