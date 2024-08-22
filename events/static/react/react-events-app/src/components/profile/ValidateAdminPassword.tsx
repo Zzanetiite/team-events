@@ -3,29 +3,25 @@ import { Box, Typography, Button, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useApi } from '../../hooks/useApi';
 import { CreateUserFormProps } from '../../interfaces/types';
+import { ErrorMessages } from '../../constants';
 import { useTokens } from '../../context/TokenContext';
-import PasswordInput from '../common/PasswordInput';
-import UsernameInput from '../common/UsernameInput';
-import EmailInput from '../common/EmailInput';
 import { handleError } from '../../errors/handleError';
+import PasswordInput from '../common/PasswordInput';
 
-const UserForm: React.FC<CreateUserFormProps> = ({
+const ValidateAdminPasswordForm: React.FC<CreateUserFormProps> = ({
   title,
   apiEndpoint,
   buttonText,
   successMessageText,
-  messageForBadRequest,
   method,
-  loginPage,
   adminPage,
 }) => {
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
-  const { setUserToken, loggedIn, adminPasswordValidated } = useTokens();
+  const { loggedIn, setAdminPasswordValidated, adminPasswordValidated } =
+    useTokens();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,8 +31,8 @@ const UserForm: React.FC<CreateUserFormProps> = ({
   }, [loggedIn, navigate]);
 
   useEffect(() => {
-    if (adminPage && !adminPasswordValidated) {
-      navigate('/validateadmin');
+    if (adminPasswordValidated) {
+      navigate('/createadmin');
     }
   }, [adminPage, adminPasswordValidated, navigate]);
 
@@ -46,26 +42,26 @@ const UserForm: React.FC<CreateUserFormProps> = ({
     try {
       const response = await fetchWithTokens(apiEndpoint, {
         method: method ? method : 'POST',
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ password }),
       });
       console.log('Response:', response);
 
       if (response) {
         setSuccessMessage(successMessageText);
         setErrorMessage(null);
-        setUsername('');
-        setPassword('');
-        setEmail('');
-        if (loginPage) {
-          setUserToken(response.token);
-        }
+        setAdminPasswordValidated(true);
       }
     } catch (error: any) {
       handleError({
         error,
         setErrorMessage,
         setSuccessMessage,
-        messageForBadRequest: messageForBadRequest,
+        messageForBadRequest: ErrorMessages.INVALID_CREDENTIALS,
+        overrideErrorHandlers: {
+          403: (setErrorMessage) => {
+            setErrorMessage('Password wrong.');
+          },
+        },
       });
     }
   };
@@ -88,9 +84,7 @@ const UserForm: React.FC<CreateUserFormProps> = ({
           alignItems="center"
           height="50vh"
         >
-          <UsernameInput field={username} setField={setUsername} />
           <PasswordInput field={password} setField={setPassword} />
-          {adminPage && <EmailInput field={email} setField={setEmail} />}
           {successMessage && (
             <Alert severity="success" sx={{ mb: 2 }}>
               {successMessage}
@@ -116,4 +110,4 @@ const UserForm: React.FC<CreateUserFormProps> = ({
   );
 };
 
-export default UserForm;
+export default ValidateAdminPasswordForm;

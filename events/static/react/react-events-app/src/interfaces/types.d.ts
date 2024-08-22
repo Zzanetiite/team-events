@@ -21,8 +21,24 @@ export interface CreateUserFormProps {
   title: string;
   apiEndpoint: string;
   successMessageText: ReactNode;
+  messageForBadRequest?: string;
   buttonText?: string;
   method?: string;
-  hasEmail?: boolean; // Applicable to Admin only
   loginPage?: boolean;
+  adminPage?: boolean;
+}
+
+interface HandleErrorProps {
+  error: any;
+  setErrorMessage: (message: string | null) => void;
+  setSuccessMessage: (message: string | null) => void;
+  messageForBadRequest?: string;
+  overrideErrorHandlers?: {
+    [key: number]: (setErrorMessage: (message: string | null) => void) => void;
+  };
+}
+
+interface InputProps {
+  field: string;
+  setField: (password: string) => void;
 }

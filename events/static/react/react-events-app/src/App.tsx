@@ -7,6 +7,7 @@ import NotFound from './components/common/NotFound';
 import PrimarySearchAppBar from './components/layout/NavBar';
 import UserForm from './components/profile/UserForm';
 import { ApiEndpoints } from './constants';
+import ValidateAdminPasswordForm from './components/profile/ValidateAdminPassword';
 
 const router = createBrowserRouter([
   {
@@ -19,13 +20,24 @@ const router = createBrowserRouter([
       <UserForm
         title="Create Admin User"
         apiEndpoint={ApiEndpoints.CREATE_ADMIN_USER}
-        hasEmail={true}
+        adminPage={true}
         successMessageText={
           <span>
             Success! Admin user created successfully.{' '}
             <a href="/login">Go to Login</a>
           </span>
         }
+        messageForBadRequest="Admin user already exists. Please choose a different username."
+      />
+    ),
+  },
+  {
+    path: '/validateadmin',
+    element: (
+      <ValidateAdminPasswordForm
+        title="Please enter secret password"
+        apiEndpoint={ApiEndpoints.VALIDATE_ADMIN_PAGE_PASSWORD}
+        successMessageText={<span>Success! Password correct.</span>}
       />
     ),
   },
@@ -40,6 +52,7 @@ const router = createBrowserRouter([
             Success! User created successfully. <a href="/login">Go to Login</a>
           </span>
         }
+        messageForBadRequest="User already exists. Please choose a different username."
       />
     ),
   },
@@ -51,6 +64,7 @@ const router = createBrowserRouter([
         apiEndpoint={ApiEndpoints.LOGIN}
         method="POST"
         successMessageText={<span>Login success! Redirecting ...</span>}
+        messageForBadRequest="Invalid credentials. Please try again."
         loginPage={true}
       />
     ),

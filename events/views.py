@@ -1,13 +1,14 @@
 import json
 import os
 
+from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import View
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from rest_framework import generics, status
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
@@ -25,6 +26,10 @@ from .serializers import UserSerializer
 # ===========================================================
 # Utility functions and index
 # ===========================================================
+def index(request):
+    return render(request, "index.html")
+
+
 @ensure_csrf_cookie
 def get_csrf_token(request):
     return JsonResponse({"success": "CSRF cookie set"})
@@ -46,8 +51,19 @@ def global_settings(request):
     }
 
 
-def index(request):
-    return render(request, "index.html")
+@api_view(["POST"])
+@csrf_exempt
+def validate_admin_page_password(request):
+    password = request.data.get("password")
+
+    if password == settings.ADMIN_CREATE_PAGE_PASSWORD:
+        return Response(
+            {"message": "Success. Password corrext."}, status=status.HTTP_200_OK
+        )
+    else:
+        return JsonResponse(
+            {"status": "error", "message": "Invalid password"}, status=403
+        )
 
 
 def create_user_internal(username, password, email=None, is_superuser=False):

@@ -15,6 +15,11 @@ urlpatterns = [
     path("api/login/", views.LoginView.as_view(), name="login"),
     path("api/logout/", views.logout_view, name="logout"),
     path("api/get-username/", views.get_username, name="get_username"),
+    path(
+        "api/validate-admin-page-password/",
+        views.validate_admin_page_password,
+        name="validate_admin_page_password",
+    ),
     # SECURITY WARNING! See view create_admin_user for info.
     path("api/create-admin-user/", views.create_admin_user, name="create-admin-user"),
 ]

@@ -15,6 +15,8 @@ interface TokenContextType {
   setUserToken: React.Dispatch<React.SetStateAction<string | null>>;
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  adminPasswordValidated: boolean;
+  setAdminPasswordValidated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const TokenContext = createContext<TokenContextType | null>(null);
@@ -29,6 +31,8 @@ export function TokenProvider({ children }: TokenProviderProps) {
     localStorage.getItem('userToken') || Cookies.get('userToken') || null
   );
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [adminPasswordValidated, setAdminPasswordValidated] =
+    useState<boolean>(false);
 
   useEffect(() => {
     fetchCSRFToken().then((token) => setCSRFToken(token));
@@ -55,6 +59,8 @@ export function TokenProvider({ children }: TokenProviderProps) {
         setUserToken,
         loggedIn,
         setLoggedIn,
+        adminPasswordValidated,
+        setAdminPasswordValidated,
       }}
     >
       {children}

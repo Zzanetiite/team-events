@@ -10,6 +10,7 @@ export enum ErrorMessages {
   USER_EXISTS = 'User already exists. Please choose a different username.',
   SERVER_ERROR = 'Internal server error. Please try again later.',
   UNKNOWN_ERROR = 'Sorry, something went wrong. If this continues, please contact the administrator.',
+  INVALID_CREDENTIALS = 'Invalid credentials. Please try again.',
 }
 
 export enum ApiEndpoints {
@@ -19,4 +20,5 @@ export enum ApiEndpoints {
   LOGOUT = 'api/logout/',
   GET_USERNAME = 'api/get-username/',
   CREATE_ADMIN_USER = 'api/create-admin-user/',
+  VALIDATE_ADMIN_PAGE_PASSWORD = 'api/validate-admin-page-password/',
 }
