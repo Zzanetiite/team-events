@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import CounterButton from './components/common/CounterButton';
 import { TokenProvider } from './context/TokenContext';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NotFound from './components/common/NotFound';
@@ -8,11 +7,12 @@ import PrimarySearchAppBar from './components/layout/NavBar';
 import UserForm from './components/profile/UserForm';
 import { ApiEndpoints } from './constants';
 import ValidateAdminPasswordForm from './components/profile/ValidateAdminPassword';
+import Home from './pages/Home';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <CounterButton counterId={1} />,
+    element: <Home />,
   },
   {
     path: '/createadmin',

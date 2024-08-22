@@ -42,3 +42,13 @@ interface InputProps {
   field: string;
   setField: (password: string) => void;
 }
+
+interface EventProps {
+  icon: ReactNode;
+  placeType: string; // Type of the place (e.g., 'Restaurant', 'Park')
+  address: string;
+  description: string;
+  comments: string[];
+  placeRating: number; // Scale 1-5
+  loudnessRating: number; // Scale 1-5
+}
