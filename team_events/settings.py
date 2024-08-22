@@ -110,7 +110,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.csrf",
                 # Add env variables to context
-                "events.views.global_settings",
+                "events.utils.global_settings",
             ],
         },
     },

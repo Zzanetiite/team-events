@@ -14,11 +14,11 @@ export enum ErrorMessages {
 }
 
 export enum ApiEndpoints {
-  GET_CSRF_TOKEN = 'api/get-csrf-token/',
-  CREATE_USER = 'api/create-user/',
-  LOGIN = 'api/login/',
-  LOGOUT = 'api/logout/',
+  GET_CSRF_TOKEN = 'api/security/get-csrf-token/',
+  CREATE_USER = 'api/user/create-user/',
+  LOGIN = 'api/user/login/',
+  LOGOUT = 'api/user/logout/',
   GET_USERNAME = 'api/get-username/',
-  CREATE_ADMIN_USER = 'api/create-admin-user/',
-  VALIDATE_ADMIN_PAGE_PASSWORD = 'api/validate-admin-page-password/',
+  CREATE_ADMIN_USER = 'api/user/create-admin/',
+  VALIDATE_ADMIN_PAGE_PASSWORD = 'api/security/validate-admin-password/',
 }
