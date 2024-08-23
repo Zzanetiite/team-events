@@ -19,5 +19,203 @@
     "fields": {
       "value": 30
     }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 1,
+    "fields": {
+      "name": "Restaurant",
+      "description": "A place where teams can enjoy meals together, fostering conversation and relaxation."
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 2,
+    "fields": {
+      "name": "Fast Food",
+      "description": "Quick dining options ideal for casual, on-the-go team gatherings."
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 3,
+    "fields": {
+      "name": "Escape Room",
+      "description": "Interactive and immersive puzzle-solving experiences designed to promote teamwork and problem-solving."
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 4,
+    "fields": {
+      "name": "Outdoor Activity",
+      "description": "Activities that take place outdoors, encouraging team bonding through physical challenges and enjoyment of nature."
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 5,
+    "fields": {
+      "name": "Classes",
+      "description": "Workshops or training sessions aimed at skill-building and knowledge enhancement for team members."
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 6,
+    "fields": {
+      "name": "Team Building",
+      "description": "Activities specifically designed to strengthen team cohesion and improve collaboration and communication."
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 7,
+    "fields": {
+      "name": "Offsite Retreat",
+      "description": "Getaways away from the usual work environment, aimed at relaxation, brainstorming, and team bonding."
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 8,
+    "fields": {
+      "name": "Tournament",
+      "description": "Competitive events that encourage teamwork and strategic thinking in a fun and engaging way."
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 9,
+    "fields": {
+      "name": "Fundraiser",
+      "description": "Events aimed at raising funds for charitable causes while providing opportunities for team engagement."
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 10,
+    "fields": {
+      "name": "Party",
+      "description": "Social gatherings designed for enjoyment, celebration, and informal interaction among team members."
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 11,
+    "fields": {
+      "name": "Art",
+      "description": "Creative events involving art activities, exhibitions, or workshops aimed at fostering creativity and collaboration."
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 1,
+    "fields": {
+      "description": "Team dinner at a fine restaurant to celebrate project completion.",
+      "average_rating_event": 4,
+      "user": 1,
+      "event_type": 1
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 2,
+    "fields": {
+      "description": "Casual lunch outing to a popular fast food spot for informal team bonding.",
+      "average_rating_event": 3,
+      "user": 1,
+      "event_type": 2
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 3,
+    "fields": {
+      "description": "Escape room challenge designed to enhance team problem-solving skills.",
+      "average_rating_event": 5,
+      "user": 1,
+      "event_type": 3
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 4,
+    "fields": {
+      "description": "Outdoor team-building activity involving obstacle courses and teamwork exercises.",
+      "average_rating_event": 4,
+      "user": 1,
+      "event_type": 4
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 5,
+    "fields": {
+      "description": "Skill-building workshop focused on communication and leadership.",
+      "average_rating_event": 4,
+      "user": 1,
+      "event_type": 5
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 6,
+    "fields": {
+      "description": "Team-building retreat to foster collaboration and creativity.",
+      "average_rating_event": 5,
+      "user": 1,
+      "event_type": 6
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 7,
+    "fields": {
+      "description": "Offsite retreat designed for team relaxation and brainstorming.",
+      "average_rating_event": 4,
+      "user": 1,
+      "event_type": 7
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 8,
+    "fields": {
+      "description": "Competitive tournament to encourage team strategy and collaboration.",
+      "average_rating_event": 4,
+      "user": 1,
+      "event_type": 8
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 9,
+    "fields": {
+      "description": "Charity fundraiser event involving a variety of engaging activities.",
+      "average_rating_event": 5,
+      "user": 1,
+      "event_type": 9
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 10,
+    "fields": {
+      "description": "Team party to celebrate a successful quarter with fun and relaxation.",
+      "average_rating_event": 5,
+      "user": 1,
+      "event_type": 10
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 11,
+    "fields": {
+      "description": "Art workshop to foster creativity and team interaction.",
+      "average_rating_event": 4,
+      "user": 1,
+      "event_type": 11
+    }
   }
 ]

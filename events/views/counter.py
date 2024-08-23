@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views import View
 
-from ..models import Counter
+from events.models.counter import Counter
 
 
 class IncrementCounterView(View):
