@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Counter, CounterButtonProps } from '../../interfaces/types';
 import { useApi } from '../../hooks/useApi';
+import { Box } from '@mui/material';
 
 const CounterButton: React.FC<CounterButtonProps> = ({ counterId }) => {
   const [value, setValue] = useState<number>(0);
@@ -30,8 +31,18 @@ const CounterButton: React.FC<CounterButtonProps> = ({ counterId }) => {
 
   return (
     <div>
-      <p>Current Value: {value}</p>
-      <button onClick={incrementCounter}>Increment</button>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          marginBottom: 1,
+          padding: 1,
+          gap: 2,
+        }}
+      >
+        <p>(Sanity test) Current Value: {value}</p>
+        <button onClick={incrementCounter}>Increment</button>
+      </Box>
     </div>
   );
 };

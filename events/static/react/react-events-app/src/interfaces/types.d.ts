@@ -1,3 +1,5 @@
+import { PlaceTypes } from '../constants';
+
 export interface Counter {
   id: number;
   value: number;
@@ -44,8 +46,8 @@ interface InputProps {
 }
 
 interface EventProps {
-  icon: ReactNode;
-  placeType: string; // Type of the place (e.g., 'Restaurant', 'Park')
+  eventTitle: string;
+  placeType: PlaceTypes;
   address: string;
   description: string;
   comments: string[];

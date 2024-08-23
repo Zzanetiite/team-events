@@ -1,3 +1,18 @@
+import React from 'react';
+import {
+  Brush,
+  Celebration,
+  DinnerDining,
+  Diversity3,
+  Fastfood,
+  MilitaryTech,
+  NaturePeople,
+  Paid,
+  School,
+  SensorDoor,
+  Signpost,
+} from '@mui/icons-material';
+
 export const DOMAIN = window.DOMAIN || 'http://localhost:8000';
 
 export enum ErrorMessages {
@@ -22,3 +37,33 @@ export enum ApiEndpoints {
   CREATE_ADMIN_USER = 'api/user/create-admin/',
   VALIDATE_ADMIN_PAGE_PASSWORD = 'api/security/validate-admin-password/',
 }
+
+export const COMMENT_LIMIT = 2;
+
+export enum PlaceTypes {
+  RESTAURANT = 'Restaurant',
+  FAST_FOOD = 'Fast Food',
+  ESCAPE_ROOM = 'Escape Room',
+  OUTDOOR_ACTIVITY = 'Outdoor Activity',
+  CLASSES = 'Classes',
+  TEAM_BUILDING = 'Team Building',
+  OFFSITE_RETREAT = 'Offsite Retreat',
+  TOURNAMENT = 'Tournament',
+  FUNDRAISER = 'Fundraiser',
+  PARTY = 'Party',
+  ART = 'Art',
+}
+
+export const PlaceTypeIcons: Record<PlaceTypes, React.ComponentType> = {
+  [PlaceTypes.RESTAURANT]: DinnerDining,
+  [PlaceTypes.FAST_FOOD]: Fastfood,
+  [PlaceTypes.ESCAPE_ROOM]: SensorDoor,
+  [PlaceTypes.OUTDOOR_ACTIVITY]: NaturePeople,
+  [PlaceTypes.CLASSES]: School,
+  [PlaceTypes.TEAM_BUILDING]: Diversity3,
+  [PlaceTypes.OFFSITE_RETREAT]: Signpost,
+  [PlaceTypes.TOURNAMENT]: MilitaryTech,
+  [PlaceTypes.FUNDRAISER]: Paid,
+  [PlaceTypes.PARTY]: Celebration,
+  [PlaceTypes.ART]: Brush,
+};

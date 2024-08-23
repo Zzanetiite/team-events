@@ -1,19 +1,14 @@
-import React, { useState } from 'react';
-import {
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Box,
-  Rating,
-  Divider,
-} from '@mui/material';
-import AddressIcon from '@mui/icons-material/LocationOn';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+// https://mui.com/material-ui/react-card/
+import React from 'react';
+import { Card, CardContent } from '@mui/material';
 import { EventProps } from '../../interfaces/types';
+import Ratings from '../common/Rating';
+import EventHeader from '../common/EventHeader';
+import CommentsSection from '../common/CommentsSection';
+import EventDescription from '../common/EventDescription';
 
 const Event: React.FC<EventProps> = ({
-  icon,
+  eventTitle,
   placeType,
   address,
   description,
@@ -21,86 +16,37 @@ const Event: React.FC<EventProps> = ({
   placeRating,
   loudnessRating,
 }) => {
-  const [showAllComments, setShowAllComments] = useState(false);
-
-  const displayedComments = showAllComments ? comments : comments.slice(0, 3);
-
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
-      <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {icon}
-            <Typography variant="body2" sx={{ marginLeft: 1 }}>
-              {placeType}
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <AddressIcon />
-            <Typography variant="body2" sx={{ marginLeft: 1 }}>
-              {address}
-            </Typography>
-          </Box>
-        </Box>
-        <Typography variant="body1" sx={{ marginTop: 1 }}>
-          {description}
-        </Typography>
-        <Box sx={{ marginTop: 1 }}>
-          {displayedComments.map((comment: string, index: number) => (
-            <Typography key={index} variant="body2">
-              {comment}
-            </Typography>
-          ))}
-          {comments.length > 3 && (
-            <Button
-              startIcon={<ExpandMoreIcon />}
-              onClick={() => setShowAllComments(!showAllComments)}
-            >
-              {showAllComments ? 'Show Less' : 'See More'}
-            </Button>
-          )}
-        </Box>
-      </CardContent>
-      <Divider />
-      <Box
+    <div>
+      <Card
+        elevation={0}
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: 2,
+          overflow: 'initial',
+          maxWidth: 500,
+          backgroundColor: 'transparent',
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="body2" sx={{ marginRight: 1 }}>
-            Place:
-          </Typography>
-          <Rating value={placeRating} readOnly precision={0.1} />
-          <Typography variant="body2" sx={{ marginLeft: 1 }}>
-            {placeRating.toFixed(1)}
-          </Typography>
-        </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="body2" sx={{ marginRight: 1 }}>
-            Loudness:
-          </Typography>
-          <Rating
-            value={loudnessRating}
-            onChange={(event, newValue) => {
-              /* TODO: Handle rating change */
-            }}
-            precision={1}
-            icon={<span>🔊</span>}
-            emptyIcon={<span>🔊</span>}
+        <CardContent
+          sx={{
+            boxShadow:
+              '0 2px 4px -2px rgba(0,0,0,0.24), 0 4px 24px -2px rgba(0, 0, 0, 0.2)',
+            position: 'relative',
+            padding: 3,
+            backgroundColor: '#fff',
+            borderRadius: '4px',
+          }}
+        >
+          <EventHeader
+            eventTitle={eventTitle}
+            placeType={placeType}
+            address={address}
           />
-        </Box>
-      </Box>
-    </Card>
+          <EventDescription description={description} />
+          <CommentsSection comments={comments} />
+          <Ratings placeRating={placeRating} loudnessRating={loudnessRating} />
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
