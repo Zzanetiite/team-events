@@ -1,6 +1,11 @@
 from django.urls import path
 
-from events.views.event import EventByTypeView, EventByUsernameView, LatestEventsView
+from events.views.event import (
+    EventByTypeView,
+    EventByUsernameView,
+    EventViewSet,
+    LatestEventsView,
+)
 
 from .utils import Utils
 from .views.counter import IncrementCounterView
@@ -32,4 +37,16 @@ urlpatterns = [
         name="events-by-type",
     ),
     path("api/events/latest/", LatestEventsView.as_view(), name="latest-events"),
+    path(
+        "api/events/<int:pk>/",
+        EventViewSet.as_view(
+            {"get": "retrieve", "put": "update", "patch": "update", "delete": "destroy"}
+        ),
+        name="event-detail",
+    ),
+    path(
+        "api/events/",
+        EventViewSet.as_view({"get": "list", "post": "create"}),
+        name="event-list",
+    ),
 ]
