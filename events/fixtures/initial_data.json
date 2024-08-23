@@ -112,6 +112,7 @@
     "model": "events.event",
     "pk": 1,
     "fields": {
+      "title": "Team Dinner",
       "description": "Team dinner at a fine restaurant to celebrate project completion.",
       "average_rating_event": 4,
       "user": 1,
@@ -122,6 +123,7 @@
     "model": "events.event",
     "pk": 2,
     "fields": {
+      "title": "Lunch Outing",
       "description": "Casual lunch outing to a popular fast food spot for informal team bonding.",
       "average_rating_event": 3,
       "user": 1,
@@ -132,6 +134,7 @@
     "model": "events.event",
     "pk": 3,
     "fields": {
+      "title": "Escape Room Challenge",
       "description": "Escape room challenge designed to enhance team problem-solving skills.",
       "average_rating_event": 5,
       "user": 1,
@@ -142,6 +145,7 @@
     "model": "events.event",
     "pk": 4,
     "fields": {
+      "title": "Outdoor Team Building",
       "description": "Outdoor team-building activity involving obstacle courses and teamwork exercises.",
       "average_rating_event": 4,
       "user": 1,
@@ -152,6 +156,7 @@
     "model": "events.event",
     "pk": 5,
     "fields": {
+      "title": "Communication Workshop",
       "description": "Skill-building workshop focused on communication and leadership.",
       "average_rating_event": 4,
       "user": 1,
@@ -162,6 +167,7 @@
     "model": "events.event",
     "pk": 6,
     "fields": {
+      "title": "Team Retreat",
       "description": "Team-building retreat to foster collaboration and creativity.",
       "average_rating_event": 5,
       "user": 1,
@@ -172,6 +178,7 @@
     "model": "events.event",
     "pk": 7,
     "fields": {
+      "title": "Offsite Retreat",
       "description": "Offsite retreat designed for team relaxation and brainstorming.",
       "average_rating_event": 4,
       "user": 1,
@@ -182,6 +189,7 @@
     "model": "events.event",
     "pk": 8,
     "fields": {
+      "title": "Team Tournament",
       "description": "Competitive tournament to encourage team strategy and collaboration.",
       "average_rating_event": 4,
       "user": 1,
@@ -192,6 +200,7 @@
     "model": "events.event",
     "pk": 9,
     "fields": {
+      "title": "Charity Fundraiser",
       "description": "Charity fundraiser event involving a variety of engaging activities.",
       "average_rating_event": 5,
       "user": 1,
@@ -202,6 +211,7 @@
     "model": "events.event",
     "pk": 10,
     "fields": {
+      "title": "Team Party",
       "description": "Team party to celebrate a successful quarter with fun and relaxation.",
       "average_rating_event": 5,
       "user": 1,
@@ -212,6 +222,7 @@
     "model": "events.event",
     "pk": 11,
     "fields": {
+      "title": "Art Workshop",
       "description": "Art workshop to foster creativity and team interaction.",
       "average_rating_event": 4,
       "user": 1,

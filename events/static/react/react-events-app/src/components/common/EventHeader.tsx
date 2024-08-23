@@ -36,7 +36,7 @@ const EventHeader: React.FC<EventHeaderProps> = ({
           lineHeight: 1.45,
         }}
       >
-        Event Title
+        {eventTitle}
       </Box>
       <Box
         sx={{

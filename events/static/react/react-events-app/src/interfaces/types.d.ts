@@ -54,3 +54,12 @@ interface EventProps {
   placeRating: number; // Scale 1-5
   loudnessRating: number; // Scale 1-5
 }
+
+interface EventDBProps {
+  id: number;
+  title: string;
+  event_type: { id: number; name: string };
+  description: string;
+  average_rating: number;
+  user: string;
+}

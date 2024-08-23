@@ -6,9 +6,9 @@ class Command(BaseCommand):
     help = "Create a default user for production"
 
     def handle(self, *args, **kwargs):
-        username = "prod_user"
+        username = "admin"
         password = "password"
-        email = "not_real_user@example.com"
+        email = "initial_data_uploader@dummy.com"
 
         if not User.objects.filter(username=username).exists():
             User.objects.create_user(username=username, password=password, email=email)

@@ -6,8 +6,6 @@ from django.db import models
 
 from events.models.eventType import EventType
 
-# TODO: CLean up by deleting the origincal models file
-
 
 class Event(models.Model):
     # TODO: Location ID
@@ -23,7 +21,8 @@ class Event(models.Model):
 
     def get_event(self):
         event_data = {
-            "is": self.id,
+            "id": self.id,
+            "title": self.title,
             "description": self.description,
             "average_rating_event": self.average_rating_event,
             "user": self.user.username,
