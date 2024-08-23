@@ -24,9 +24,13 @@ DEBUG = os.environ.get("DEBUG", "True") == "True"
 CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "False") == "True"
 SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "False") == "True"
 SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT", "False") == "True"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
 
-# ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(",")
-ALLOWED_HOSTS = ["team-events-cvm0.onrender.com", "localhost", "127.0.0.1"]
+CSRF_COOKIE_HTTPONLY = False  # To allow handling via Javascript
+CSRF_USE_SESSIONS = False  # Using CSRF token from cookies instead
+CSRF_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SAMESITE = "Lax"
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,14 +92,6 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "https://team-events-cvm0.onrender.com",
 ]
-CSRF_COOKIE_HTTPONLY = False  # Ensure that the CSRF cookie is not HTTP only
-CSRF_USE_SESSIONS = False  # If using CSRF token from cookies
-CSRF_COOKIE_SAMESITE = (
-    "Lax"  # or 'Strict' if your frontend and backend are on the same domain
-)
-SESSION_COOKIE_SAMESITE = (
-    "Lax"  # or 'Strict' if your frontend and backend are on the same domain
-)
 
 TEMPLATES = [
     {
