@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Container, Grid } from '@mui/material';
 import Event from '../components/layout/Event';
 import CounterButton from '../components/common/CounterButton';

@@ -4,12 +4,12 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 import Logout from '@mui/icons-material/Logout';
 import Login from '@mui/icons-material/Login';
 import { useApi } from '../../hooks/useApi';
 import { useTokens } from '../../context/TokenContext';
 import { ApiEndpoints } from '../../constants';
+import { EventNote } from '@mui/icons-material';
 
 export default function NavBar() {
   const { fetchWithTokens } = useApi();
@@ -56,6 +56,10 @@ export default function NavBar() {
     window.location.href = '/login';
   }, []);
 
+  const handleEventsButton = React.useCallback(() => {
+    window.location.href = '/myevents';
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -84,9 +88,9 @@ export default function NavBar() {
               size="large"
               aria-label="events-list"
               color="inherit"
-              onClick={() => console.log('Events button clicked')}
+              onClick={handleEventsButton}
             >
-              {loggedIn ? <EventRepeatIcon /> : null}
+              {loggedIn ? <EventNote /> : null}
             </IconButton>
             <IconButton
               size="large"

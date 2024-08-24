@@ -5,11 +5,16 @@ import UserForm from './components/profile/UserForm';
 import ValidateAdminPasswordForm from './components/profile/ValidateAdminPassword';
 import NotFound from './components/common/NotFound';
 import { ApiEndpoints } from './constants';
+import UserEvents from './pages/UserEvents';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+  },
+  {
+    path: '/myevents',
+    element: <UserEvents />,
   },
   {
     path: '/createadmin',

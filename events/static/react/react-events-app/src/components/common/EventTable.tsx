@@ -1,51 +1,48 @@
-// https://mui.com/material-ui/react-table/
 import * as React from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Typography } from '@mui/material';
+import { Typography, Box, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { eventTableDummyRows, eventTableFormatting } from '../config';
 
-// TODO: Needs to be contained in an area.
-// TODO: Needs formatting
-// TODO: Correct table fields
-const columns: GridColDef[] = [
-  { field: 'datCreated', headerName: 'Date Created', width: 130 },
-  { field: 'eventTYpe', headerName: 'Type', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (value: string, row: any) =>
-      `${row.firstName || ''} ${row.lastName || ''}`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
-// TODO: nicer heading
 export default function EventTable() {
+  const navigate = useNavigate();
+  const columns: GridColDef[] = [
+    {
+      field: 'eventTitle',
+      headerName: 'Event Title',
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <Button
+            variant="text"
+            color="primary"
+            onClick={() => navigate(`/event/${params.row.id}`)}
+            sx={{ textTransform: 'none' }} // Optional: prevents text from being uppercased
+          >
+            {params.value}
+          </Button>
+        );
+      },
+    },
+    { field: 'placeType', headerName: 'Type', width: 130 },
+    { field: 'address', headerName: 'Address', width: 250 },
+    {
+      field: 'description',
+      headerName: 'Description',
+      width: 300,
+    },
+  ];
   return (
-    <div>
-      <Typography component="legend">UserName's Event List</Typography>
+    <Box sx={{ marginX: '20px' }}>
+      <Typography component="legend" variant="h5" gutterBottom>
+        Events created by you
+      </Typography>
+      <Typography component="legend" variant="body2" gutterBottom>
+        Click on an event to edit it.
+      </Typography>
       <div style={{ height: 400, width: '100%' }}>
         <DataGrid
-          rows={rows}
+          rows={eventTableDummyRows}
           columns={columns}
           initialState={{
             pagination: {
@@ -53,9 +50,10 @@ export default function EventTable() {
             },
           }}
           pageSizeOptions={[5, 10]}
-          checkboxSelection
+          // loading={true} // TODO If 0 rows, show no DATA. If loading data, show loading spinner.
+          sx={eventTableFormatting}
         />
       </div>
-    </div>
+    </Box>
   );
 }
