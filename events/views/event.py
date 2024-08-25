@@ -20,10 +20,13 @@ class EventViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
+        print("Incoming data:", request.data)
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
+            print("Validated data:", serializer.validated_data)
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print("Validation errors:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, pk=None):

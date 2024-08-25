@@ -38,6 +38,7 @@ const CreateEvent = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log('Form Data:', formData);
     e.preventDefault();
 
     try {
@@ -50,7 +51,6 @@ const CreateEvent = () => {
           address: formData.address,
         }),
       });
-      console.log('Response:', response);
 
       if (response !== undefined && response !== null) {
         setSuccessMessage('Event created successfully!');

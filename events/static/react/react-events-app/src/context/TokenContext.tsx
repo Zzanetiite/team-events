@@ -13,6 +13,8 @@ interface TokenContextType {
   setCSRFToken: React.Dispatch<React.SetStateAction<string | null>>;
   userToken: string | null;
   setUserToken: React.Dispatch<React.SetStateAction<string | null>>;
+  username: string | null;
+  setUsername: React.Dispatch<React.SetStateAction<string | null>>;
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   adminPasswordValidated: boolean;
@@ -29,6 +31,9 @@ export function TokenProvider({ children }: TokenProviderProps) {
   const [csrfToken, setCSRFToken] = useState<string | null>(null);
   const [userToken, setUserToken] = useState<string | null>(
     localStorage.getItem('userToken') || Cookies.get('userToken') || null
+  );
+  const [username, setUsername] = useState<string | null>(
+    localStorage.getItem('username') || Cookies.get('username') || null
   );
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [adminPasswordValidated, setAdminPasswordValidated] =
@@ -50,6 +55,16 @@ export function TokenProvider({ children }: TokenProviderProps) {
     }
   }, [userToken]);
 
+  useEffect(() => {
+    if (username) {
+      localStorage.setItem('username', username);
+      Cookies.set('username', username, { expires: 7 });
+    } else {
+      localStorage.removeItem('username');
+      Cookies.remove('username');
+    }
+  }, [username]);
+
   return (
     <TokenContext.Provider
       value={{
@@ -57,6 +72,8 @@ export function TokenProvider({ children }: TokenProviderProps) {
         setCSRFToken,
         userToken,
         setUserToken,
+        username,
+        setUsername,
         loggedIn,
         setLoggedIn,
         adminPasswordValidated,

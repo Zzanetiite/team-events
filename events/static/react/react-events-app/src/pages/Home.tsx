@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
-import { Container, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Alert, Container, Grid } from '@mui/material';
 import Event from '../components/layout/Event';
 import CounterButton from '../components/common/CounterButton';
-import { ApiEndpoints, PlaceTypes } from '../constants';
+import { ApiEndpoints } from '../constants';
 import { useApi } from '../hooks/useApi';
-import { EventDBProps, EventProps } from '../interfaces/types';
+import { EventDBProps } from '../interfaces/types';
 import { useDataContext } from '../context/DataContext';
+import { mapEventData } from '../utils/mapping';
 
 const Home = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
   const { eventData, setEventData } = useDataContext();
 
@@ -19,35 +21,19 @@ const Home = () => {
         setEventData(mappedEvents);
       })
       .catch((error: any) =>
-        console.error('Error fetching Latest Event data:', error)
+        setErrorMessage(
+          'Error loading Event data. Apologies for the inconvenince.'
+        )
       );
   }, [setEventData]);
 
-  const mapEventData = (apiData: EventDBProps[]): EventProps[] => {
-    return apiData.map((event) => ({
-      eventTitle: event.title,
-      placeType: mapEventTypeToPlaceType(event.event_type.name),
-      address: '123 Main St',
-      description: event.description,
-      comments: [
-        'Short comment!',
-        'Great service. A lovely place to eat and hang out with friends. Great ambiance and food!',
-        'Will visit again! A lovely place to eat and hang out with friends. Great ambiance and food!',
-      ],
-      placeRating: event.average_rating || 4.5,
-      loudnessRating: 3,
-    }));
-  };
-
-  const mapEventTypeToPlaceType = (eventTypeName: string): PlaceTypes => {
-    const placeType = Object.values(PlaceTypes).find(
-      (type) => type === eventTypeName
-    );
-    return placeType || PlaceTypes.TEAM_BUILDING;
-  };
-
   return (
     <div>
+      {errorMessage && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {errorMessage}
+        </Alert>
+      )}
       <CounterButton counterId={2} />
       <Container maxWidth="lg" sx={{ paddingX: 1 }}>
         <Grid container spacing={2}>

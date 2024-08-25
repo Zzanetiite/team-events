@@ -1,11 +1,42 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Typography, Box, Button } from '@mui/material';
+import { Alert, Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { eventTableDummyRows, eventTableFormatting } from '../config';
+import { ApiEndpoints } from '../../constants';
+import { useApi } from '../../hooks/useApi';
+import { useTokens } from '../../context/TokenContext';
+import { EventDBProps, EventTableProps } from '../../interfaces/types';
+import { eventTableFormatting } from '../config';
+import { mapEventTableData } from '../../utils/mapping';
 
 export default function EventTable() {
+  const [userEvents, setUserEvents] = useState<EventTableProps[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { username } = useTokens();
   const navigate = useNavigate();
+  const { fetchWithTokens } = useApi();
+
+  useEffect(() => {
+    if (!username) {
+      setErrorMessage('Username not found. No events to display.');
+    } else {
+      try {
+        fetchWithTokens(ApiEndpoints.GET_USER_EVENTS(username), {
+          method: 'GET',
+        })
+          .then((data: EventDBProps[]) => {
+            setUserEvents(mapEventTableData(data));
+          })
+          .catch((error: any) => {
+            console.error('Error fetching User Events:', error);
+            setErrorMessage('Error fetching User Events.');
+          });
+      } catch (error) {
+        setErrorMessage('Error fetching User Events.');
+      }
+    }
+  }, [username, setUserEvents]);
+
   const columns: GridColDef[] = [
     {
       field: 'eventTitle',
@@ -16,8 +47,8 @@ export default function EventTable() {
           <Button
             variant="text"
             color="primary"
-            onClick={() => navigate(`/event/${params.row.id}`)}
-            sx={{ textTransform: 'none' }} // Optional: prevents text from being uppercased
+            onClick={() => navigate(`/event/${params.row.id}`)} // TODO: set up links for event ids
+            sx={{ textTransform: 'none' }}
           >
             {params.value}
           </Button>
@@ -33,27 +64,34 @@ export default function EventTable() {
     },
   ];
   return (
-    <Box sx={{ marginX: '20px' }}>
-      <Typography component="legend" variant="h5" gutterBottom>
-        Events created by you
-      </Typography>
-      <Typography component="legend" variant="body2" gutterBottom>
-        Click on an event to edit it.
-      </Typography>
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={eventTableDummyRows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          // loading={true} // TODO If 0 rows, show no DATA. If loading data, show loading spinner.
-          sx={eventTableFormatting}
-        />
-      </div>
-    </Box>
+    <div>
+      {errorMessage && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {errorMessage}
+        </Alert>
+      )}
+      <Box sx={{ marginX: '20px' }}>
+        <Typography component="legend" variant="h5" gutterBottom>
+          Events created by you
+        </Typography>
+        <Typography component="legend" variant="body2" gutterBottom>
+          Click on an event to edit it.
+        </Typography>
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid
+            rows={userEvents}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            // loading={true} // TODO If 0 rows, show no DATA. If loading data, show loading spinner.
+            sx={eventTableFormatting}
+          />
+        </div>
+      </Box>
+    </div>
   );
 }

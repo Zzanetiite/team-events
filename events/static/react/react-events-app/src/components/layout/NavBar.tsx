@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,8 +16,9 @@ export default function NavBar() {
   const { setUserToken, setLoggedIn, loggedIn } = useTokens();
   const [username, setUsername] = React.useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchUsername = async () => {
+      // TODO: Check context first
       try {
         const data = await fetchWithTokens(ApiEndpoints.GET_USERNAME);
         setUsername(data.username);

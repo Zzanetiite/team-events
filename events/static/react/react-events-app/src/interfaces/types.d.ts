@@ -30,7 +30,7 @@ export interface CreateUserFormProps {
   adminPage?: boolean;
 }
 
-interface HandleErrorProps {
+export interface HandleErrorProps {
   error: any;
   setErrorMessage: (message: string | null) => void;
   setSuccessMessage: (message: string | null) => void;
@@ -40,12 +40,12 @@ interface HandleErrorProps {
   };
 }
 
-interface InputProps {
+export interface InputProps {
   field: string;
   setField: (password: string) => void;
 }
 
-interface EventProps {
+export interface EventProps {
   eventTitle: string;
   placeType: PlaceTypes;
   address: string;
@@ -55,11 +55,20 @@ interface EventProps {
   loudnessRating: number; // Scale 1-5
 }
 
-interface EventDBProps {
+export interface EventDBProps {
   id: number;
   title: string;
-  event_type: { id: number; name: string };
+  event_type: string;
   description: string;
   average_rating: number;
   user: string;
+  address: string;
+}
+
+export interface EventTableProps {
+  id: number;
+  eventTitle: string;
+  placeType: PlaceTypes;
+  address: string;
+  description: string;
 }

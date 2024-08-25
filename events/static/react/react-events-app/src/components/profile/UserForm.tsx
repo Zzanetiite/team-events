@@ -8,6 +8,7 @@ import PasswordInput from '../common/PasswordInput';
 import UsernameInput from '../common/UsernameInput';
 import EmailInput from '../common/EmailInput';
 import { handleError } from '../../errors/handleError';
+import { ApiEndpoints } from '../../constants';
 
 const UserForm: React.FC<CreateUserFormProps> = ({
   title,
@@ -19,13 +20,19 @@ const UserForm: React.FC<CreateUserFormProps> = ({
   loginPage,
   adminPage,
 }) => {
-  const [username, setUsername] = useState('');
+  const [newUsername, setNewUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
-  const { setUserToken, loggedIn, adminPasswordValidated } = useTokens();
+  const {
+    username,
+    setUserToken,
+    setUsername,
+    loggedIn,
+    adminPasswordValidated,
+  } = useTokens();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,15 +47,29 @@ const UserForm: React.FC<CreateUserFormProps> = ({
     }
   }, [adminPage, adminPasswordValidated, navigate]);
 
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const data = await fetchWithTokens(ApiEndpoints.GET_USERNAME);
+        setUsername(data.username);
+      } catch (error) {}
+    };
+
+    if (loggedIn) {
+      fetchUsername();
+    } else {
+      setUsername('');
+    }
+  }, [fetchWithTokens, loggedIn, setUsername, username]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const response = await fetchWithTokens(apiEndpoint, {
         method: method ? method : 'POST',
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username: newUsername, password }),
       });
-      console.log('Response:', response);
 
       if (response) {
         setSuccessMessage(successMessageText);
@@ -88,7 +109,7 @@ const UserForm: React.FC<CreateUserFormProps> = ({
           alignItems="center"
           height="50vh"
         >
-          <UsernameInput field={username} setField={setUsername} />
+          <UsernameInput field={newUsername} setField={setNewUsername} />
           <PasswordInput field={password} setField={setPassword} />
           {adminPage && <EmailInput field={email} setField={setEmail} />}
           {successMessage && (

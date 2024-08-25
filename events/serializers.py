@@ -30,7 +30,7 @@ class EventTypeSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-    event_type = EventTypeSerializer(read_only=True)
+    event_type = serializers.CharField(required=False)  # Accept name as string
 
     class Meta:
         model = Event
@@ -41,5 +41,25 @@ class EventSerializer(serializers.ModelSerializer):
             "description",
             "average_rating_event",
             "user",
+            "address",
         ]
         read_only_fields = ["average_rating_event", "user"]
+
+    def validate_event_type(self, value):
+        """
+        Required because the default method doesn't resolve the EventType by name.
+        """
+        if isinstance(value, str):
+            try:
+                return EventType.objects.get(name=value)
+            except EventType.DoesNotExist:
+                raise serializers.ValidationError("Invalid event type name.")
+        elif isinstance(value, int):
+            try:
+                return EventType.objects.get(id=value)
+            except EventType.DoesNotExist:
+                raise serializers.ValidationError("Invalid event type ID.")
+        raise serializers.ValidationError("Event type must be a valid ID or name.")
+
+    def create(self, validated_data):
+        return super().create(validated_data)
