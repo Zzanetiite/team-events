@@ -18,6 +18,7 @@ class Event(models.Model):
     description = models.CharField(max_length=40)
     average_rating_event = models.IntegerField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    address = models.CharField(max_length=255)
 
     def get_event(self):
         event_data = {
@@ -27,6 +28,7 @@ class Event(models.Model):
             "average_rating_event": self.average_rating_event,
             "user": self.user.username,
             "event_type": self.event_type.name,
+            "address": self.address,
         }
         return json.dumps(event_data, cls=DjangoJSONEncoder)
 

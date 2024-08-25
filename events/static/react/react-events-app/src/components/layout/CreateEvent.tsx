@@ -3,6 +3,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Alert,
   Box,
   Button,
   MenuItem,
@@ -10,15 +11,20 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { PlaceTypes } from '../../constants';
+import { ApiEndpoints, PlaceTypes } from '../../constants';
 import { useState } from 'react';
 import { AddCircle, ChevronRightRounded } from '@mui/icons-material';
+import { handleError } from '../../errors/handleError';
+import { useApi } from '../../hooks/useApi';
 
 const CreateEvent = () => {
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { fetchWithTokens } = useApi();
   const [expanded, setExpanded] = useState(false);
   const [formData, setFormData] = useState({
-    eventTitle: '',
-    placeType: '',
+    title: '',
+    eventType: '',
     address: '',
     description: '',
   });
@@ -31,10 +37,32 @@ const CreateEvent = () => {
     }));
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: Handle form submission logic here
-    console.log('Form Data:', formData);
+
+    try {
+      const response = await fetchWithTokens(ApiEndpoints.CREATE_EVENT, {
+        method: 'POST',
+        body: JSON.stringify({
+          title: formData.title,
+          description: formData.description,
+          event_type: formData.eventType,
+          address: formData.address,
+        }),
+      });
+      console.log('Response:', response);
+
+      if (response !== undefined && response !== null) {
+        setSuccessMessage('Event created successfully!');
+        setErrorMessage(null);
+      }
+    } catch (error: any) {
+      handleError({
+        error,
+        setErrorMessage,
+        setSuccessMessage,
+      });
+    }
   };
 
   return (
@@ -46,7 +74,7 @@ const CreateEvent = () => {
           id="panel1a-header"
           sx={{
             display: 'flex',
-            alignItems: 'center', // Vertically center items
+            alignItems: 'center',
           }}
         >
           <Box
@@ -69,8 +97,8 @@ const CreateEvent = () => {
           <form onSubmit={handleSubmit} style={{ width: '100%' }}>
             <TextField
               label="Event Title"
-              name="eventTitle"
-              value={formData.eventTitle}
+              name="title"
+              value={formData.title}
               onChange={handleChange}
               variant="outlined"
               fullWidth
@@ -101,14 +129,15 @@ const CreateEvent = () => {
             />
             <Select
               label="Place Type"
-              name="placeType"
-              value={formData.placeType}
+              name="eventType"
+              value={formData.eventType}
               onChange={handleChange}
               fullWidth
               margin="dense"
               required
+              displayEmpty
             >
-              <MenuItem value="">
+              <MenuItem value="" disabled>
                 <em>Select place type</em>
               </MenuItem>
               {Object.values(PlaceTypes).map((type) => (
@@ -117,11 +146,22 @@ const CreateEvent = () => {
                 </MenuItem>
               ))}
             </Select>
+            {successMessage && (
+              <Alert severity="success" sx={{ mb: 2, mt: 2 }}>
+                {successMessage}
+              </Alert>
+            )}
+
+            {errorMessage && (
+              <Alert severity="error" sx={{ mb: 2, mt: 2 }}>
+                {errorMessage}
+              </Alert>
+            )}
             <Button
               type="submit"
               variant="contained"
               color="primary"
-              style={{ marginTop: '16px' }}
+              style={{ marginTop: '1px' }}
             >
               Submit
             </Button>
