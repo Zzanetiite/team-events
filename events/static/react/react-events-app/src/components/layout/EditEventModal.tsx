@@ -34,6 +34,17 @@ const EditEventModal = ({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
 
+  // Automatically hide success message
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage(null);
+      }, 4000); // 2 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
+
   useEffect(() => {
     if (open && event) {
       setEventData(event);
