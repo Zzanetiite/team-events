@@ -73,7 +73,11 @@ class UserManagementView(APIView):
         if action == "get-username":
             if request.user.is_authenticated:
                 return Response(
-                    {"username": request.user.username}, status=status.HTTP_200_OK
+                    {
+                        "username": request.user.username,
+                        "is_admin": request.user.is_superuser,
+                    },
+                    status=status.HTTP_200_OK,
                 )
             else:
                 return Response(

@@ -32,6 +32,7 @@ const UserForm: React.FC<CreateUserFormProps> = ({
     setUsername,
     loggedIn,
     adminPasswordValidated,
+    setIsAdmin,
   } = useTokens();
   const navigate = useNavigate();
 
@@ -52,6 +53,11 @@ const UserForm: React.FC<CreateUserFormProps> = ({
       try {
         const data = await fetchWithTokens(ApiEndpoints.GET_USERNAME);
         setUsername(data.username);
+        if (data.is_admin) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
       } catch (error) {}
     };
 
@@ -60,7 +66,7 @@ const UserForm: React.FC<CreateUserFormProps> = ({
     } else {
       setUsername('');
     }
-  }, [fetchWithTokens, loggedIn, setUsername, username]);
+  }, [fetchWithTokens, loggedIn, setIsAdmin, setUsername, username]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -4,12 +4,19 @@ import { Alert, Box, Button, Typography } from '@mui/material';
 import { ApiEndpoints } from '../../constants';
 import { useApi } from '../../hooks/useApi';
 import { useTokens } from '../../context/TokenContext';
-import { EventDBProps, EventTableProps } from '../../interfaces/types';
+import {
+  EventDBProps,
+  EventTableProps,
+  NewEventCreatedProps,
+} from '../../interfaces/types';
 import { eventTableFormatting } from '../config';
 import { mapEventTableData } from '../../utils/mapping';
 import EditEventModal from '../layout/EditEventModal';
 
-export default function EventTable() {
+const EventTable: React.FC<NewEventCreatedProps> = ({
+  newEventCreated,
+  setNewEventCreated,
+}) => {
   const [userEvents, setUserEvents] = useState<EventTableProps[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<EventTableProps | null>(
@@ -17,6 +24,7 @@ export default function EventTable() {
   );
   const [modalOpen, setModalOpen] = useState(false);
   const [modalUpdated, setModalUpdated] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { username } = useTokens();
   const { fetchWithTokens } = useApi();
 
@@ -30,6 +38,9 @@ export default function EventTable() {
         })
           .then((data: EventDBProps[]) => {
             setUserEvents(mapEventTableData(data));
+            setModalUpdated(false);
+            setNewEventCreated(false);
+            setLoading(false);
           })
           .catch((error: any) => {
             console.error('Error fetching User Events:', error);
@@ -39,7 +50,25 @@ export default function EventTable() {
         setErrorMessage('Error fetching User Events.');
       }
     }
-  }, [username, setUserEvents, modalUpdated]);
+  }, [
+    username,
+    setUserEvents,
+    modalUpdated,
+    newEventCreated,
+    setNewEventCreated,
+  ]);
+
+  useEffect(() => {
+    if (newEventCreated || modalUpdated) {
+      setLoading(true);
+    }
+  }, [newEventCreated, modalUpdated]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      setLoading(false);
+    }
+  }, [errorMessage]);
 
   const columns: GridColDef[] = [
     {
@@ -103,7 +132,7 @@ export default function EventTable() {
               },
             }}
             pageSizeOptions={[5, 10]}
-            // loading={true} // TODO If 0 rows, show no DATA. If loading data, show loading spinner.
+            loading={loading}
             sx={eventTableFormatting}
           />
         </div>
@@ -116,4 +145,6 @@ export default function EventTable() {
       />
     </div>
   );
-}
+};
+
+export default EventTable;

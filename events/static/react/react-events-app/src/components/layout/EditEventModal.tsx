@@ -1,37 +1,21 @@
-import React, {
-  useState,
-  useEffect,
-  ChangeEvent,
-  SetStateAction,
-  Dispatch,
-} from 'react';
+import React, { useState, useEffect, SetStateAction, Dispatch } from 'react';
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Button,
-  TextField,
-  Select,
-  MenuItem,
   Alert,
   SelectChangeEvent,
 } from '@mui/material';
 import { useApi } from '../../hooks/useApi';
-import { EventTableProps } from '../../interfaces/types';
+import { EditEventModalProps, EventTableProps } from '../../interfaces/types';
 import { ApiEndpoints, ErrorMessages, PlaceTypes } from '../../constants';
 import { handleError } from '../../errors/handleError';
 import EventTitleInput from '../common/input/EventTitleInput';
 import EventAddressInput from '../common/input/EventAddressInput';
 import EventDescriptionInput from '../common/input/EventDescriptionInput';
 import EventPlaceTypeInput from '../common/input/EventPlaceTypeInput';
-
-interface EditEventModalProps {
-  open: boolean;
-  handleClose: () => void;
-  event: EventTableProps | null;
-  setModalUpdated: Dispatch<SetStateAction<boolean>>;
-}
 
 const EditEventModal = ({
   open,
@@ -83,15 +67,16 @@ const EditEventModal = ({
         {
           method: 'PUT',
           body: JSON.stringify({
-            id: event.id,
-            title: event.title,
-            event_type: event.eventType,
-            description: event.description,
+            id: eventData.id,
+            title: eventData.title,
+            event_type: eventData.eventType,
+            description: eventData.description,
           }),
         }
       );
 
       if (response) {
+        console.log('API response:', response);
         setErrorMessage(null);
         setSuccessMessage('Event updated successfully.');
         setModalUpdated(true);

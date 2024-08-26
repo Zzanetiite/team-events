@@ -87,3 +87,15 @@ export interface CreateUpdateEventProps {
   address: string;
   description: string;
 }
+
+interface EditEventModalProps {
+  open: boolean;
+  handleClose: () => void;
+  event: EventTableProps | null;
+  setModalUpdated: Dispatch<SetStateAction<boolean>>;
+}
+
+interface NewEventCreatedProps {
+  newEventCreated: boolean;
+  setNewEventCreated: React.Dispatch<React.SetStateAction<boolean>>;
+}

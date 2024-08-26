@@ -6,10 +6,7 @@ import {
   Alert,
   Box,
   Button,
-  MenuItem,
-  Select,
   SelectChangeEvent,
-  TextField,
   Typography,
 } from '@mui/material';
 import { ApiEndpoints, PlaceTypes } from '../../constants';
@@ -22,7 +19,11 @@ import EventAddressInput from '../common/input/EventAddressInput';
 import EventDescriptionInput from '../common/input/EventDescriptionInput';
 import EventPlaceTypeInput from '../common/input/EventPlaceTypeInput';
 
-const CreateEvent = () => {
+interface CreateEventProps {
+  setNewEventCreated: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
@@ -53,7 +54,6 @@ const CreateEvent = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log('Form Data:', formData);
     e.preventDefault();
 
     try {
@@ -70,6 +70,13 @@ const CreateEvent = () => {
       if (response !== undefined && response !== null) {
         setSuccessMessage('Event created successfully!');
         setErrorMessage(null);
+        setNewEventCreated(true);
+        setFormData({
+          title: '',
+          eventType: PlaceTypes.TEAM_BUILDING,
+          address: '',
+          description: '',
+        });
       }
     } catch (error: any) {
       handleError({

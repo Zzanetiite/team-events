@@ -5,8 +5,8 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
-import { ApiEndpoints, DOMAIN } from '../constants';
 import Cookies from 'js-cookie';
+import { ApiEndpoints, DOMAIN } from '../constants';
 
 interface TokenContextType {
   csrfToken: string | null;
@@ -19,6 +19,8 @@ interface TokenContextType {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   adminPasswordValidated: boolean;
   setAdminPasswordValidated: React.Dispatch<React.SetStateAction<boolean>>;
+  isAdmin: boolean | null;
+  setIsAdmin: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
 
 const TokenContext = createContext<TokenContextType | null>(null);
@@ -28,20 +30,27 @@ interface TokenProviderProps {
 }
 
 export function TokenProvider({ children }: TokenProviderProps) {
-  const [csrfToken, setCSRFToken] = useState<string | null>(null);
+  const [csrfToken, setCSRFToken] = useState<string | null>(
+    Cookies.get('csrftoken') || null
+  );
   const [userToken, setUserToken] = useState<string | null>(
     localStorage.getItem('userToken') || Cookies.get('userToken') || null
   );
   const [username, setUsername] = useState<string | null>(
     localStorage.getItem('username') || Cookies.get('username') || null
   );
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [loggedIn, setLoggedIn] = useState<boolean>(userToken !== null);
   const [adminPasswordValidated, setAdminPasswordValidated] =
     useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(
+    JSON.parse(Cookies.get('isAdmin') || 'null')
+  );
 
   useEffect(() => {
-    fetchCSRFToken().then((token) => setCSRFToken(token));
-  }, []);
+    if (!csrfToken) {
+      fetchCSRFToken().then((token) => setCSRFToken(token));
+    }
+  }, [csrfToken]);
 
   useEffect(() => {
     if (userToken) {
@@ -65,6 +74,14 @@ export function TokenProvider({ children }: TokenProviderProps) {
     }
   }, [username]);
 
+  useEffect(() => {
+    if (isAdmin !== null) {
+      Cookies.set('isAdmin', JSON.stringify(isAdmin), { expires: 7 });
+    } else {
+      Cookies.remove('isAdmin');
+    }
+  }, [isAdmin]);
+
   return (
     <TokenContext.Provider
       value={{
@@ -78,6 +95,8 @@ export function TokenProvider({ children }: TokenProviderProps) {
         setLoggedIn,
         adminPasswordValidated,
         setAdminPasswordValidated,
+        isAdmin,
+        setIsAdmin,
       }}
     >
       {children}

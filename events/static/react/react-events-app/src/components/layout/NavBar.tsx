@@ -13,7 +13,8 @@ import { EventNote } from '@mui/icons-material';
 
 export default function NavBar() {
   const { fetchWithTokens } = useApi();
-  const { setUserToken, setLoggedIn, loggedIn, username } = useTokens();
+  const { setUserToken, setLoggedIn, loggedIn, username, isAdmin, setIsAdmin } =
+    useTokens();
 
   const handleLogout = React.useCallback(async () => {
     try {
@@ -23,6 +24,7 @@ export default function NavBar() {
       if (response) {
         setUserToken(null);
         setLoggedIn(false);
+        setIsAdmin(null);
         window.location.href = '/login';
       } else {
         console.error('Logout failed with status:', response.status);
@@ -31,8 +33,9 @@ export default function NavBar() {
       console.error('Error during logout:', error);
       setUserToken(null);
       setLoggedIn(false);
+      setIsAdmin(null);
     }
-  }, [fetchWithTokens, setUserToken, setLoggedIn]);
+  }, [fetchWithTokens, setUserToken, setLoggedIn, setIsAdmin]);
 
   const handleLogin = React.useCallback(() => {
     window.location.href = '/login';
@@ -63,7 +66,7 @@ export default function NavBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            {username}
+            {username} {isAdmin ? '(Admin)' : ''}
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton

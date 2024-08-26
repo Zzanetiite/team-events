@@ -9,6 +9,7 @@ const UserEvents = () => {
   const { loggedIn } = useTokens();
   const navigate = useNavigate();
   const [initialized, setInitialized] = useState(false);
+  const [newEventCreated, setNewEventCreated] = useState(false);
 
   useEffect(() => {
     if (loggedIn !== null) {
@@ -27,10 +28,13 @@ const UserEvents = () => {
   return (
     <div>
       <Box marginTop={1} marginBottom={1}>
-        <CreateEvent />
+        <CreateEvent setNewEventCreated={setNewEventCreated} />
       </Box>
       <Box marginTop={1} marginBottom={1}>
-        <EventTable />
+        <EventTable
+          newEventCreated={newEventCreated}
+          setNewEventCreated={setNewEventCreated}
+        />
       </Box>
     </div>
   );

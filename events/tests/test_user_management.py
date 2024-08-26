@@ -56,7 +56,7 @@ class UserManagementViewTests(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {"username": self.username})
+        self.assertEqual(response.data, {"username": self.username, "is_admin": False})
 
     def test_invalid_action(self):
         url = self.base_url + "invalid-action/"

@@ -12,7 +12,7 @@ class EventViewSetTests(APITestCase):
         self.user = User.objects.create_user(username="testuser", password="password")
         self.client.login(username="testuser", password="password")
         self.event_type = EventType.objects.create(
-            name="Conference", description="A large conference"
+            name="Restaurant", description="A large conference"
         )
         self.event = Event.objects.create(
             title="Sample Event",
@@ -42,7 +42,8 @@ class EventViewSetTests(APITestCase):
             "title": "New Event",
             "description": "Description of the new event",
             "average_rating_event": 4,
-            "event_type": self.event_type.id,
+            "event_type": self.event_type.name,
+            "address": "123 Main St",
         }
         response = self.client.post(self.url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
