@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useApi } from '../../hooks/useApi';
 import { CreateUserFormProps } from '../../interfaces/types';
 import { useTokens } from '../../context/TokenContext';
-import PasswordInput from '../common/PasswordInput';
-import UsernameInput from '../common/UsernameInput';
-import EmailInput from '../common/EmailInput';
+import PasswordInput from '../common/input/PasswordInput';
+import UsernameInput from '../common/input/UsernameInput';
+import EmailInput from '../common/input/EmailInput';
 import { handleError } from '../../errors/handleError';
 import { ApiEndpoints } from '../../constants';
 
@@ -109,9 +109,9 @@ const UserForm: React.FC<CreateUserFormProps> = ({
           alignItems="center"
           height="50vh"
         >
-          <UsernameInput field={newUsername} setField={setNewUsername} />
-          <PasswordInput field={password} setField={setPassword} />
-          {adminPage && <EmailInput field={email} setField={setEmail} />}
+          <UsernameInput value={newUsername} onChange={setNewUsername} />
+          <PasswordInput value={password} onChange={setPassword} />
+          {adminPage && <EmailInput value={email} onChange={setEmail} />}
           {successMessage && (
             <Alert severity="success" sx={{ mb: 2 }}>
               {successMessage}

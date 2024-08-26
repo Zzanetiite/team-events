@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, TextField } from '@mui/material';
 import { Email } from '@mui/icons-material';
-import { InputProps } from '../../interfaces/types';
+import { InputProps } from '../../../interfaces/types';
 
-const EmailInput: React.FC<InputProps> = ({ field, setField }) => {
+const EmailInput: React.FC<InputProps> = ({ value, onChange }) => {
   return (
     <Box display="flex" alignItems="center">
       <Email style={{ marginRight: '10px' }} />
@@ -11,8 +11,8 @@ const EmailInput: React.FC<InputProps> = ({ field, setField }) => {
         label="Email"
         type="email"
         variant="outlined"
-        value={field}
-        onChange={(e) => setField(e.target.value)}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       />
     </Box>
   );

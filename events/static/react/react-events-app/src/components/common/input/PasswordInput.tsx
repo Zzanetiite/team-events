@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, TextField } from '@mui/material';
 import KeyIcon from '@mui/icons-material/Key';
-import { InputProps } from '../../interfaces/types';
+import { InputProps } from '../../../interfaces/types';
 
-const PasswordInput: React.FC<InputProps> = ({ field, setField }) => {
+const PasswordInput: React.FC<InputProps> = ({ value, onChange }) => {
   return (
     <Box display="flex" alignItems="center">
       <KeyIcon style={{ marginRight: '10px' }} />
@@ -11,8 +11,8 @@ const PasswordInput: React.FC<InputProps> = ({ field, setField }) => {
         label="Password"
         type="password"
         variant="outlined"
-        value={field}
-        onChange={(e) => setField(e.target.value)}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         required
       />
     </Box>

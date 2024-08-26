@@ -1,15 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from events.models.counter import Counter
 from events.models.event import Event
 from events.models.eventType import EventType
-
-
-class CounterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Counter
-        fields = ["id", "value"]
 
 
 class UserSerializer(serializers.ModelSerializer):

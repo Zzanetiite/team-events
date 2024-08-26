@@ -29,8 +29,8 @@ export const mapEventTableData = (
 ): EventTableProps[] => {
   const data = apiData.map((event) => ({
     id: event.id,
-    eventTitle: event.title,
-    placeType: mapEventTypeToPlaceType(event.event_type),
+    title: event.title,
+    eventType: mapEventTypeToPlaceType(event.event_type),
     address: event.address,
     description: event.description,
   }));

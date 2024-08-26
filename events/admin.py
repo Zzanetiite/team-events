@@ -1,13 +1,7 @@
 from django.contrib import admin
 
-from events.models.counter import Counter
 from events.models.event import Event
 from events.models.eventType import EventType
-
-
-@admin.register(Counter)
-class CounterAdmin(admin.ModelAdmin):
-    list_filter = ["value"]
 
 
 @admin.register(EventType)

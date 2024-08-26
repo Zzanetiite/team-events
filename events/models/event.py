@@ -15,7 +15,7 @@ class Event(models.Model):
     event_type = models.ForeignKey(
         EventType, on_delete=models.SET_NULL, null=True, blank=True
     )
-    description = models.CharField(max_length=40)
+    description = models.CharField(max_length=255)
     average_rating_event = models.IntegerField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=255)

@@ -41,8 +41,20 @@ export interface HandleErrorProps {
 }
 
 export interface InputProps {
-  field: string;
-  setField: (password: string) => void;
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export interface CreateUpdateEventInputProps {
+  value: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+}
+
+export interface SelectInputProps {
+  value: string;
+  onChange: (e: SelectChangeEvent<string>) => void;
 }
 
 export interface EventProps {
@@ -65,10 +77,13 @@ export interface EventDBProps {
   address: string;
 }
 
-export interface EventTableProps {
+export interface EventTableProps extends CreateUpdateEventProps {
   id: number;
-  eventTitle: string;
-  placeType: PlaceTypes;
+}
+
+export interface CreateUpdateEventProps {
+  title: string;
+  eventType: PlaceTypes;
   address: string;
   description: string;
 }

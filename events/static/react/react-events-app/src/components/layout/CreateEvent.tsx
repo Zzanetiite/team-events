@@ -8,6 +8,7 @@ import {
   Button,
   MenuItem,
   Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from '@mui/material';
@@ -16,6 +17,10 @@ import { useState } from 'react';
 import { AddCircle, ChevronRightRounded } from '@mui/icons-material';
 import { handleError } from '../../errors/handleError';
 import { useApi } from '../../hooks/useApi';
+import EventTitleInput from '../common/input/EventTitleInput';
+import EventAddressInput from '../common/input/EventAddressInput';
+import EventDescriptionInput from '../common/input/EventDescriptionInput';
+import EventPlaceTypeInput from '../common/input/EventPlaceTypeInput';
 
 const CreateEvent = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -24,12 +29,22 @@ const CreateEvent = () => {
   const [expanded, setExpanded] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
-    eventType: '',
+    eventType: PlaceTypes.TEAM_BUILDING,
     address: '',
     description: '',
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSelectChange = (e: SelectChangeEvent<string>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -93,80 +108,43 @@ const CreateEvent = () => {
             </Typography>
           </Box>
         </AccordionSummary>
-        <AccordionDetails>
-          <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-            <TextField
-              label="Event Title"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              required
-            />
-            <TextField
-              label="Address"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              required
-            />
-            <TextField
-              label="Description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              variant="outlined"
-              multiline
-              rows={4}
-              fullWidth
-              margin="normal"
-              required
-            />
-            <Select
-              label="Place Type"
-              name="eventType"
-              value={formData.eventType}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              required
-              displayEmpty
-            >
-              <MenuItem value="" disabled>
-                <em>Select place type</em>
-              </MenuItem>
-              {Object.values(PlaceTypes).map((type) => (
-                <MenuItem key={type} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-            </Select>
-            {successMessage && (
-              <Alert severity="success" sx={{ mb: 2, mt: 2 }}>
-                {successMessage}
-              </Alert>
-            )}
-
-            {errorMessage && (
-              <Alert severity="error" sx={{ mb: 2, mt: 2 }}>
-                {errorMessage}
-              </Alert>
-            )}
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              style={{ marginTop: '1px' }}
-            >
-              Submit
-            </Button>
-          </form>
-        </AccordionDetails>
+        {expanded && (
+          <AccordionDetails>
+            <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+              <EventTitleInput value={formData.title} onChange={handleChange} />
+              <EventAddressInput
+                value={formData.address}
+                onChange={handleChange}
+              />
+              <EventDescriptionInput
+                value={formData.description}
+                onChange={handleChange}
+              />
+              <EventPlaceTypeInput
+                value={formData.eventType}
+                onChange={handleSelectChange}
+              />
+              {successMessage && (
+                <Alert severity="success" sx={{ mb: 2, mt: 2 }}>
+                  {successMessage}
+                </Alert>
+              )}
+              {errorMessage && (
+                <Alert severity="error" sx={{ mb: 2, mt: 2 }}>
+                  {errorMessage}
+                </Alert>
+              )}
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                style={{ marginTop: '10px' }}
+              >
+                Submit
+              </Button>
+            </form>
+          </AccordionDetails>
+        )}
       </Accordion>
     </div>
   );

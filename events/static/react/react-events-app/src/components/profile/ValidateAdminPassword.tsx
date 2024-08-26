@@ -6,7 +6,7 @@ import { CreateUserFormProps } from '../../interfaces/types';
 import { ErrorMessages } from '../../constants';
 import { useTokens } from '../../context/TokenContext';
 import { handleError } from '../../errors/handleError';
-import PasswordInput from '../common/PasswordInput';
+import PasswordInput from '../common/input/PasswordInput';
 
 const ValidateAdminPasswordForm: React.FC<CreateUserFormProps> = ({
   title,
@@ -44,7 +44,6 @@ const ValidateAdminPasswordForm: React.FC<CreateUserFormProps> = ({
         method: method ? method : 'POST',
         body: JSON.stringify({ password }),
       });
-      console.log('Response:', response);
 
       if (response) {
         setSuccessMessage(successMessageText);
@@ -84,7 +83,7 @@ const ValidateAdminPasswordForm: React.FC<CreateUserFormProps> = ({
           alignItems="center"
           height="50vh"
         >
-          <PasswordInput field={password} setField={setPassword} />
+          <PasswordInput value={password} onChange={setPassword} />
           {successMessage && (
             <Alert severity="success" sx={{ mb: 2 }}>
               {successMessage}

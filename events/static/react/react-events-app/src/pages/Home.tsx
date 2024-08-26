@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Container, Grid } from '@mui/material';
 import Event from '../components/layout/Event';
-import CounterButton from '../components/common/CounterButton';
 import { ApiEndpoints } from '../constants';
 import { useApi } from '../hooks/useApi';
 import { EventDBProps } from '../interfaces/types';
@@ -34,8 +33,10 @@ const Home = () => {
           {errorMessage}
         </Alert>
       )}
-      <CounterButton counterId={2} />
-      <Container maxWidth="lg" sx={{ paddingX: 1 }}>
+      <Container
+        maxWidth="lg"
+        sx={{ paddingX: 1, marginTop: 3, marginBottom: 3 }}
+      >
         <Grid container spacing={2}>
           {eventData.map((event, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>

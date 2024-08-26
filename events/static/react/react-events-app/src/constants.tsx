@@ -41,6 +41,7 @@ export const ApiEndpoints = {
     `api/events/type/${event_type_id}/`,
   GET_LATEST_EVENTS: 'api/events/latest/',
   CREATE_EVENT: 'api/events/',
+  UPDATE_EVENT: (event_id: number) => `api/events/${event_id}/`,
 };
 
 export const COMMENT_LIMIT = 2;

@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Alert, Box, Button, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { ApiEndpoints } from '../../constants';
 import { useApi } from '../../hooks/useApi';
 import { useTokens } from '../../context/TokenContext';
 import { EventDBProps, EventTableProps } from '../../interfaces/types';
 import { eventTableFormatting } from '../config';
 import { mapEventTableData } from '../../utils/mapping';
+import EditEventModal from '../layout/EditEventModal';
 
 export default function EventTable() {
   const [userEvents, setUserEvents] = useState<EventTableProps[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<EventTableProps | null>(
+    null
+  );
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalUpdated, setModalUpdated] = useState(false);
   const { username } = useTokens();
-  const navigate = useNavigate();
   const { fetchWithTokens } = useApi();
 
   useEffect(() => {
@@ -35,11 +39,11 @@ export default function EventTable() {
         setErrorMessage('Error fetching User Events.');
       }
     }
-  }, [username, setUserEvents]);
+  }, [username, setUserEvents, modalUpdated]);
 
   const columns: GridColDef[] = [
     {
-      field: 'eventTitle',
+      field: 'title',
       headerName: 'Event Title',
       width: 200,
       renderCell: (params) => {
@@ -47,7 +51,14 @@ export default function EventTable() {
           <Button
             variant="text"
             color="primary"
-            onClick={() => navigate(`/event/${params.row.id}`)} // TODO: set up links for event ids
+            onClick={() => {
+              const event = userEvents.find((e) => e.id === params.row.id);
+              if (event) {
+                setSelectedEvent(event);
+                setModalOpen(true);
+              }
+              setModalOpen(true);
+            }}
             sx={{ textTransform: 'none' }}
           >
             {params.value}
@@ -55,7 +66,7 @@ export default function EventTable() {
         );
       },
     },
-    { field: 'placeType', headerName: 'Type', width: 130 },
+    { field: 'eventType', headerName: 'Type', width: 130 },
     { field: 'address', headerName: 'Address', width: 250 },
     {
       field: 'description',
@@ -63,6 +74,11 @@ export default function EventTable() {
       width: 300,
     },
   ];
+
+  const handleCloseModal = (): void => {
+    setModalOpen(false);
+  };
+
   return (
     <div>
       {errorMessage && (
@@ -92,6 +108,12 @@ export default function EventTable() {
           />
         </div>
       </Box>
+      <EditEventModal
+        open={modalOpen}
+        handleClose={handleCloseModal}
+        event={selectedEvent}
+        setModalUpdated={setModalUpdated}
+      />
     </div>
   );
 }

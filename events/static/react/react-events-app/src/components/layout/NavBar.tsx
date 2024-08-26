@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,26 +13,7 @@ import { EventNote } from '@mui/icons-material';
 
 export default function NavBar() {
   const { fetchWithTokens } = useApi();
-  const { setUserToken, setLoggedIn, loggedIn } = useTokens();
-  const [username, setUsername] = React.useState('');
-
-  useEffect(() => {
-    const fetchUsername = async () => {
-      // TODO: Check context first
-      try {
-        const data = await fetchWithTokens(ApiEndpoints.GET_USERNAME);
-        setUsername(data.username);
-      } catch (error) {
-        console.error('Error fetching username:', error);
-      }
-    };
-
-    if (loggedIn) {
-      fetchUsername();
-    } else {
-      setUsername('');
-    }
-  }, [fetchWithTokens, loggedIn]);
+  const { setUserToken, setLoggedIn, loggedIn, username } = useTokens();
 
   const handleLogout = React.useCallback(async () => {
     try {
