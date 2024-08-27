@@ -16,7 +16,7 @@ import StatusAlert from '../common/StatusAlert';
 import EventForm from '../common/EventForm';
 import { EventTableProps } from '../../interfaces/types';
 import FilledSubmitButton from '../common/FilledSubmitButton';
-import { eventEmptyData } from '../config';
+import { eventEmptyData } from '../../config';
 
 interface CreateEventProps {
   setNewEventCreated: React.Dispatch<React.SetStateAction<boolean>>;

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { CreateUserFormProps } from '../interfaces/types';
 import { useApi } from '../hooks/useApi';
 import { useTokens } from '../context/TokenContext';
-import { ApiEndpoints } from '../constants';
+import { ApiEndpoints, MINIMUM_PASSWORD_LENGTH } from '../constants';
 import { handleError } from '../errors/handleError';
 import zxcvbn from 'zxcvbn';
 import UsernameInput from '../components/common/input/UsernameInput';
@@ -15,7 +15,6 @@ import UserFormBox from '../components/common/UserFormBox';
 import UserInputInternalBox from '../components/common/UserInputInternalBox';
 import FilledSubmitButton from '../components/common/FilledSubmitButton';
 import StatusAlert from '../components/common/StatusAlert';
-import { MINIMUM_PASSWORD_LENGTH } from '../components/config';
 
 const CreateUser: React.FC<CreateUserFormProps> = ({
   title,

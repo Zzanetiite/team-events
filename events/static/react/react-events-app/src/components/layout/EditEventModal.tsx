@@ -9,14 +9,14 @@ import {
 } from '@mui/material';
 import { useApi } from '../../hooks/useApi';
 import { EditEventModalProps, EventTableProps } from '../../interfaces/types';
-import { ApiEndpoints, ErrorMessages, PlaceTypes } from '../../constants';
+import { ApiEndpoints, ErrorMessages } from '../../constants';
 import { handleError } from '../../errors/handleError';
 import { useTokens } from '../../context/TokenContext';
 import ConfirmAction from '../common/ConfirmAction';
 import StatusAlert from '../common/StatusAlert';
 import EventForm from '../common/EventForm';
 import { mapEventToDBFormat } from '../../utils/mapping';
-import { eventEmptyData } from '../config';
+import { eventEmptyData } from '../../config';
 
 const EditEventModal = ({
   open,

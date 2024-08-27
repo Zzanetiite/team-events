@@ -1,7 +1,5 @@
-import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import { PlaceTypes } from '../constants';
-import { EventTableProps } from '../interfaces/types';
-import { Button } from '@mui/material';
+import { PlaceTypes } from './constants';
+import { EventTableProps } from './interfaces/types';
 
 export const eventTableFormatting = {
   '& .MuiDataGrid-root': {
@@ -32,5 +30,3 @@ export const eventEmptyData: EventTableProps = {
   address: '',
   description: '',
 };
-
-export const MINIMUM_PASSWORD_LENGTH = 8;

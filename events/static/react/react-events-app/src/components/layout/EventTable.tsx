@@ -9,7 +9,7 @@ import {
   EventTableProps,
   NewEventCreatedProps,
 } from '../../interfaces/types';
-import { eventTableFormatting } from '../config';
+import { eventTableFormatting } from '../../config';
 import { mapEventTableData } from '../../utils/mapping';
 import EditEventModal from './EditEventModal';
 import StatusAlert from '../common/StatusAlert';

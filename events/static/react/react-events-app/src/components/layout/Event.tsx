@@ -4,7 +4,7 @@ import { Card, CardContent } from '@mui/material';
 import { EventProps } from '../../interfaces/types';
 import Ratings from '../common/Rating';
 import EventHeader from '../common/EventHeader';
-import CommentsSection from '../common/CommentsSection';
+import CommentsSection from './CommentsSection';
 import EventDescription from '../common/EventDescription';
 
 const Event: React.FC<EventProps> = ({

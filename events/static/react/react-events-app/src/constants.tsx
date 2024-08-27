@@ -73,3 +73,5 @@ export const PlaceTypeIcons: Record<PlaceTypes, React.ComponentType> = {
   [PlaceTypes.PARTY]: Celebration,
   [PlaceTypes.ART]: Brush,
 };
+
+export const MINIMUM_PASSWORD_LENGTH = 8;
