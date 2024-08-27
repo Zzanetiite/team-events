@@ -141,6 +141,11 @@ const UserForm: React.FC<CreateUserFormProps> = ({
           >
             {buttonText || 'Submit'}
           </Button>
+          {loginPage && (
+            <Typography variant="body2" gutterBottom>
+              Sign up? <a href="/signup">Go to Sign Up</a>
+            </Typography>
+          )}
         </Box>
       </form>
     </Box>

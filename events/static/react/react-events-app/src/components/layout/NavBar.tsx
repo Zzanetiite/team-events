@@ -26,6 +26,7 @@ export default function NavBar() {
     const fetchUsername = async () => {
       try {
         const data = await fetchWithTokens(ApiEndpoints.GET_USERNAME);
+        console.log(data);
         setUsername(data.username);
         if (data.is_admin) {
           setIsAdmin(true);
@@ -37,10 +38,8 @@ export default function NavBar() {
 
     if (loggedIn && !username) {
       fetchUsername();
-    } else {
-      setUsername('');
     }
-  }, [fetchWithTokens, loggedIn, setIsAdmin, setUsername, username]);
+  }, [loggedIn, username, setIsAdmin, setUsername]);
 
   const handleLogout = React.useCallback(async () => {
     try {
