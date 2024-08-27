@@ -20,8 +20,7 @@ const ValidateAdminPasswordForm: React.FC<CreateUserFormProps> = ({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
-  const { loggedIn, setAdminPasswordValidated, adminPasswordValidated } =
-    useTokens();
+  const { loggedIn, setAdminPassword, adminPassword } = useTokens();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,23 +30,23 @@ const ValidateAdminPasswordForm: React.FC<CreateUserFormProps> = ({
   }, [loggedIn, navigate]);
 
   useEffect(() => {
-    if (adminPasswordValidated) {
+    if (adminPassword && !errorMessage) {
       navigate('/createadmin');
     }
-  }, [adminPage, adminPasswordValidated, navigate]);
+  }, [adminPage, adminPassword, errorMessage, navigate]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await fetchWithTokens(apiEndpoint, {
         method: method ? method : 'POST',
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password: password }),
       });
 
       if (response) {
         setSuccessMessage(successMessageText);
         setErrorMessage(null);
-        setAdminPasswordValidated(true);
+        setAdminPassword(password);
       }
     } catch (error: any) {
       handleError({

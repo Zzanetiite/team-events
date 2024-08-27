@@ -17,8 +17,8 @@ interface TokenContextType {
   setUsername: React.Dispatch<React.SetStateAction<string | null>>;
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  adminPasswordValidated: boolean;
-  setAdminPasswordValidated: React.Dispatch<React.SetStateAction<boolean>>;
+  adminPassword: string;
+  setAdminPassword: React.Dispatch<React.SetStateAction<string>>;
   isAdmin: boolean | null;
   setIsAdmin: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
@@ -40,8 +40,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
     localStorage.getItem('username') || Cookies.get('username') || null
   );
   const [loggedIn, setLoggedIn] = useState<boolean>(userToken !== null);
-  const [adminPasswordValidated, setAdminPasswordValidated] =
-    useState<boolean>(false);
+  const [adminPassword, setAdminPassword] = useState<string>('');
   const [isAdmin, setIsAdmin] = useState<boolean | null>(
     JSON.parse(Cookies.get('isAdmin') || 'null')
   );
@@ -93,8 +92,8 @@ export function TokenProvider({ children }: TokenProviderProps) {
         setUsername,
         loggedIn,
         setLoggedIn,
-        adminPasswordValidated,
-        setAdminPasswordValidated,
+        adminPassword,
+        setAdminPassword,
         isAdmin,
         setIsAdmin,
       }}

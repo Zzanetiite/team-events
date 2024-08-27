@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -23,6 +25,7 @@ class UserManagementViewTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {"success": "User created successfully."})
 
+    @patch("events.views.user_management.ADMIN_CREATE_PAGE_PASSWORD", "testpassword")
     def test_create_admin(self):
         url = self.base_url + "create-admin/"
         response = self.client.post(
@@ -31,10 +34,25 @@ class UserManagementViewTests(APITestCase):
                 "username": "adminuser",
                 "password": "adminpassword",
                 "email": "admin@example.com",
+                "secret_admin_password": "testpassword",
             },
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {"success": "Admin user created successfully."})
+
+    def test_create_admin_invalid_secret_password(self):
+        url = self.base_url + "create-admin/"
+        response = self.client.post(
+            url,
+            {
+                "username": "adminuser",
+                "password": "adminpassword",
+                "email": "admin@example.com",
+                "secret_admin_password": "wrongpassword",
+            },
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.data, {"error": "Invalid secret admin password"})
 
     def test_login(self):
         url = self.base_url + "login/"

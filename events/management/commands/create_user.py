@@ -6,7 +6,7 @@ class Command(BaseCommand):
     help = "Create a default user for production"
 
     def handle(self, *args, **kwargs):
-        username = "admin"
+        username = "prod_user"
         password = "password"
         email = "initial_data_uploader@dummy.com"
 

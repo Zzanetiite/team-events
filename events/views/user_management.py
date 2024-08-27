@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework.serializers import CharField, Serializer
 from rest_framework.views import APIView
 
+from team_events.settings import ADMIN_CREATE_PAGE_PASSWORD
+
 from ..utils import Utils
 
 
@@ -23,10 +25,17 @@ class UserManagementView(APIView):
             password = request.data.get("password")
             return Utils.create_user_internal(username, password)
 
+        # TODO: Add secret password check to the request
         elif action == "create-admin":
             username = request.data.get("username")
             password = request.data.get("password")
             email = request.data.get("email")
+            secret_admin_password = request.data.get("secret_admin_password")
+            if secret_admin_password != ADMIN_CREATE_PAGE_PASSWORD:
+                return Response(
+                    {"error": "Invalid secret admin password"},
+                    status=status.HTTP_401_UNAUTHORIZED,
+                )
             return Utils.create_user_internal(
                 username, password, email, is_superuser=True
             )

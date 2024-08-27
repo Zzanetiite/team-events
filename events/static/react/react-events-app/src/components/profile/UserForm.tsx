@@ -31,7 +31,7 @@ const UserForm: React.FC<CreateUserFormProps> = ({
     setUserToken,
     setUsername,
     loggedIn,
-    adminPasswordValidated,
+    adminPassword,
     setIsAdmin,
   } = useTokens();
   const navigate = useNavigate();
@@ -43,10 +43,10 @@ const UserForm: React.FC<CreateUserFormProps> = ({
   }, [loggedIn, navigate]);
 
   useEffect(() => {
-    if (adminPage && !adminPasswordValidated) {
+    if (adminPage && !adminPassword) {
       navigate('/validateadmin');
     }
-  }, [adminPage, adminPasswordValidated, navigate]);
+  }, [adminPage, adminPassword, navigate]);
 
   useEffect(() => {
     const fetchUsername = async () => {
@@ -73,7 +73,11 @@ const UserForm: React.FC<CreateUserFormProps> = ({
     try {
       const response = await fetchWithTokens(apiEndpoint, {
         method: method ? method : 'POST',
-        body: JSON.stringify({ username: newUsername, password }),
+        body: JSON.stringify({
+          username: newUsername,
+          password: password,
+          secret_admin_password: adminPassword,
+        }),
       });
 
       if (response) {
