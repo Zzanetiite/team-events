@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -20,13 +21,10 @@ class EventViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        print("Incoming data:", request.data)
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
-            print("Validated data:", serializer.validated_data)
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        print("Validation errors:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, pk=None):
@@ -39,6 +37,10 @@ class EventViewSet(viewsets.ViewSet):
 
     def destroy(self, request, pk=None):
         event = get_object_or_404(Event, pk=pk)
+
+        if not request.user.is_staff:
+            raise PermissionDenied("You do not have permission to delete events.")
+
         event.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

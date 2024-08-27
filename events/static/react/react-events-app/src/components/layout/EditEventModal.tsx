@@ -1,4 +1,4 @@
-import React, { useState, useEffect, SetStateAction, Dispatch } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -16,12 +16,15 @@ import EventTitleInput from '../common/input/EventTitleInput';
 import EventAddressInput from '../common/input/EventAddressInput';
 import EventDescriptionInput from '../common/input/EventDescriptionInput';
 import EventPlaceTypeInput from '../common/input/EventPlaceTypeInput';
+import { useTokens } from '../../context/TokenContext';
+import ConfirmAction from '../common/ConfirmAction';
 
 const EditEventModal = ({
   open,
   handleClose,
   event,
   setModalUpdated,
+  setDeleteSuccessMessage,
 }: EditEventModalProps) => {
   const [eventData, setEventData] = useState<EventTableProps>({
     id: 0,
@@ -32,7 +35,9 @@ const EditEventModal = ({
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const { fetchWithTokens } = useApi();
+  const { isAdmin } = useTokens();
 
   // Automatically hide success message
   useEffect(() => {
@@ -102,8 +107,43 @@ const EditEventModal = ({
     }
   };
 
+  const handleDelete = async () => {
+    if (!event) return;
+    console.log('Deleting: ', eventData);
+    try {
+      const response = await fetchWithTokens(
+        ApiEndpoints.UPDATE_EVENT(event.id),
+        {
+          method: 'DELETE',
+        }
+      );
+
+      if (response.deleted) {
+        setDeleteSuccessMessage('Event deleted successfully.');
+        setModalUpdated(true);
+        handleClose();
+      } else {
+        throw new Error(
+          'Failed to delete event. Server responded with an unexpected status.'
+        );
+      }
+    } catch (error: any) {
+      handleError({
+        error,
+        setErrorMessage,
+        setSuccessMessage,
+        messageForBadRequest: 'Error deleting event.',
+      });
+    }
+  };
+
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-modal={true}
+      aria-hidden={false}
+    >
       <DialogTitle>Edit Event</DialogTitle>
       <DialogContent>
         <EventTitleInput value={eventData.title} onChange={handleChange} />
@@ -128,6 +168,11 @@ const EditEventModal = ({
         </Alert>
       )}
       <DialogActions>
+        {isAdmin && (
+          <Button onClick={() => setConfirmOpen(true)} color="warning">
+            Delete
+          </Button>
+        )}
         <Button onClick={handleClose} color="secondary">
           Close
         </Button>
@@ -135,6 +180,11 @@ const EditEventModal = ({
           Submit
         </Button>
       </DialogActions>
+      <ConfirmAction
+        confirmOpen={confirmOpen}
+        setConfirmOpen={setConfirmOpen}
+        handleDelete={handleDelete}
+      />
     </Dialog>
   );
 };

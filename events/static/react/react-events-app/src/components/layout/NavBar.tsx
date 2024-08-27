@@ -2,14 +2,13 @@ import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import Logout from '@mui/icons-material/Logout';
-import Login from '@mui/icons-material/Login';
 import { useApi } from '../../hooks/useApi';
 import { useTokens } from '../../context/TokenContext';
 import { ApiEndpoints } from '../../constants';
-import { EventNote } from '@mui/icons-material';
+import Logo from './Logo';
+import NavBarLoginButton from '../common/NavBarLoginButton';
+import NavBarEventsButton from '../common/NavBarEventsButton';
+import NavBarUsername from '../common/NavBarUserName';
 
 export default function NavBar() {
   const { fetchWithTokens } = useApi();
@@ -49,42 +48,19 @@ export default function NavBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-            >
-              Team Events
-            </Typography>
-          </a>
+          <Logo />
           <Box sx={{ flexGrow: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            {username} {isAdmin ? '(Admin)' : ''}
-          </Typography>
+          <NavBarUsername username={username} isAdmin={isAdmin} />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton
-              size="large"
-              aria-label="events-list"
-              color="inherit"
-              onClick={handleEventsButton}
-            >
-              {loggedIn ? <EventNote /> : null}
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label={loggedIn ? 'logout' : 'login'}
-              color="inherit"
-              onClick={loggedIn ? handleLogout : handleLogin}
-            >
-              {loggedIn ? <Logout /> : <Login />}
-            </IconButton>
+            <NavBarEventsButton
+              loggedIn={loggedIn}
+              handleEventsButton={handleEventsButton}
+            />
+            <NavBarLoginButton
+              loggedIn={loggedIn}
+              handleLogin={handleLogin}
+              handleLogout={handleLogout}
+            />
           </Box>
         </Toolbar>
       </AppBar>

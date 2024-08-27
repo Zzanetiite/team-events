@@ -11,13 +11,16 @@ import {
 } from '../../interfaces/types';
 import { eventTableFormatting } from '../config';
 import { mapEventTableData } from '../../utils/mapping';
-import EditEventModal from '../layout/EditEventModal';
+import EditEventModal from './EditEventModal';
 
 const EventTable: React.FC<NewEventCreatedProps> = ({
   newEventCreated,
   setNewEventCreated,
 }) => {
   const [userEvents, setUserEvents] = useState<EventTableProps[]>([]);
+  const [deleteSuccessMessage, setDeleteSuccessMessage] = useState<
+    string | null
+  >(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<EventTableProps | null>(
     null
@@ -55,7 +58,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
     setUserEvents,
     modalUpdated,
     newEventCreated,
-    setNewEventCreated,
+    setNewEventCreated, // fetchWithTokens causes cyclic dependency
   ]);
 
   useEffect(() => {
@@ -122,6 +125,11 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
         <Typography component="legend" variant="body2" gutterBottom>
           Click on an event to edit it.
         </Typography>
+        {deleteSuccessMessage && (
+          <Alert severity="success" sx={{ mb: 2 }}>
+            {deleteSuccessMessage}
+          </Alert>
+        )}
         <div style={{ height: 400, width: '100%' }}>
           <DataGrid
             rows={userEvents}
@@ -137,11 +145,13 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
           />
         </div>
       </Box>
+
       <EditEventModal
         open={modalOpen}
         handleClose={handleCloseModal}
         event={selectedEvent}
         setModalUpdated={setModalUpdated}
+        setDeleteSuccessMessage={setDeleteSuccessMessage}
       />
     </div>
   );

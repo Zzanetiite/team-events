@@ -10,6 +10,9 @@ from events.serializers import EventSerializer
 class EventViewSetTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="testuser", password="password")
+        self.admin_user = User.objects.create_superuser(
+            username="adminuser", password="adminpassword"
+        )
         self.client.login(username="testuser", password="password")
         self.event_type = EventType.objects.create(
             name="Restaurant", description="A large conference"
@@ -57,7 +60,13 @@ class EventViewSetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(self.event.title, "Updated Event")
 
-    def test_delete_event(self):
+    def test_delete_event_by_non_admin(self):
+        response = self.client.delete(self.detail_url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(Event.objects.count(), 1)
+
+    def test_delete_event_by_admin(self):
+        self.client.login(username="adminuser", password="adminpassword")
         response = self.client.delete(self.detail_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Event.objects.count(), 0)

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import EventTable from '../components/common/EventTable';
+import EventTable from '../components/layout/EventTable';
 import { useNavigate } from 'react-router-dom';
 import { useTokens } from '../context/TokenContext';
 import CreateEvent from '../components/layout/CreateEvent';

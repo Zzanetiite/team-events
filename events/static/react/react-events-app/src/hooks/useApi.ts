@@ -30,6 +30,10 @@ export function useApi() {
 
     const response = await fetch(`${DOMAIN}/${url}`, fetchOptions);
 
+    if (response.status === 204) {
+      return { deleted: true };
+    }
+
     if (!response.ok) {
       throw response;
     }

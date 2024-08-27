@@ -88,14 +88,37 @@ export interface CreateUpdateEventProps {
   description: string;
 }
 
-interface EditEventModalProps {
+export interface EditEventModalProps {
   open: boolean;
   handleClose: () => void;
   event: EventTableProps | null;
   setModalUpdated: Dispatch<SetStateAction<boolean>>;
+  setDeleteSuccessMessage: Dispatch<SetStateAction<string | null>>;
 }
 
-interface NewEventCreatedProps {
+export interface NewEventCreatedProps {
   newEventCreated: boolean;
   setNewEventCreated: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface NavBarEventsButtonProps {
+  loggedIn: boolean;
+  handleEventsButton: () => void;
+}
+
+export interface NavBarLoginButtonProps {
+  loggedIn: boolean;
+  handleLogout: () => void;
+  handleLogin: () => void;
+}
+
+export interface NavBarUsernameProps {
+  username: string | null;
+  isAdmin: boolean | null;
+}
+
+export interface ConfirmActionProps {
+  confirmOpen: boolean;
+  setConfirmOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleDelete: () => void;
 }
