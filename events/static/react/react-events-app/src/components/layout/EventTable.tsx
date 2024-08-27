@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Alert, Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { ApiEndpoints } from '../../constants';
 import { useApi } from '../../hooks/useApi';
 import { useTokens } from '../../context/TokenContext';
@@ -12,6 +12,8 @@ import {
 import { eventTableFormatting } from '../config';
 import { mapEventTableData } from '../../utils/mapping';
 import EditEventModal from './EditEventModal';
+import StatusAlert from '../common/StatusAlert';
+import { renderEventCell } from '../../utils/renderEventCell';
 
 const EventTable: React.FC<NewEventCreatedProps> = ({
   newEventCreated,
@@ -58,7 +60,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
     setUserEvents,
     modalUpdated,
     newEventCreated,
-    setNewEventCreated, // fetchWithTokens causes cyclic dependency
+    setNewEventCreated, // fetchWithTokens causes a cyclic dependency
   ]);
 
   useEffect(() => {
@@ -78,25 +80,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
       field: 'title',
       headerName: 'Event Title',
       width: 200,
-      renderCell: (params) => {
-        return (
-          <Button
-            variant="text"
-            color="primary"
-            onClick={() => {
-              const event = userEvents.find((e) => e.id === params.row.id);
-              if (event) {
-                setSelectedEvent(event);
-                setModalOpen(true);
-              }
-              setModalOpen(true);
-            }}
-            sx={{ textTransform: 'none' }}
-          >
-            {params.value}
-          </Button>
-        );
-      },
+      renderCell: renderEventCell(userEvents, setSelectedEvent, setModalOpen),
     },
     { field: 'eventType', headerName: 'Type', width: 130 },
     { field: 'address', headerName: 'Address', width: 250 },
@@ -113,11 +97,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
 
   return (
     <div>
-      {errorMessage && (
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {errorMessage}
-        </Alert>
-      )}
+      {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
       <Box sx={{ marginX: '20px' }}>
         <Typography component="legend" variant="h5" gutterBottom>
           Events created by you
@@ -126,9 +106,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
           Click on an event to edit it.
         </Typography>
         {deleteSuccessMessage && (
-          <Alert severity="success" sx={{ mb: 2 }}>
-            {deleteSuccessMessage}
-          </Alert>
+          <StatusAlert message={deleteSuccessMessage} severity="success" />
         )}
         <div style={{ height: 400, width: '100%' }}>
           <DataGrid
@@ -145,7 +123,6 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
           />
         </div>
       </Box>
-
       <EditEventModal
         open={modalOpen}
         handleClose={handleCloseModal}

@@ -1,5 +1,10 @@
 import { PlaceTypes } from '../constants';
-import { EventDBProps, EventProps, EventTableProps } from '../interfaces/types';
+import {
+  EventDBMinimumProps,
+  EventDBProps,
+  EventProps,
+  EventTableProps,
+} from '../interfaces/types';
 
 export const mapEventTypeToPlaceType = (eventTypeName: string): PlaceTypes => {
   const placeType = Object.values(PlaceTypes).find(
@@ -27,12 +32,22 @@ export const mapEventData = (apiData: EventDBProps[]): EventProps[] => {
 export const mapEventTableData = (
   apiData: EventDBProps[]
 ): EventTableProps[] => {
-  const data = apiData.map((event) => ({
+  return apiData.map((event) => ({
     id: event.id,
     title: event.title,
     eventType: mapEventTypeToPlaceType(event.event_type),
     address: event.address,
     description: event.description,
   }));
-  return data;
+};
+
+export const mapEventToDBFormat = (
+  event: EventTableProps
+): EventDBMinimumProps => {
+  return {
+    id: event.id,
+    title: event.title,
+    event_type: event.eventType,
+    description: event.description,
+  };
 };

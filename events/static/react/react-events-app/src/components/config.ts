@@ -1,3 +1,8 @@
+import { GridCellParams, GridColDef } from '@mui/x-data-grid';
+import { PlaceTypes } from '../constants';
+import { EventTableProps } from '../interfaces/types';
+import { Button } from '@mui/material';
+
 export const eventTableFormatting = {
   '& .MuiDataGrid-root': {
     borderRadius: '10px',
@@ -18,4 +23,12 @@ export const eventTableFormatting = {
   '& .MuiDataGrid-row:nth-of-type(even)': {
     backgroundColor: '#fff',
   },
+};
+
+export const eventEmptyData: EventTableProps = {
+  id: 0,
+  title: '',
+  eventType: PlaceTypes.TEAM_BUILDING,
+  address: '',
+  description: '',
 };

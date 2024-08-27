@@ -3,7 +3,7 @@ import EventTable from '../components/layout/EventTable';
 import { useNavigate } from 'react-router-dom';
 import { useTokens } from '../context/TokenContext';
 import CreateEvent from '../components/layout/CreateEvent';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 
 const UserEvents = () => {
   const { loggedIn } = useTokens();
@@ -23,7 +23,17 @@ const UserEvents = () => {
     }
   }, [initialized, loggedIn, navigate]);
 
-  if (!initialized) return <div>Loading...</div>; // TODO: Add loading spinner
+  if (!initialized)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
 
   return (
     <div>

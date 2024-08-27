@@ -67,14 +67,17 @@ export interface EventProps {
   loudnessRating: number; // Scale 1-5
 }
 
-export interface EventDBProps {
+export interface EventDBProps extends EventDBMinimumProps {
+  average_rating: number;
+  user: string;
+  address: string;
+}
+
+export interface EventDBMinimumProps {
   id: number;
   title: string;
   event_type: string;
   description: string;
-  average_rating: number;
-  user: string;
-  address: string;
 }
 
 export interface EventTableProps extends CreateUpdateEventProps {
@@ -121,4 +124,17 @@ export interface ConfirmActionProps {
   confirmOpen: boolean;
   setConfirmOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleDelete: () => void;
+}
+
+interface StatusAlertProps {
+  message: string | null;
+  severity: 'success' | 'error';
+}
+
+interface EventFormProps {
+  data: EventTableProps;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  handleSelectChange: (e: SelectChangeEvent<string>) => void;
 }

@@ -70,7 +70,6 @@ const UserForm: React.FC<CreateUserFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
       const response = await fetchWithTokens(apiEndpoint, {
         method: method ? method : 'POST',
@@ -96,6 +95,7 @@ const UserForm: React.FC<CreateUserFormProps> = ({
       });
     }
   };
+
   return (
     <Box
       display="flex"

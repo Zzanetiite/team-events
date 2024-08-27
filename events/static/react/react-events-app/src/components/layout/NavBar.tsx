@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { useApi } from '../../hooks/useApi';
 import { useTokens } from '../../context/TokenContext';
 import { ApiEndpoints } from '../../constants';
-import Logo from './Logo';
+import Logo from '../common/Logo';
 import NavBarLoginButton from '../common/NavBarLoginButton';
 import NavBarEventsButton from '../common/NavBarEventsButton';
 import NavBarUsername from '../common/NavBarUserName';
