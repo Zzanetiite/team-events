@@ -128,7 +128,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
               {errorMessage && (
                 <StatusAlert message={errorMessage} severity="error" />
               )}
-              <FilledSubmitButton />
+              <FilledSubmitButton style={{ marginTop: '10px' }} />
             </form>
           </AccordionDetails>
         )}

@@ -1,14 +1,9 @@
 import { Button } from '@mui/material';
 import React from 'react';
 
-const FilledSubmitButton = () => {
+const FilledSubmitButton = ({ style }: { style?: React.CSSProperties }) => {
   return (
-    <Button
-      type="submit"
-      variant="contained"
-      color="primary"
-      style={{ marginTop: '10px' }}
-    >
+    <Button type="submit" variant="contained" color="primary" style={style}>
       Submit
     </Button>
   );

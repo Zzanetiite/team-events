@@ -1,11 +1,12 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
-import UserForm from './components/profile/UserForm';
-import ValidateAdminPasswordForm from './components/profile/ValidateAdminPassword';
+import ValidateAdminPasswordForm from './pages/ValidateAdminPassword';
 import NotFound from './components/common/NotFound';
 import { ApiEndpoints } from './constants';
 import UserEvents from './pages/UserEvents';
+import Login from './pages/Login';
+import CreateUser from './pages/CreateUser';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
   {
     path: '/createadmin',
     element: (
-      <UserForm
+      <CreateUser
         title="Create Admin User"
         apiEndpoint={ApiEndpoints.CREATE_ADMIN_USER}
         adminPage={true}
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
   {
     path: '/signup',
     element: (
-      <UserForm
+      <CreateUser
         title="Sign Up"
         apiEndpoint={ApiEndpoints.CREATE_USER}
         successMessageText={
@@ -61,13 +62,12 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: (
-      <UserForm
+      <Login
         title="Login"
         apiEndpoint={ApiEndpoints.LOGIN}
         method="POST"
         successMessageText={<span>Login success! Redirecting ...</span>}
         messageForBadRequest="Invalid credentials. Please try again."
-        loginPage={true}
       />
     ),
   },

@@ -24,10 +24,17 @@ export interface CreateUserFormProps {
   apiEndpoint: string;
   successMessageText: ReactNode;
   messageForBadRequest?: string;
-  buttonText?: string;
   method?: string;
   loginPage?: boolean;
   adminPage?: boolean;
+}
+
+export interface LoginPageProps {
+  title: string;
+  apiEndpoint: string;
+  successMessageText: ReactNode;
+  messageForBadRequest: string;
+  method: string;
 }
 
 export interface HandleErrorProps {
@@ -38,6 +45,12 @@ export interface HandleErrorProps {
   overrideErrorHandlers?: {
     [key: number]: (setErrorMessage: (message: string | null) => void) => void;
   };
+}
+
+export interface PasswordInputProps {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  feedback: string;
 }
 
 export interface InputProps {

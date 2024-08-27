@@ -32,3 +32,5 @@ export const eventEmptyData: EventTableProps = {
   address: '',
   description: '',
 };
+
+export const MINIMUM_PASSWORD_LENGTH = 8;
