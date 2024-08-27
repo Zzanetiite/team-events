@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,8 +12,35 @@ import NavBarUsername from '../common/NavBarUserName';
 
 export default function NavBar() {
   const { fetchWithTokens } = useApi();
-  const { setUserToken, setLoggedIn, loggedIn, username, isAdmin, setIsAdmin } =
-    useTokens();
+  const {
+    setUserToken,
+    setLoggedIn,
+    loggedIn,
+    username,
+    isAdmin,
+    setIsAdmin,
+    setUsername,
+  } = useTokens();
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const data = await fetchWithTokens(ApiEndpoints.GET_USERNAME);
+        setUsername(data.username);
+        if (data.is_admin) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (error) {}
+    };
+
+    if (loggedIn && !username) {
+      fetchUsername();
+    } else {
+      setUsername('');
+    }
+  }, [fetchWithTokens, loggedIn, setIsAdmin, setUsername, username]);
 
   const handleLogout = React.useCallback(async () => {
     try {
