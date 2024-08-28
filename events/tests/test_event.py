@@ -101,11 +101,12 @@ class EventByUsernameViewTests(APITestCase):
 class EventByTypeViewTests(APITestCase):
     def setUp(self):
         self.event_type = EventType.objects.create(
-            name="Seminar", description="Educational seminar"
+            name="Restaurant", description="French cuisine"
         )
         self.other_event_type = EventType.objects.create(
-            name="Social", description="Social event"
+            name="Fast Food", description="KFC, McDonald's, etc."
         )
+
         self.event = Event.objects.create(
             title="Event by Type",
             description="Event of a specific type",
@@ -113,13 +114,17 @@ class EventByTypeViewTests(APITestCase):
             event_type=self.event_type,
             user=User.objects.create_user(username="anotheruser", password="password"),
         )
+        event_type_names = f"{self.event_type.name},{self.other_event_type.name}"
         self.url = reverse(
-            "events-by-type", kwargs={"event_type_id": self.event_type.id}
+            "events_by_type_names",
+            kwargs={"event_type_names": event_type_names},
         )
 
     def test_get_events_by_type(self):
         response = self.client.get(self.url)
-        events = Event.objects.filter(event_type=self.event_type)
+        events = Event.objects.filter(
+            event_type__name__in=[self.event_type.name, self.other_event_type.name]
+        )
         serializer = EventSerializer(events, many=True)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, serializer.data)

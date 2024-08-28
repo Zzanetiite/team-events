@@ -8,7 +8,7 @@ import { useTokens } from '../context/TokenContext';
 import { handleError } from '../errors/handleError';
 import PasswordInput from '../components/common/input/PasswordInput';
 import StatusAlert from '../components/common/StatusAlert';
-import FilledSubmitButton from '../components/common/FilledSubmitButton';
+import FilledSubmitButton from '../components/common/buttons/FilledSubmitButton';
 
 const ValidateAdminPasswordForm: React.FC<CreateUserFormProps> = ({
   title,

@@ -15,7 +15,7 @@ import { useApi } from '../../hooks/useApi';
 import StatusAlert from '../common/StatusAlert';
 import EventForm from '../common/EventForm';
 import { EventTableProps } from '../../interfaces/types';
-import FilledSubmitButton from '../common/FilledSubmitButton';
+import FilledSubmitButton from '../common/buttons/FilledSubmitButton';
 import { eventEmptyData } from '../../config';
 
 interface CreateEventProps {

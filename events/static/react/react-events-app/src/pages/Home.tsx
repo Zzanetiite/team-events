@@ -1,50 +1,101 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Container, Grid } from '@mui/material';
-import Event from '../components/layout/Event';
-import { ApiEndpoints } from '../constants';
+import { ApiEndpoints, PlaceTypes } from '../constants';
 import { useApi } from '../hooks/useApi';
 import { EventDBProps } from '../interfaces/types';
 import { useDataContext } from '../context/DataContext';
 import { mapEventData } from '../utils/mapping';
+import StatusAlert from '../components/common/StatusAlert';
+import HomeEventsContainer from '../components/layout/HomeEventsContainer';
+import HomeEventsFilter from '../components/layout/HomeEventsFilter';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
-  const { eventData, setEventData } = useDataContext();
+  const { eventData, setEventData, homePageFilterOpen } = useDataContext();
+  const [selectedEventTypes, setSelectedEventTypes] = useState<String[]>([]);
+  const [filterOn, setFilterOn] = useState(false);
 
   useEffect(() => {
-    fetchWithTokens(ApiEndpoints.GET_LATEST_EVENTS, { method: 'GET' })
-      .then((data: EventDBProps[]) => {
-        console.log('Fetched Event Data:', data);
-        const mappedEvents = mapEventData(data);
-        setEventData(mappedEvents);
-      })
-      .catch((error: any) =>
-        setErrorMessage(
-          'Error loading Event data. Apologies for the inconvenince.'
-        )
-      );
-  }, [setEventData]);
+    if (!filterOn) {
+      fetchWithTokens(ApiEndpoints.GET_LATEST_EVENTS, { method: 'GET' })
+        .then((data: EventDBProps[]) => {
+          console.log('Fetched Event Data:', data);
+          const mappedEvents = mapEventData(data);
+          setEventData(mappedEvents);
+        })
+        .catch((error: any) =>
+          setErrorMessage(
+            'Error loading Event data. Apologies for the inconvenince.'
+          )
+        );
+    }
+  }, [setEventData, filterOn]);
+
+  useEffect(() => {
+    if (filterOn && selectedEventTypes.length === 0 && !homePageFilterOpen) {
+      setFilterOn(false);
+    }
+  }, [filterOn, homePageFilterOpen, selectedEventTypes]);
+
+  useEffect(() => {
+    if (filterOn) {
+      console.log('Selected Event Types: ', selectedEventTypes.join(','));
+      fetchWithTokens(
+        ApiEndpoints.GET_EVENTS_BY_TYPE(selectedEventTypes.join(',')),
+        { method: 'GET' }
+      )
+        .then((data: EventDBProps[]) => {
+          console.log('Fetched Event Type Data:', data);
+          if (data.length === 0) {
+            setInfoMessage('No events found for the selected types.');
+          }
+          const mappedEvents = mapEventData(data);
+          setEventData(mappedEvents);
+        })
+        .catch((error: any) =>
+          setErrorMessage(
+            'Error loading Event data. Apologies for the inconvenince.'
+          )
+        );
+    }
+  }, [setEventData, filterOn, selectedEventTypes]);
+
+  useEffect(() => {
+    if (errorMessage || infoMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage(null);
+        setInfoMessage(null);
+      }, 3000); // 3 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage, infoMessage]);
+
+  const handleApplyFilter = (selectedTypes: PlaceTypes[]) => {
+    if (selectedTypes.length === 0) {
+      setInfoMessage('Please select at least one event type.');
+      return;
+    }
+    setFilterOn(true);
+    setSelectedEventTypes(selectedTypes.map((key) => key.toString()));
+  };
+
+  const handleResetFilter = () => {
+    setFilterOn(false);
+    setSelectedEventTypes([]);
+  };
 
   return (
     <div>
-      {errorMessage && (
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {errorMessage}
-        </Alert>
+      {homePageFilterOpen && (
+        <HomeEventsFilter
+          onApplyFilter={handleApplyFilter}
+          onResetFilter={handleResetFilter}
+        />
       )}
-      <Container
-        maxWidth="lg"
-        sx={{ paddingX: 1, marginTop: 3, marginBottom: 3 }}
-      >
-        <Grid container spacing={2}>
-          {eventData.map((event, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Event {...event} />
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+      {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
+      {infoMessage && <StatusAlert message={infoMessage} severity="info" />}
+      <HomeEventsContainer eventData={eventData} />
     </div>
   );
 };

@@ -37,8 +37,8 @@ export const ApiEndpoints = {
   CREATE_ADMIN_USER: 'api/user/create-admin/',
   VALIDATE_ADMIN_PAGE_PASSWORD: 'api/security/validate-admin-password/',
   GET_USER_EVENTS: (username: string) => `api/events/username/${username}/`,
-  GET_TYPE_EVENTS: (event_type_id: number) =>
-    `api/events/type/${event_type_id}/`,
+  GET_EVENTS_BY_TYPE: (event_types: string) =>
+    `api/events/by-type/${event_types}/`,
   GET_LATEST_EVENTS: 'api/events/latest/',
   CREATE_EVENT: 'api/events/',
   UPDATE_OR_DELETE_EVENT: (event_id: number) => `api/events/${event_id}/`,

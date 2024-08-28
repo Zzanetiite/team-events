@@ -122,6 +122,10 @@ export interface NavBarEventsButtonProps {
   handleEventsButton: () => void;
 }
 
+interface NavBarFilterButtonProps {
+  handleFilterOpen: () => void;
+}
+
 export interface NavBarLoginButtonProps {
   loggedIn: boolean;
   handleLogout: () => void;
@@ -141,7 +145,7 @@ export interface ConfirmActionProps {
 
 interface StatusAlertProps {
   message: string | null;
-  severity: 'success' | 'error';
+  severity: 'success' | 'error' | 'info' | 'warning';
 }
 
 interface EventFormProps {

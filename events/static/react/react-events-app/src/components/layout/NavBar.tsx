@@ -6,9 +6,12 @@ import { useApi } from '../../hooks/useApi';
 import { useTokens } from '../../context/TokenContext';
 import { ApiEndpoints } from '../../constants';
 import Logo from '../common/Logo';
-import NavBarLoginButton from '../common/NavBarLoginButton';
-import NavBarEventsButton from '../common/NavBarEventsButton';
+import NavBarLoginButton from '../common/buttons/NavBarLoginButton';
+import NavBarEventsButton from '../common/buttons/NavBarEventsButton';
 import NavBarUsername from '../common/NavBarUserName';
+import SearchBar from '../common/SearchBar';
+import { useDataContext } from '../../context/DataContext';
+import NavBarFilterButton from '../common/buttons/NavBarFilterButton';
 
 export default function NavBar() {
   const { fetchWithTokens } = useApi();
@@ -21,6 +24,7 @@ export default function NavBar() {
     setIsAdmin,
     setUsername,
   } = useTokens();
+  const { homePageFilterOpen, setHomePageFilterOpen } = useDataContext();
 
   useEffect(() => {
     const fetchUsername = async () => {
@@ -70,11 +74,17 @@ export default function NavBar() {
     window.location.href = '/myevents';
   }, []);
 
+  const handleFilterOpen = React.useCallback(() => {
+    setHomePageFilterOpen(!homePageFilterOpen);
+  }, [homePageFilterOpen, setHomePageFilterOpen]);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <Logo />
+          <SearchBar />
+          <NavBarFilterButton handleFilterOpen={handleFilterOpen} />
           <Box sx={{ flexGrow: 1 }} />
           <NavBarUsername username={username} isAdmin={isAdmin} />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>

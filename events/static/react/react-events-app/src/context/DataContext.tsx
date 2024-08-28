@@ -10,6 +10,8 @@ import { EventProps } from '../interfaces/types';
 interface DataContextType {
   eventData: EventProps[];
   setEventData: React.Dispatch<React.SetStateAction<EventProps[]>>;
+  homePageFilterOpen: boolean;
+  setHomePageFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DataContext = createContext<DataContextType | null>(null);
@@ -21,12 +23,19 @@ interface DataProviderProps {
 export function DataProvider({ children }: DataProviderProps) {
   const [eventData, setEventData] = useState<EventProps[]>([]);
   useMemo(() => ({ eventData, setEventData }), [eventData]);
+  const [homePageFilterOpen, setHomePageFilterOpen] = useState(false);
+  useMemo(
+    () => ({ homePageFilterOpen, setHomePageFilterOpen }),
+    [homePageFilterOpen]
+  );
 
   return (
     <DataContext.Provider
       value={{
         eventData,
         setEventData,
+        homePageFilterOpen,
+        setHomePageFilterOpen,
       }}
     >
       {children}

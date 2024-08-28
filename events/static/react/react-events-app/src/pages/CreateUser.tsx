@@ -13,7 +13,7 @@ import PasswordFeedback from '../components/common/input/PasswordFeedback';
 import EmailInput from '../components/common/input/EmailInput';
 import UserFormBox from '../components/common/UserFormBox';
 import UserInputInternalBox from '../components/common/UserInputInternalBox';
-import FilledSubmitButton from '../components/common/FilledSubmitButton';
+import FilledSubmitButton from '../components/common/buttons/FilledSubmitButton';
 import StatusAlert from '../components/common/StatusAlert';
 
 const CreateUser: React.FC<CreateUserFormProps> = ({

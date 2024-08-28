@@ -75,6 +75,15 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
     }
   }, [errorMessage]);
 
+  useEffect(() => {
+    if (deleteSuccessMessage) {
+      const timer = setTimeout(() => {
+        setDeleteSuccessMessage(null);
+      }, 4000); // 4 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [deleteSuccessMessage]);
+
   const columns: GridColDef[] = [
     {
       field: 'title',

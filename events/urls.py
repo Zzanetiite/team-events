@@ -25,9 +25,9 @@ urlpatterns = [
         name="events-by-username",
     ),
     path(
-        "api/events/type/<int:event_type_id>/",
+        "api/events/by-type/<str:event_type_names>/",
         EventByTypeView.as_view(),
-        name="events-by-type",
+        name="events_by_type_names",
     ),
     path("api/events/latest/", LatestEventsView.as_view(), name="latest-events"),
     path(

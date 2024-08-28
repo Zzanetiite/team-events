@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import FilledSubmitButton from '../components/common/FilledSubmitButton';
+import FilledSubmitButton from '../components/common/buttons/FilledSubmitButton';
 import StatusAlert from '../components/common/StatusAlert';
 import UserFormBox from '../components/common/UserFormBox';
 import UserInputInternalBox from '../components/common/UserInputInternalBox';
