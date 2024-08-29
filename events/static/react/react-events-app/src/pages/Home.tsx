@@ -20,7 +20,6 @@ const Home = () => {
     if (!filterOn) {
       fetchWithTokens(ApiEndpoints.GET_LATEST_EVENTS, { method: 'GET' })
         .then((data: EventDBProps[]) => {
-          console.log('Fetched Event Data:', data);
           const mappedEvents = mapEventData(data);
           setEventData(mappedEvents);
         })
@@ -40,13 +39,11 @@ const Home = () => {
 
   useEffect(() => {
     if (filterOn) {
-      console.log('Selected Event Types: ', selectedEventTypes.join(','));
       fetchWithTokens(
         ApiEndpoints.GET_EVENTS_BY_TYPE(selectedEventTypes.join(',')),
         { method: 'GET' }
       )
         .then((data: EventDBProps[]) => {
-          console.log('Fetched Event Type Data:', data);
           if (data.length === 0) {
             setInfoMessage('No events found for the selected types.');
           }

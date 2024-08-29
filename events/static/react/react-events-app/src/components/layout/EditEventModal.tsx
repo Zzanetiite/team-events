@@ -65,7 +65,6 @@ const EditEventModal = ({
 
   const handleSubmit = async () => {
     if (!event) return;
-    console.log(eventData);
     try {
       const response = await fetchWithTokens(
         ApiEndpoints.UPDATE_OR_DELETE_EVENT(event.id),
@@ -75,7 +74,6 @@ const EditEventModal = ({
         }
       );
       if (response) {
-        console.log('API response:', response);
         setErrorMessage(null);
         setSuccessMessage('Event updated successfully.');
         setModalUpdated(true);
@@ -92,7 +90,6 @@ const EditEventModal = ({
 
   const handleDelete = async () => {
     if (!event) return;
-    console.log('Deleting: ', eventData);
     try {
       const response = await fetchWithTokens(
         ApiEndpoints.UPDATE_OR_DELETE_EVENT(event.id),

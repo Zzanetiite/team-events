@@ -14,7 +14,6 @@ export const mapEventTypeToPlaceType = (eventTypeName: string): PlaceTypes => {
 };
 
 export const mapEventData = (apiData: EventDBProps[]): EventProps[] => {
-  console.log(apiData);
   return apiData.map((event) => ({
     eventTitle: event.title,
     placeType: mapEventTypeToPlaceType(event.event_type),

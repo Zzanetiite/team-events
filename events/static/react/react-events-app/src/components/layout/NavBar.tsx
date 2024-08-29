@@ -30,7 +30,6 @@ export default function NavBar() {
     const fetchUsername = async () => {
       try {
         const data = await fetchWithTokens(ApiEndpoints.GET_USERNAME);
-        console.log(data);
         setUsername(data.username);
         if (data.is_admin) {
           setIsAdmin(true);
