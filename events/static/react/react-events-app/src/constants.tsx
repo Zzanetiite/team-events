@@ -39,6 +39,7 @@ export const ApiEndpoints = {
   GET_USER_EVENTS: (username: string) => `api/events/username/${username}/`,
   GET_EVENTS_BY_TYPE: (event_types: string) =>
     `api/events/by-type/${event_types}/`,
+  GET_ALL_EVENTS: 'api/events/',
   GET_LATEST_EVENTS: 'api/events/latest/',
   CREATE_EVENT: 'api/events/',
   UPDATE_OR_DELETE_EVENT: (event_id: number) => `api/events/${event_id}/`,

@@ -81,7 +81,7 @@ export interface EventProps {
 }
 
 export interface EventDBProps extends EventDBMinimumProps {
-  average_rating: number;
+  average_rating_event: number;
   user: string;
   address: string;
 }
@@ -95,6 +95,7 @@ export interface EventDBMinimumProps {
 
 export interface EventTableProps extends CreateUpdateEventProps {
   id: number;
+  user: string;
 }
 
 export interface CreateUpdateEventProps {

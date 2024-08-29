@@ -14,6 +14,7 @@ export const mapEventTypeToPlaceType = (eventTypeName: string): PlaceTypes => {
 };
 
 export const mapEventData = (apiData: EventDBProps[]): EventProps[] => {
+  console.log(apiData);
   return apiData.map((event) => ({
     eventTitle: event.title,
     placeType: mapEventTypeToPlaceType(event.event_type),
@@ -24,7 +25,7 @@ export const mapEventData = (apiData: EventDBProps[]): EventProps[] => {
       'Great service. A lovely place to eat and hang out with friends. Great ambiance and food!',
       'Will visit again! A lovely place to eat and hang out with friends. Great ambiance and food!',
     ],
-    placeRating: event.average_rating || 4.5,
+    placeRating: event.average_rating_event || 4.5,
     loudnessRating: 3,
   }));
 };
@@ -38,6 +39,7 @@ export const mapEventTableData = (
     eventType: mapEventTypeToPlaceType(event.event_type),
     address: event.address,
     description: event.description,
+    user: event.user,
   }));
 };
 

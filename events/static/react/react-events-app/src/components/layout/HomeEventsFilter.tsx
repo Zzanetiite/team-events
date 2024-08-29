@@ -44,7 +44,7 @@ const HomeEventsFilter = ({
           selectedTypes={selectedTypes}
           handleCheckboxChange={handleCheckboxChange}
         />
-        <Box mt={2} display="flex" justifyContent="space-between">
+        <Box mt={2} gap={3} display="flex" justifyContent="flex-start">
           <ApplyButton handleApply={handleApply} />
           <ResetButton handleReset={handleReset} />
         </Box>

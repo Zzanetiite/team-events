@@ -11,7 +11,6 @@ import { useApi } from '../../hooks/useApi';
 import { EditEventModalProps, EventTableProps } from '../../interfaces/types';
 import { ApiEndpoints, ErrorMessages } from '../../constants';
 import { handleError } from '../../errors/handleError';
-import { useTokens } from '../../context/TokenContext';
 import ConfirmAction from '../common/ConfirmAction';
 import StatusAlert from '../common/StatusAlert';
 import EventForm from '../common/EventForm';
@@ -30,7 +29,6 @@ const EditEventModal = ({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const { fetchWithTokens } = useApi();
-  const { isAdmin } = useTokens();
 
   useEffect(() => {
     if (successMessage) {
@@ -141,11 +139,9 @@ const EditEventModal = ({
         <StatusAlert message={successMessage} severity="success" />
       )}
       <DialogActions>
-        {isAdmin && (
-          <Button onClick={() => setConfirmOpen(true)} color="warning">
-            Delete
-          </Button>
-        )}
+        <Button onClick={() => setConfirmOpen(true)} color="warning">
+          Delete
+        </Button>
         <Button onClick={handleClose} color="secondary">
           Close
         </Button>

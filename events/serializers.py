@@ -24,6 +24,7 @@ class EventTypeSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     event_type = serializers.CharField(required=False)  # Accept name as string
+    user = serializers.SerializerMethodField()
 
     class Meta:
         model = Event
@@ -37,6 +38,9 @@ class EventSerializer(serializers.ModelSerializer):
             "address",
         ]
         read_only_fields = ["average_rating_event", "user"]
+
+    def get_user(self, obj):
+        return obj.user.username
 
     def validate_event_type(self, value):
         """

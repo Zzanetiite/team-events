@@ -13,6 +13,9 @@ class EventViewSetTests(APITestCase):
         self.admin_user = User.objects.create_superuser(
             username="adminuser", password="adminpassword"
         )
+        self.other_user = User.objects.create_user(
+            username="otheruser", password="otherpassword"
+        )
         self.client.login(username="testuser", password="password")
         self.event_type = EventType.objects.create(
             name="Restaurant", description="A large conference"
@@ -60,10 +63,18 @@ class EventViewSetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(self.event.title, "Updated Event")
 
-    def test_delete_event_by_non_admin(self):
+    def test_delete_event_by_non_creator_non_admin(self):
+        logged_in = self.client.login(username="otheruser", password="otherpassword")
+        self.assertTrue(logged_in, "Login failed for 'otheruser'")
         response = self.client.delete(self.detail_url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(Event.objects.count(), 1)
+
+    def test_delete_event_by_creator(self):
+        # Already logged in via setup()
+        response = self.client.delete(self.detail_url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Event.objects.count(), 0)
 
     def test_delete_event_by_admin(self):
         self.client.login(username="adminuser", password="adminpassword")

@@ -30,7 +30,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [modalUpdated, setModalUpdated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { username } = useTokens();
+  const { username, isAdmin } = useTokens();
   const { fetchWithTokens } = useApi();
 
   useEffect(() => {
@@ -38,9 +38,14 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
       setErrorMessage('Username not found. No events to display.');
     } else {
       try {
-        fetchWithTokens(ApiEndpoints.GET_USER_EVENTS(username), {
-          method: 'GET',
-        })
+        fetchWithTokens(
+          isAdmin
+            ? ApiEndpoints.GET_ALL_EVENTS
+            : ApiEndpoints.GET_USER_EVENTS(username),
+          {
+            method: 'GET',
+          }
+        )
           .then((data: EventDBProps[]) => {
             setUserEvents(mapEventTableData(data));
             setModalUpdated(false);
@@ -48,8 +53,8 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
             setLoading(false);
           })
           .catch((error: any) => {
-            console.error('Error fetching User Events:', error);
-            setErrorMessage('Error fetching User Events.');
+            console.error('Error fetching event list:', error);
+            setErrorMessage('Error fetching event list.');
           });
       } catch (error) {
         setErrorMessage('Error fetching User Events.');
@@ -100,6 +105,27 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
     },
   ];
 
+  const adminColumns: GridColDef[] = [
+    {
+      field: 'title',
+      headerName: 'Event Title',
+      width: 200,
+      renderCell: renderEventCell(userEvents, setSelectedEvent, setModalOpen),
+    },
+    {
+      field: 'user',
+      headerName: 'Creator',
+      width: 130,
+    },
+    { field: 'eventType', headerName: 'Type', width: 130 },
+    { field: 'address', headerName: 'Address', width: 250 },
+    {
+      field: 'description',
+      headerName: 'Description',
+      width: 300,
+    },
+  ];
+
   const handleCloseModal = (): void => {
     setModalOpen(false);
   };
@@ -120,7 +146,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
         <div style={{ height: 400, width: '100%' }}>
           <DataGrid
             rows={userEvents}
-            columns={columns}
+            columns={isAdmin ? adminColumns : columns}
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 5 },

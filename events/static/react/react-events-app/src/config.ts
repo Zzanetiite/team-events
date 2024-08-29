@@ -29,4 +29,5 @@ export const eventEmptyData: EventTableProps = {
   eventType: PlaceTypes.TEAM_BUILDING,
   address: '',
   description: '',
+  user: '',
 };

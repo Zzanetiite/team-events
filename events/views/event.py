@@ -38,7 +38,7 @@ class EventViewSet(viewsets.ViewSet):
     def destroy(self, request, pk=None):
         event = get_object_or_404(Event, pk=pk)
 
-        if not request.user.is_staff:
+        if not (request.user.is_staff or event.user == request.user):
             raise PermissionDenied("You do not have permission to delete events.")
 
         event.delete()

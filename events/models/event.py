@@ -8,8 +8,6 @@ from events.models.eventType import EventType
 
 
 class Event(models.Model):
-    # TODO: Location ID
-    # TODO: CommentsList ID
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=40)
     event_type = models.ForeignKey(
