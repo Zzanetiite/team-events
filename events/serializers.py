@@ -2,7 +2,9 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from events.models.event import Event
-from events.models.eventType import EventType
+from events.models.event_type import EventType
+from events.models.rating import Rating
+from events.models.rating_type import RatingType
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -60,3 +62,18 @@ class EventSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return super().create(validated_data)
+
+
+class RatingSerializer(serializers.ModelSerializer):
+    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    rating_type = serializers.PrimaryKeyRelatedField(queryset=RatingType.objects.all())
+
+    class Meta:
+        model = Rating
+        fields = ["id", "event", "user", "rating_type", "score"]
+
+    def update(self, instance, validated_data):
+        instance.score = validated_data.get("score", instance.score)
+        instance.save()
+        return instance

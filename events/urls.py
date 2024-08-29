@@ -8,6 +8,7 @@ from events.views.event import (
 )
 
 from .utils import Utils
+from .views.rating import RatingView
 from .views.security import SecurityView
 from .views.user_management import UserManagementView
 
@@ -42,4 +43,5 @@ urlpatterns = [
         EventViewSet.as_view({"get": "list", "post": "create"}),
         name="event-list",
     ),
+    path("api/ratings/", RatingView.as_view(), name="rating-list"),
 ]

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from events.models.event import Event
-from events.models.eventType import EventType
+from events.models.event_type import EventType
 from events.serializers import EventSerializer
 
 

@@ -207,5 +207,45 @@
       "user": 1,
       "event_type": 11
     }
+  },
+  {
+    "model": "events.rating",
+    "pk": 1,
+    "fields": {
+      "event": 1,
+      "user": 1,
+      "rating_type": 1,
+      "score": 5
+    }
+  },
+  {
+    "model": "events.rating",
+    "pk": 2,
+    "fields": {
+      "event": 1,
+      "user": 1,
+      "rating_type": 2,
+      "score": 3
+    }
+  },
+  {
+    "model": "events.rating",
+    "pk": 3,
+    "fields": {
+      "event": 3,
+      "user": 1,
+      "rating_type": 1,
+      "score": 5
+    }
+  },
+  {
+    "model": "events.rating",
+    "pk": 4,
+    "fields": {
+      "event": 3,
+      "user": 1,
+      "rating_type": 2,
+      "score": 4
+    }
   }
 ]
