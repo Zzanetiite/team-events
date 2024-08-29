@@ -7,6 +7,7 @@ import { mapEventData } from '../utils/mapping';
 import StatusAlert from '../components/common/StatusAlert';
 import HomeEventsContainer from '../components/layout/HomeEventsContainer';
 import HomeEventsFilter from '../components/layout/HomeEventsFilter';
+import { handleError } from '../errors/handleError';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -24,9 +25,17 @@ const Home = () => {
           setEventData(mappedEvents);
         })
         .catch((error: any) =>
-          setErrorMessage(
-            'Error loading Event data. Apologies for the inconvenince.'
-          )
+          handleError({
+            error,
+            setErrorMessage,
+            overrideErrorHandlers: {
+              403: (setErrorMessage) => {
+                setErrorMessage(
+                  'Error loading Event data. Please try clearing site cookies.'
+                );
+              },
+            },
+          })
         );
     }
   }, [setEventData, filterOn]);
@@ -51,9 +60,18 @@ const Home = () => {
           setEventData(mappedEvents);
         })
         .catch((error: any) =>
-          setErrorMessage(
-            'Error loading Event data. Apologies for the inconvenince.'
-          )
+          handleError({
+            error,
+            setErrorMessage,
+            messageForBadRequest: 'No events found for the selected types.',
+            overrideErrorHandlers: {
+              403: (setErrorMessage) => {
+                setErrorMessage(
+                  'Error loading Event data. Please try clearing site cookies.'
+                );
+              },
+            },
+          })
         );
     }
   }, [setEventData, filterOn, selectedEventTypes]);

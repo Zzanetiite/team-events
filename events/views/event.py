@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -63,6 +64,8 @@ class EventByTypeView(APIView):
 
 
 class LatestEventsView(APIView):
+    permission_classes = [AllowAny]
+
     def get(self, request):
         events = Event.objects.order_by("-id")[:10]  # Latest 10 event IDs
         serializer = EventSerializer(events, many=True)

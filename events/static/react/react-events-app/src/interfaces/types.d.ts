@@ -40,7 +40,7 @@ export interface LoginPageProps {
 export interface HandleErrorProps {
   error: any;
   setErrorMessage: (message: string | null) => void;
-  setSuccessMessage: (message: string | null) => void;
+  setSuccessMessage?: (message: string | null) => void;
   messageForBadRequest?: string;
   overrideErrorHandlers?: {
     [key: number]: (setErrorMessage: (message: string | null) => void) => void;

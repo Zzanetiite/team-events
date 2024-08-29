@@ -37,5 +37,7 @@ export const handleError = ({
         break;
     }
   }
-  setSuccessMessage(null);
+  if (setSuccessMessage) {
+    setSuccessMessage(null);
+  }
 };
