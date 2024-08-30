@@ -11,6 +11,9 @@ import ConfirmAction from '../common/ConfirmAction';
 import StatusAlert from '../common/StatusAlert';
 import EventForm from '../common/EventForm';
 import { useEditEventModal } from '../../hooks/useEditEventModal';
+import EmptySubmitButton from '../common/buttons/EmptySubmitButton';
+import EmptyCancelButton from '../common/buttons/EmptyCancelButton';
+import EmptyDeleteButton from '../common/buttons/EmptyDeleteButton';
 
 const EditEventModal = ({
   open,
@@ -56,15 +59,9 @@ const EditEventModal = ({
         <StatusAlert message={successMessage} severity="success" />
       )}
       <DialogActions>
-        <Button onClick={() => setConfirmOpen(true)} color="warning">
-          Delete
-        </Button>
-        <Button onClick={handleClose} color="secondary">
-          Close
-        </Button>
-        <Button onClick={handleSubmit} color="primary">
-          Submit
-        </Button>
+        <EmptyDeleteButton handleDelete={() => setConfirmOpen(true)} />
+        <EmptyCancelButton handleClose={handleClose} text="Close" />
+        <EmptySubmitButton handleSubmit={handleSubmit} />
       </DialogActions>
       <ConfirmAction
         confirmOpen={confirmOpen}

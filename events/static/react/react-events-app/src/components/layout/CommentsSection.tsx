@@ -1,50 +1,30 @@
 import React from 'react';
-import { Box, Button, Typography, Card, CardContent } from '@mui/material';
-import { useState } from 'react';
-import { ChevronRightRounded } from '@mui/icons-material';
+import { Box } from '@mui/material';
+import CommentCard from '../common/CommentCard';
+import StatusAlert from '../common/StatusAlert';
+import useComments from '../../hooks/useComments';
+import { EventProps } from '../../interfaces/types';
 import { COMMENT_LIMIT } from '../../constants';
+import ShowCommentsButton from '../common/buttons/ShowCommentsButton';
+import AddCommentButton from '../common/buttons/AddCommentButton';
+import EmptySubmitButton from '../common/buttons/EmptySubmitButton';
+import EmptyCancelButton from '../common/buttons/EmptyCancelButton';
+import CommentInput from '../common/input/CommentInput';
 
-function CommentCard({
-  username,
-  date,
-  text,
-}: {
-  username: string;
-  date: string;
-  text: string;
-}) {
-  return (
-    <Card sx={{ marginBottom: 1 }}>
-      <CardContent>
-        <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 0 }}>
-          <Typography variant="subtitle2" sx={{ marginRight: 1 }}>
-            {username}
-          </Typography>
-          <Typography variant="caption" sx={{ marginLeft: 1, color: 'gray' }}>
-            {date}
-          </Typography>
-        </Box>
-        <Typography variant="body2">{text}</Typography>
-      </CardContent>
-    </Card>
-  );
-}
-
-// TODO: Should take the comments object with data instead
-export default function CommentsSection({ comments }: { comments: string[] }) {
-  const [showAllComments, setShowAllComments] = useState(false);
-
-  // Temporary data for demo, replace with real data
-  const commentsData = comments.map((comment, index) => ({
-    username: `User${index + 1}`,
-    date: new Date().toLocaleDateString(),
-    text: comment,
-  }));
-
-  const displayedComments = showAllComments
-    ? commentsData
-    : commentsData.slice(0, COMMENT_LIMIT);
-
+export default function CommentsSection({ event }: { event: EventProps }) {
+  const {
+    showAllComments,
+    setShowAllComments,
+    showCommentInput,
+    newComment,
+    setNewComment,
+    allComments,
+    errorMessage,
+    handleAddComment,
+    handleCommentSubmit,
+    handleCloseCommentAdd,
+    displayedComments,
+  } = useComments(event);
   return (
     <Box sx={{ marginTop: 1 }}>
       {displayedComments.map((comment, index) => (
@@ -55,19 +35,31 @@ export default function CommentsSection({ comments }: { comments: string[] }) {
           text={comment.text}
         />
       ))}
-      {comments.length > COMMENT_LIMIT && (
-        <Button
-          onClick={() => setShowAllComments(!showAllComments)}
-          color={'primary'}
-          sx={{
-            mt: 0,
-            textTransform: 'initial',
-            padding: 0,
-            minHeight: 'auto',
-          }}
-        >
-          {showAllComments ? 'show less' : 'see more'} <ChevronRightRounded />
-        </Button>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        {allComments.length > COMMENT_LIMIT && (
+          <ShowCommentsButton
+            showAllComments={showAllComments}
+            setShowAllComments={setShowAllComments}
+          />
+        )}
+        <AddCommentButton handleAddComment={handleAddComment} />
+      </Box>
+      {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
+      {showCommentInput && (
+        <Box sx={{ marginTop: 1 }}>
+          <CommentInput newComment={newComment} setNewComment={setNewComment} />
+          <EmptySubmitButton handleSubmit={handleCommentSubmit} />
+          <EmptyCancelButton
+            handleClose={handleCloseCommentAdd}
+            text="Cancel"
+          />
+        </Box>
       )}
     </Box>
   );

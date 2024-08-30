@@ -8,6 +8,7 @@ from events.views.event import (
 )
 
 from .utils import Utils
+from .views.comment import CommentCreateView
 from .views.rating import RatingView
 from .views.security import SecurityView
 from .views.user_management import UserManagementView
@@ -44,4 +45,5 @@ urlpatterns = [
         name="event-list",
     ),
     path("api/ratings/", RatingView.as_view(), name="rating-list"),
+    path("api/comment/", CommentCreateView.as_view(), name="comment-create"),
 ]

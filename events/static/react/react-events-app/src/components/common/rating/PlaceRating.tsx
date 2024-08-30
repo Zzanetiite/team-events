@@ -10,7 +10,7 @@ const PlaceRating: React.FC<RatingProps> = ({ event }) => {
     useRating(event, RatingTypes.PLACE);
   return (
     <RatingBox
-      eventRating={event.usersPlaceRating || 0}
+      eventRating={event.placeRating || 0}
       submissionStatus={submissionStatus}
     >
       <Rating

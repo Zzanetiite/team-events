@@ -1,12 +1,27 @@
 import { PlaceTypes, RatingTypes } from '../constants';
 
-export interface Counter {
-  id: number;
-  value: number;
-}
-
 export interface CounterButtonProps {
   counterId: number;
+}
+
+export interface ShowCommentsButtonProps {
+  showAllComments: boolean;
+  setShowAllComments: (showAllComments: boolean) => void;
+}
+
+export interface NavBarEventsButtonProps {
+  loggedIn: boolean;
+  handleEventsButton: () => void;
+}
+
+export interface NavBarFilterButtonProps {
+  handleFilterOpen: () => void;
+}
+
+export interface NavBarLoginButtonProps {
+  loggedIn: boolean;
+  handleLogout: () => void;
+  handleLogin: () => void;
 }
 
 export interface FetchOptions extends RequestInit {
@@ -76,11 +91,25 @@ export interface EventProps {
   placeType: PlaceTypes;
   address: string;
   description: string;
-  comments: string[];
   placeRating: number;
   loudnessRating: number;
   usersPlaceRating: number | null;
   usersLoudnessRating: number | null;
+  comments: CommentDBProps[];
+}
+
+export interface CommentDBProps {
+  id: number;
+  comment: string;
+  event: number;
+  user: string;
+  date_created: string;
+}
+
+export interface CommentCardProps {
+  username: string;
+  date: string;
+  text: string;
 }
 
 export interface RatingDBProps {
@@ -93,10 +122,11 @@ export interface RatingDBProps {
 export interface EventDBProps extends EventDBMinimumProps {
   user: string;
   address: string;
-  average_rating_event: number;
-  average_rating_loudness: number;
+  average_rating_event: number | null;
+  average_rating_loudness: number | null;
   users_rating_event: number | null;
   users_rating_loudness: number | null;
+  comments: CommentDBProps[];
 }
 
 export interface EventDBMinimumProps {
@@ -129,21 +159,6 @@ export interface EditEventModalProps {
 export interface NewEventCreatedProps {
   newEventCreated: boolean;
   setNewEventCreated: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export interface NavBarEventsButtonProps {
-  loggedIn: boolean;
-  handleEventsButton: () => void;
-}
-
-interface NavBarFilterButtonProps {
-  handleFilterOpen: () => void;
-}
-
-export interface NavBarLoginButtonProps {
-  loggedIn: boolean;
-  handleLogout: () => void;
-  handleLogin: () => void;
 }
 
 export interface NavBarUsernameProps {

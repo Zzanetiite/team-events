@@ -11,7 +11,7 @@ const LoudnessRating: React.FC<RatingProps> = ({ event }) => {
     useRating(event, RatingTypes.LOUDNESS);
   return (
     <RatingBox
-      eventRating={event.usersLoudnessRating || 0}
+      eventRating={event.loudnessRating || 0}
       submissionStatus={submissionStatus}
     >
       <StyledLoudnessRating

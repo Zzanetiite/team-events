@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { SelectChangeEvent } from '@mui/material';
 import { EventTableProps } from '../interfaces/types';
 import { useApi } from './useApi';
 import { eventEmptyData } from '../config';
 import { ApiEndpoints } from '../constants';
 import { handleError } from '../errors/handleError';
+import useAutoClearMessage from './useAutoClearMessage';
 
 export const useCreateEvent = (
   setNewEventCreated: (value: boolean) => void
@@ -15,15 +16,10 @@ export const useCreateEvent = (
   const [formData, setFormData] = useState<EventTableProps>(eventEmptyData);
   const { fetchWithTokens } = useApi();
 
-  useEffect(() => {
-    if (successMessage) {
-      const timer = setTimeout(() => {
-        setSuccessMessage(null);
-      }, 4000); // 4 seconds
-
-      return () => clearTimeout(timer);
-    }
-  }, [successMessage]);
+  useAutoClearMessage({
+    message: successMessage,
+    setMessage: setSuccessMessage,
+  });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

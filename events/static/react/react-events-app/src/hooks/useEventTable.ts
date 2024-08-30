@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useApi } from './useApi';
 import { ApiEndpoints } from '../constants';
 import { mapEventTableData } from '../utils/mapping';
+import useAutoClearMessage from './useAutoClearMessage';
 
 export const useEventTableData = (
   newEventCreated: boolean,
@@ -62,14 +63,10 @@ export const useEventTableData = (
     }
   }, [errorMessage]);
 
-  useEffect(() => {
-    if (deleteSuccessMessage) {
-      const timer = setTimeout(() => {
-        setDeleteSuccessMessage(null);
-      }, 4000); // 4 seconds
-      return () => clearTimeout(timer);
-    }
-  }, [deleteSuccessMessage]);
+  useAutoClearMessage({
+    message: deleteSuccessMessage,
+    setMessage: setDeleteSuccessMessage,
+  });
 
   return {
     userEvents,

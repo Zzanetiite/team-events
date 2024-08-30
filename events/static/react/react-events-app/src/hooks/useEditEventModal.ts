@@ -6,6 +6,7 @@ import { useApi } from './useApi';
 import { ApiEndpoints, ErrorMessages } from '../constants';
 import { mapEventToDBFormat } from '../utils/mapping';
 import { handleError } from '../errors/handleError';
+import useAutoClearMessage from './useAutoClearMessage';
 
 export const useEditEventModal = ({
   event,
@@ -19,14 +20,10 @@ export const useEditEventModal = ({
   const [confirmOpen, setConfirmOpen] = useState(false);
   const { fetchWithTokens } = useApi();
 
-  useEffect(() => {
-    if (successMessage) {
-      const timer = setTimeout(() => {
-        setSuccessMessage(null);
-      }, 4000); // 4 seconds
-      return () => clearTimeout(timer);
-    }
-  }, [successMessage]);
+  useAutoClearMessage({
+    message: successMessage,
+    setMessage: setSuccessMessage,
+  });
 
   useEffect(() => {
     if (event) {

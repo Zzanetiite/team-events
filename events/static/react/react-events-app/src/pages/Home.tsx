@@ -1,90 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { ApiEndpoints, PlaceTypes } from '../constants';
+import React, { useState } from 'react';
 import { useApi } from '../hooks/useApi';
-import { EventDBProps } from '../interfaces/types';
 import { useDataContext } from '../context/DataContext';
-import { mapEventData } from '../utils/mapping';
+import useFetchEvents from '../hooks/useFetchEvents';
+import useEventFilter from '../hooks/useEventFilter';
+import useAutoClearMessage from '../hooks/useAutoClearMessage';
 import StatusAlert from '../components/common/StatusAlert';
 import HomeEventsContainer from '../components/layout/HomeEventsContainer';
 import HomeEventsFilter from '../components/layout/HomeEventsFilter';
-import { handleError } from '../errors/handleError';
+import { PlaceTypes } from '../constants';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
   const { eventData, setEventData, homePageFilterOpen } = useDataContext();
-  const [selectedEventTypes, setSelectedEventTypes] = useState<String[]>([]);
-  const [filterOn, setFilterOn] = useState(false);
+  const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
+  const [filterOn, setFilterOn] = useEventFilter({
+    homePageFilterOpen,
+    selectedEventTypes,
+  });
 
-  useEffect(() => {
-    if (!filterOn) {
-      fetchWithTokens(ApiEndpoints.GET_LATEST_EVENTS, { method: 'GET' })
-        .then((data: EventDBProps[]) => {
-          const mappedEvents = mapEventData(data);
-          setEventData(mappedEvents);
-        })
-        .catch((error: any) =>
-          handleError({
-            error,
-            setErrorMessage,
-            overrideErrorHandlers: {
-              403: (setErrorMessage) => {
-                setErrorMessage(
-                  'Error loading Event data. Please try clearing site cookies.'
-                );
-              },
-            },
-          })
-        );
-    }
-  }, [setEventData, filterOn]);
+  useFetchEvents({
+    filterOn,
+    selectedEventTypes,
+    setErrorMessage,
+    setEventData,
+    fetchWithTokens,
+  });
 
-  useEffect(() => {
-    if (filterOn && selectedEventTypes.length === 0 && !homePageFilterOpen) {
-      setFilterOn(false);
-    }
-  }, [filterOn, homePageFilterOpen, selectedEventTypes]);
-
-  useEffect(() => {
-    if (filterOn) {
-      fetchWithTokens(
-        ApiEndpoints.GET_EVENTS_BY_TYPE(selectedEventTypes.join(',')),
-        { method: 'GET' }
-      )
-        .then((data: EventDBProps[]) => {
-          if (data.length === 0) {
-            setInfoMessage('No events found for the selected types.');
-          }
-          const mappedEvents = mapEventData(data);
-          setEventData(mappedEvents);
-        })
-        .catch((error: any) =>
-          handleError({
-            error,
-            setErrorMessage,
-            messageForBadRequest: 'No events found for the selected types.',
-            overrideErrorHandlers: {
-              403: (setErrorMessage) => {
-                setErrorMessage(
-                  'Error loading Event data. Please try clearing site cookies.'
-                );
-              },
-            },
-          })
-        );
-    }
-  }, [setEventData, filterOn, selectedEventTypes]);
-
-  useEffect(() => {
-    if (errorMessage || infoMessage) {
-      const timer = setTimeout(() => {
-        setErrorMessage(null);
-        setInfoMessage(null);
-      }, 3000); // 3 seconds
-      return () => clearTimeout(timer);
-    }
-  }, [errorMessage, infoMessage]);
+  useAutoClearMessage({ message: errorMessage, setMessage: setErrorMessage });
+  useAutoClearMessage({ message: infoMessage, setMessage: setInfoMessage });
 
   const handleApplyFilter = (selectedTypes: PlaceTypes[]) => {
     if (selectedTypes.length === 0) {

@@ -44,9 +44,10 @@ export const ApiEndpoints = {
   CREATE_EVENT: 'api/events/',
   UPDATE_OR_DELETE_EVENT: (event_id: number) => `api/events/${event_id}/`,
   SUBMIT_OR_UPDATE_RATING: 'api/ratings/',
+  SUBMIT_COMMENT: 'api/comment/',
 };
 
-export const COMMENT_LIMIT = 2;
+export const COMMENT_LIMIT = 1;
 
 export enum PlaceTypes {
   RESTAURANT = 'Restaurant',

@@ -12,7 +12,7 @@ from events.serializers import EventSerializer
 
 class EventViewSet(viewsets.ViewSet):
     def list(self, request):
-        events = Event.objects.all()
+        events = Event.objects.all().prefetch_related("comments")
         serializer = EventSerializer(events, many=True, context={"request": request})
         return Response(serializer.data)
 

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
+from events.models.comment import Comment
 from events.models.event import Event
 from events.models.event_type import EventType
 from events.models.rating import Rating
@@ -24,11 +25,39 @@ class EventTypeSerializer(serializers.ModelSerializer):
         fields = ["id", "name"]
 
 
+class RatingSerializer(serializers.ModelSerializer):
+    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    rating_type = serializers.PrimaryKeyRelatedField(queryset=RatingType.objects.all())
+
+    class Meta:
+        model = Rating
+        fields = ["id", "event", "user", "rating_type", "score"]
+
+    def update(self, instance, validated_data):
+        instance.score = validated_data.get("score", instance.score)
+        instance.save()
+        return instance
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+    user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Comment
+        fields = ["id", "comment", "event", "user", "date_created"]
+
+    def get_user(self, obj):
+        return obj.user.username
+
+
 class EventSerializer(serializers.ModelSerializer):
     event_type = serializers.CharField(required=False)  # Accept name as string
     user = serializers.SerializerMethodField()
     users_rating_event = serializers.SerializerMethodField()
     users_rating_loudness = serializers.SerializerMethodField()
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Event
@@ -43,6 +72,7 @@ class EventSerializer(serializers.ModelSerializer):
             "average_rating_loudness",
             "users_rating_event",
             "users_rating_loudness",
+            "comments",
         ]
         read_only_fields = [
             "average_rating_event",
@@ -101,18 +131,3 @@ class EventSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return super().create(validated_data)
-
-
-class RatingSerializer(serializers.ModelSerializer):
-    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    rating_type = serializers.PrimaryKeyRelatedField(queryset=RatingType.objects.all())
-
-    class Meta:
-        model = Rating
-        fields = ["id", "event", "user", "rating_type", "score"]
-
-    def update(self, instance, validated_data):
-        instance.score = validated_data.get("score", instance.score)
-        instance.save()
-        return instance

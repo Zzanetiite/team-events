@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from events.models.comment import Comment
 from events.models.event import Event
 from events.models.event_type import EventType
 from events.models.rating import Rating
@@ -24,3 +25,8 @@ class RatingAdmin(admin.ModelAdmin):
 @admin.register(RatingType)
 class RatingTypeAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("id", "comment", "event", "user", "date_created")
