@@ -209,13 +209,19 @@
     }
   },
   {
-    "model": "events.rating",
+    "model": "events.ratingtype",
     "pk": 1,
     "fields": {
-      "event": 1,
-      "user": 1,
-      "rating_type": 1,
-      "score": 5
+      "id": 1,
+      "name": "Place Rating"
+    }
+  },
+  {
+    "model": "events.ratingtype",
+    "pk": 2,
+    "fields": {
+      "id": 1,
+      "name": "Place Rating"
     }
   },
   {
