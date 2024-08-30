@@ -18,18 +18,18 @@ class RatingView(APIView):
             rating_type = validated_data["rating_type"]
             score = validated_data["score"]
 
-            # Validate that user hasn't already voted
-            rating, created = Rating.objects.update_or_create(
+            Rating.objects.update_or_create(
                 event_id=event_id,
                 user=user,
                 rating_type=rating_type,
                 defaults={"score": score},
             )
 
-            # Calculate the new average rating for the event
             self.update_event_average_rating(event_id)
 
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(
+                {"message": "Rating updated successfully."}, status=status.HTTP_200_OK
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update_event_average_rating(self, event_id):

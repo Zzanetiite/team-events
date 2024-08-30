@@ -79,8 +79,8 @@ export interface EventProps {
   comments: string[];
   placeRating: number;
   loudnessRating: number;
-  usersPlaceRating?: number;
-  usersLoudnessRating?: number;
+  usersPlaceRating: number | null;
+  usersLoudnessRating: number | null;
 }
 
 export interface RatingDBProps {
@@ -95,6 +95,8 @@ export interface EventDBProps extends EventDBMinimumProps {
   address: string;
   average_rating_event: number;
   average_rating_loudness: number;
+  users_rating_event: number | null;
+  users_rating_loudness: number | null;
 }
 
 export interface EventDBMinimumProps {

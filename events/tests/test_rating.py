@@ -22,8 +22,9 @@ class RatingViewTest(TestCase):
         self.event = Event.objects.create(
             title="Sample Event", description="This is a sample event", user=self.user
         )
-        self.rating_type_event = RatingType.objects.create(name="Event")
-        self.rating_type_loudness = RatingType.objects.create(name="Loudness")
+
+        self.rating_type_event = RatingType.objects.create(name="Place Rating")
+        self.rating_type_loudness = RatingType.objects.create(name="Loudness Rating")
 
         self.url = reverse("rating-list")
 

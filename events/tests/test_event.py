@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from events.models.event import Event, EventType
+from events.models.rating_type import RatingType
 from events.serializers import EventSerializer
 
 
@@ -27,6 +28,9 @@ class EventViewSetTests(APITestCase):
             user=self.user,
             event_type=self.event_type,
         )
+        RatingType.objects.create(name="Loudness Rating")
+        RatingType.objects.create(name="Place Rating")
+
         self.url = reverse("event-list")
         self.detail_url = reverse("event-detail", kwargs={"pk": self.event.pk})
 
@@ -96,6 +100,9 @@ class EventByUsernameViewTests(APITestCase):
             user=self.user,
             event_type=self.event_type,
         )
+        RatingType.objects.create(name="Loudness Rating")
+        RatingType.objects.create(name="Place Rating")
+
         self.url = reverse(
             "events-by-username", kwargs={"username": self.user.username}
         )
@@ -125,6 +132,10 @@ class EventByTypeViewTests(APITestCase):
             user=User.objects.create_user(username="anotheruser", password="password"),
         )
         event_type_names = f"{self.event_type.name},{self.other_event_type.name}"
+
+        RatingType.objects.create(name="Loudness Rating")
+        RatingType.objects.create(name="Place Rating")
+
         self.url = reverse(
             "events_by_type_names",
             kwargs={"event_type_names": event_type_names},
@@ -153,6 +164,10 @@ class LatestEventsViewTests(APITestCase):
                 user=User.objects.create_user(username=f"user{i}", password="password"),
                 event_type=self.event_type,
             )
+
+        RatingType.objects.create(name="Loudness Rating")
+        RatingType.objects.create(name="Place Rating")
+
         self.url = reverse("latest-events")
 
     def test_get_latest_events(self):

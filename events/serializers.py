@@ -27,6 +27,8 @@ class EventTypeSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     event_type = serializers.CharField(required=False)  # Accept name as string
     user = serializers.SerializerMethodField()
+    users_rating_event = serializers.SerializerMethodField()
+    users_rating_loudness = serializers.SerializerMethodField()
 
     class Meta:
         model = Event
@@ -39,11 +41,47 @@ class EventSerializer(serializers.ModelSerializer):
             "address",
             "average_rating_event",
             "average_rating_loudness",
+            "users_rating_event",
+            "users_rating_loudness",
         ]
-        read_only_fields = ["average_rating_event", "average_rating_loudness", "user"]
+        read_only_fields = [
+            "average_rating_event",
+            "average_rating_loudness",
+            "users_rating_event",
+            "users_rating_loudness",
+            "user",
+        ]
 
     def get_user(self, obj):
         return obj.user.username
+
+    def get_users_rating_event(self, obj):
+        request = self.context.get("request", None)
+        if request and request.user.is_authenticated:
+            user = request.user
+            rating_type_event = RatingType.objects.get(name="Place Rating")
+            try:
+                rating = Rating.objects.get(
+                    event=obj, user=user, rating_type=rating_type_event
+                )
+                return rating.score
+            except Rating.DoesNotExist:
+                return None
+        return None
+
+    def get_users_rating_loudness(self, obj):
+        request = self.context.get("request", None)
+        if request and request.user.is_authenticated:
+            user = request.user
+            rating_type_loudness = RatingType.objects.get(name="Loudness Rating")
+            try:
+                rating = Rating.objects.get(
+                    event=obj, user=user, rating_type=rating_type_loudness
+                )
+                return rating.score
+            except Rating.DoesNotExist:
+                return None
+        return None
 
     def validate_event_type(self, value):
         """

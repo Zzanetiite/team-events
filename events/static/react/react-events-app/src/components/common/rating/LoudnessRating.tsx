@@ -3,19 +3,17 @@ import { VolumeMute, VolumeUp } from '@mui/icons-material';
 import { StyledLoudnessRating } from '../../../config';
 import { RatingProps } from '../../../interfaces/types';
 import { RatingTypes } from '../../../constants';
-import { usePlaceRating } from '../../../hooks/useRating';
+import { useRating } from '../../../hooks/useRating';
 import RatingBox from './RatingBox';
 
 const LoudnessRating: React.FC<RatingProps> = ({ event }) => {
-  const {
-    userRating,
-    submissionStatus,
-    eventRating,
-    handleRatingChange,
-    disabled,
-  } = usePlaceRating(event, RatingTypes.LOUDNESS);
+  const { userRating, submissionStatus, handleRatingChange, disabled } =
+    useRating(event, RatingTypes.LOUDNESS);
   return (
-    <RatingBox eventRating={eventRating} submissionStatus={submissionStatus}>
+    <RatingBox
+      eventRating={event.usersLoudnessRating || 0}
+      submissionStatus={submissionStatus}
+    >
       <StyledLoudnessRating
         name="loudness-rating"
         defaultValue={event.loudnessRating}

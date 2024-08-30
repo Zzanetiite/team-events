@@ -29,6 +29,8 @@ export const mapEventData = (apiData: EventDBProps[]): EventProps[] => {
     ],
     placeRating: event.average_rating_event || 0,
     loudnessRating: event.average_rating_loudness || 0,
+    usersPlaceRating: event.users_rating_event || null,
+    usersLoudnessRating: event.users_rating_loudness || null,
   }));
 };
 

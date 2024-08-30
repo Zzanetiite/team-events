@@ -5,12 +5,13 @@ import { ApiEndpoints, RatingTypes } from '../constants';
 import { mapEventToRatingDBFormat } from '../utils/mapping';
 import { EventProps } from '../interfaces/types';
 
-export const usePlaceRating = (event: EventProps, ratingType: RatingTypes) => {
-  const [userRating, setUserRating] = useState<number>(0);
+export const useRating = (event: EventProps, ratingType: RatingTypes) => {
+  const [userRating, setUserRating] = useState<number>(
+    getStartingUserRating(ratingType, event)
+  );
   const [submissionStatus, setSubmissionStatus] = useState<
     'success' | 'error' | null
   >(null);
-  const [eventRating, setEventRating] = useState<number>(event.loudnessRating);
   const { loggedIn, user } = useAuth();
   const { fetchWithTokens } = useApi();
 
@@ -43,10 +44,6 @@ export const usePlaceRating = (event: EventProps, ratingType: RatingTypes) => {
         }
       );
       if (response) {
-        const newAvgRating = response.score;
-        if (newAvgRating) {
-          setEventRating(newAvgRating);
-        }
         setUserRating(newValue);
         setSubmissionStatus('success');
       }
@@ -59,8 +56,20 @@ export const usePlaceRating = (event: EventProps, ratingType: RatingTypes) => {
   return {
     userRating,
     submissionStatus,
-    eventRating,
     handleRatingChange,
     disabled: !loggedIn || userRating > 0,
   };
 };
+
+function getStartingUserRating(
+  ratingType: RatingTypes,
+  event: EventProps
+): number {
+  if (ratingType === RatingTypes.LOUDNESS) {
+    return event.usersLoudnessRating || 0;
+  } else if (ratingType === RatingTypes.PLACE) {
+    return event.placeRating || 0;
+  } else {
+    return 0;
+  }
+}

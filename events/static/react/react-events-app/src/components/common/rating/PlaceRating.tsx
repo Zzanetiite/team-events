@@ -1,20 +1,18 @@
 import React from 'react';
 import { Rating } from '@mui/material';
 import { RatingProps } from '../../../interfaces/types';
-import { usePlaceRating } from '../../../hooks/useRating';
+import { useRating } from '../../../hooks/useRating';
 import { RatingTypes } from '../../../constants';
 import RatingBox from './RatingBox';
 
 const PlaceRating: React.FC<RatingProps> = ({ event }) => {
-  const {
-    userRating,
-    submissionStatus,
-    eventRating,
-    handleRatingChange,
-    disabled,
-  } = usePlaceRating(event, RatingTypes.PLACE);
+  const { userRating, submissionStatus, handleRatingChange, disabled } =
+    useRating(event, RatingTypes.PLACE);
   return (
-    <RatingBox eventRating={eventRating} submissionStatus={submissionStatus}>
+    <RatingBox
+      eventRating={event.usersPlaceRating || 0}
+      submissionStatus={submissionStatus}
+    >
       <Rating
         name="place-rating"
         defaultValue={event.placeRating}

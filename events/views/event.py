@@ -13,16 +13,16 @@ from events.serializers import EventSerializer
 class EventViewSet(viewsets.ViewSet):
     def list(self, request):
         events = Event.objects.all()
-        serializer = EventSerializer(events, many=True)
+        serializer = EventSerializer(events, many=True, context={"request": request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         event = get_object_or_404(Event, pk=pk)
-        serializer = EventSerializer(event)
+        serializer = EventSerializer(event, context={"request": request})
         return Response(serializer.data)
 
     def create(self, request):
-        serializer = EventSerializer(data=request.data)
+        serializer = EventSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -30,7 +30,9 @@ class EventViewSet(viewsets.ViewSet):
 
     def update(self, request, pk=None):
         event = get_object_or_404(Event, pk=pk)
-        serializer = EventSerializer(event, data=request.data, partial=True)
+        serializer = EventSerializer(
+            event, data=request.data, partial=True, context={"request": request}
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -49,7 +51,7 @@ class EventViewSet(viewsets.ViewSet):
 class EventByUsernameView(APIView):
     def get(self, request, username):
         events = Event.objects.filter(user__username=username)
-        serializer = EventSerializer(events, many=True)
+        serializer = EventSerializer(events, many=True, context={"request": request})
         return Response(serializer.data)
 
 
@@ -59,7 +61,7 @@ class EventByTypeView(APIView):
         event_types = EventType.objects.filter(name__in=event_type_names)
         event_type_ids = [event_type.id for event_type in event_types]
         events = Event.objects.filter(event_type_id__in=event_type_ids)
-        serializer = EventSerializer(events, many=True)
+        serializer = EventSerializer(events, many=True, context={"request": request})
         return Response(serializer.data)
 
 
@@ -68,5 +70,5 @@ class LatestEventsView(APIView):
 
     def get(self, request):
         events = Event.objects.order_by("-id")[:10]  # Latest 10 event IDs
-        serializer = EventSerializer(events, many=True)
+        serializer = EventSerializer(events, many=True, context={"request": request})
         return Response(serializer.data)
