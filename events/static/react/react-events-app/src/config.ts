@@ -2,6 +2,8 @@ import { GridColDef } from '@mui/x-data-grid';
 import { PlaceTypes } from './constants';
 import { EventTableProps, TableColumnProps } from './interfaces/types';
 import { renderEventCell } from './utils/renderEventCell';
+import styled from '@emotion/styled';
+import { Rating } from '@mui/material';
 
 export const eventTableFormatting = {
   '& .MuiDataGrid-root': {
@@ -82,3 +84,12 @@ export const tableAdminColumns = ({
     },
   ];
 };
+
+export const StyledLoudnessRating = styled(Rating)({
+  '& .MuiRating-iconFilled': {
+    color: '#33a1b0',
+  },
+  '& .MuiRating-iconHover': {
+    color: '#cdf0f4',
+  },
+});

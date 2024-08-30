@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { TokenProvider } from './context/TokenContext';
+import { AuthProvider } from './context/AuthContext';
 import { RouterProvider } from 'react-router-dom';
 import router from './router';
 import NavBar from './components/layout/NavBar';
@@ -8,12 +8,12 @@ import { DataProvider } from './context/DataContext';
 
 const App: React.FC = () => {
   return (
-    <TokenProvider>
+    <AuthProvider>
       <DataProvider>
         <NavBar />
         <RouterProvider router={router} />
       </DataProvider>
-    </TokenProvider>
+    </AuthProvider>
   );
 };
 

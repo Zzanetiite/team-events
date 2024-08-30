@@ -1,12 +1,12 @@
 import { DOMAIN } from '../constants';
-import { useTokens } from '../context/TokenContext';
+import { useAuth } from '../context/AuthContext';
 
 interface FetchOptions extends RequestInit {
   body?: any;
 }
 
 export function useApi() {
-  const { csrfToken, userToken } = useTokens();
+  const { csrfToken, userToken } = useAuth();
 
   const fetchWithTokens = async (url: string, options: FetchOptions = {}) => {
     const headers: HeadersInit = {

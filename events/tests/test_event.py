@@ -47,7 +47,6 @@ class EventViewSetTests(APITestCase):
         data = {
             "title": "New Event",
             "description": "Description of the new event",
-            "average_rating_event": 4,
             "event_type": self.event_type.name,
             "address": "123 Main St",
         }

@@ -6,7 +6,7 @@ import StatusAlert from '../components/common/StatusAlert';
 import UserFormBox from '../components/common/UserFormBox';
 import UserInputInternalBox from '../components/common/UserInputInternalBox';
 import { useApi } from '../hooks/useApi';
-import { useTokens } from '../context/TokenContext';
+import { useAuth } from '../context/AuthContext';
 import { ApiEndpoints } from '../constants';
 import { LoginPageProps } from '../interfaces/types';
 import { handleError } from '../errors/handleError';
@@ -25,14 +25,7 @@ const Login: React.FC<LoginPageProps> = ({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
-  const {
-    username,
-    setUserToken,
-    setUsername,
-    loggedIn,
-    adminPassword,
-    setIsAdmin,
-  } = useTokens();
+  const { setUser, setUserToken, loggedIn, adminPassword } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,21 +38,18 @@ const Login: React.FC<LoginPageProps> = ({
     const fetchUsername = async () => {
       try {
         const data = await fetchWithTokens(ApiEndpoints.GET_USERNAME);
-        setUsername(data.username);
-        if (data.is_admin) {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-        }
+        setUser({
+          username: data.username,
+          isAdmin: data.is_admin || false,
+          userId: data.id,
+        });
       } catch (error) {}
     };
 
     if (loggedIn) {
       fetchUsername();
-    } else {
-      setUsername('');
     }
-  }, [fetchWithTokens, loggedIn, setIsAdmin, setUsername, username]);
+  }, [fetchWithTokens, loggedIn, setUser]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,8 +66,6 @@ const Login: React.FC<LoginPageProps> = ({
       if (response) {
         setSuccessMessage(successMessageText);
         setErrorMessage(null);
-        setUsername('');
-        setPassword('');
         setUserToken(response.token);
       }
     } catch (error: any) {

@@ -1,21 +1,12 @@
-// https://mui.com/material-ui/react-card/
 import React from 'react';
 import { Card, CardContent } from '@mui/material';
 import { EventProps } from '../../interfaces/types';
-import Ratings from '../common/Rating';
 import EventHeader from '../common/EventHeader';
 import CommentsSection from './CommentsSection';
 import EventDescription from '../common/EventDescription';
+import Ratings from '../common/rating/Ratings';
 
-const Event: React.FC<EventProps> = ({
-  eventTitle,
-  placeType,
-  address,
-  description,
-  comments,
-  placeRating,
-  loudnessRating,
-}) => {
+const Event: React.FC<EventProps> = (event) => {
   return (
     <div>
       <Card
@@ -37,13 +28,13 @@ const Event: React.FC<EventProps> = ({
           }}
         >
           <EventHeader
-            eventTitle={eventTitle}
-            placeType={placeType}
-            address={address}
+            eventTitle={event.eventTitle}
+            placeType={event.placeType}
+            address={event.address}
           />
-          <EventDescription description={description} />
-          <CommentsSection comments={comments} />
-          <Ratings placeRating={placeRating} loudnessRating={loudnessRating} />
+          <EventDescription description={event.description} />
+          <CommentsSection comments={event.comments} />
+          <Ratings event={event} />
         </CardContent>
       </Card>
     </div>

@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { CreateUserFormProps } from '../interfaces/types';
 import { useApi } from '../hooks/useApi';
-import { useTokens } from '../context/TokenContext';
+import { useAuth } from '../context/AuthContext';
 import { ApiEndpoints, MINIMUM_PASSWORD_LENGTH } from '../constants';
 import { handleError } from '../errors/handleError';
 import zxcvbn from 'zxcvbn';
@@ -32,14 +32,7 @@ const CreateUser: React.FC<CreateUserFormProps> = ({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
-  const {
-    username,
-    setUserToken,
-    setUsername,
-    loggedIn,
-    adminPassword,
-    setIsAdmin,
-  } = useTokens();
+  const { user, setUser, setUserToken, loggedIn, adminPassword } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,26 +57,6 @@ const CreateUser: React.FC<CreateUserFormProps> = ({
     }
   }, [adminPage, adminPassword, navigate]);
 
-  useEffect(() => {
-    const fetchUsername = async () => {
-      try {
-        const data = await fetchWithTokens(ApiEndpoints.GET_USERNAME);
-        setUsername(data.username);
-        if (data.is_admin) {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-        }
-      } catch (error) {}
-    };
-
-    if (loggedIn) {
-      fetchUsername();
-    } else {
-      setUsername('');
-    }
-  }, [fetchWithTokens, loggedIn, setIsAdmin, setUsername, username]);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -104,7 +77,7 @@ const CreateUser: React.FC<CreateUserFormProps> = ({
       if (response) {
         setSuccessMessage(successMessageText);
         setErrorMessage(null);
-        setUsername('');
+        setNewUsername('');
         setPassword('');
         setEmail('');
         if (loginPage) {

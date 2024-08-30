@@ -13,8 +13,7 @@ import { useNavBar } from '../../hooks/useNavBar';
 export default function NavBar() {
   const {
     loggedIn,
-    username,
-    isAdmin,
+    user,
     handleLogout,
     handleLogin,
     handleEventsButton,
@@ -28,7 +27,7 @@ export default function NavBar() {
           <SearchBar />
           <NavBarFilterButton handleFilterOpen={handleFilterOpen} />
           <Box sx={{ flexGrow: 1 }} />
-          <NavBarUsername username={username} isAdmin={isAdmin} />
+          <NavBarUsername username={user.username} isAdmin={user.isAdmin} />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <NavBarEventsButton
               loggedIn={loggedIn}

@@ -43,6 +43,7 @@ export const ApiEndpoints = {
   GET_LATEST_EVENTS: 'api/events/latest/',
   CREATE_EVENT: 'api/events/',
   UPDATE_OR_DELETE_EVENT: (event_id: number) => `api/events/${event_id}/`,
+  SUBMIT_OR_UPDATE_RATING: 'api/ratings/',
 };
 
 export const COMMENT_LIMIT = 2;
@@ -76,3 +77,9 @@ export const PlaceTypeIcons: Record<PlaceTypes, React.ComponentType> = {
 };
 
 export const MINIMUM_PASSWORD_LENGTH = 8;
+export const USER_COOKIE_LENGTH_DAYS = 7;
+
+export enum RatingTypes {
+  PLACE = 1,
+  LOUDNESS = 2,
+}

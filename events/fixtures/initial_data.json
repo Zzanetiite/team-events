@@ -219,7 +219,7 @@
     "model": "events.ratingtype",
     "pk": 2,
     "fields": {
-      "name": "Place Rating"
+      "name": "Loudness Rating"
     }
   },
   {

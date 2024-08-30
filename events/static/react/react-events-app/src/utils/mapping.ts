@@ -1,9 +1,10 @@
-import { PlaceTypes } from '../constants';
+import { PlaceTypes, RatingTypes } from '../constants';
 import {
   EventDBMinimumProps,
   EventDBProps,
   EventProps,
   EventTableProps,
+  RatingDBProps,
 } from '../interfaces/types';
 
 export const mapEventTypeToPlaceType = (eventTypeName: string): PlaceTypes => {
@@ -14,7 +15,9 @@ export const mapEventTypeToPlaceType = (eventTypeName: string): PlaceTypes => {
 };
 
 export const mapEventData = (apiData: EventDBProps[]): EventProps[] => {
+  console.log('API data:', apiData);
   return apiData.map((event) => ({
+    id: event.id,
     eventTitle: event.title,
     placeType: mapEventTypeToPlaceType(event.event_type),
     address: event.address,
@@ -24,8 +27,8 @@ export const mapEventData = (apiData: EventDBProps[]): EventProps[] => {
       'Great service. A lovely place to eat and hang out with friends. Great ambiance and food!',
       'Will visit again! A lovely place to eat and hang out with friends. Great ambiance and food!',
     ],
-    placeRating: event.average_rating_event || 4.5,
-    loudnessRating: 3,
+    placeRating: event.average_rating_event || 0,
+    loudnessRating: event.average_rating_loudness || 0,
   }));
 };
 
@@ -50,5 +53,19 @@ export const mapEventToDBFormat = (
     title: event.title,
     event_type: event.eventType,
     description: event.description,
+  };
+};
+
+export const mapEventToRatingDBFormat = (
+  event: EventProps,
+  rating: number,
+  votingUserID: number,
+  ratingType: RatingTypes
+): RatingDBProps => {
+  return {
+    event: event.id,
+    user: votingUserID, // TODO: Add user ID to context
+    rating_type: ratingType,
+    score: rating,
   };
 };

@@ -1,4 +1,4 @@
-import { PlaceTypes } from '../constants';
+import { PlaceTypes, RatingTypes } from '../constants';
 
 export interface Counter {
   id: number;
@@ -71,19 +71,30 @@ export interface SelectInputProps {
 }
 
 export interface EventProps {
+  id: number;
   eventTitle: string;
   placeType: PlaceTypes;
   address: string;
   description: string;
   comments: string[];
-  placeRating: number; // Scale 1-5
-  loudnessRating: number; // Scale 1-5
+  placeRating: number;
+  loudnessRating: number;
+  usersPlaceRating?: number;
+  usersLoudnessRating?: number;
+}
+
+export interface RatingDBProps {
+  event: number;
+  user: number;
+  rating_type: RatingTypes;
+  score: number | null;
 }
 
 export interface EventDBProps extends EventDBMinimumProps {
-  average_rating_event: number;
   user: string;
   address: string;
+  average_rating_event: number;
+  average_rating_loudness: number;
 }
 
 export interface EventDBMinimumProps {
@@ -165,4 +176,8 @@ export interface TableColumnProps {
 
 export interface CreateEventProps {
   setNewEventCreated: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface RatingProps {
+  event: EventProps;
 }

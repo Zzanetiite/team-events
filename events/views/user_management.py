@@ -83,6 +83,7 @@ class UserManagementView(APIView):
             if request.user.is_authenticated:
                 return Response(
                     {
+                        "id": request.user.id,
                         "username": request.user.username,
                         "is_admin": request.user.is_superuser,
                     },

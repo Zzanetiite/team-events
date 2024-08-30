@@ -1,37 +1,13 @@
 import { useEffect, useCallback } from 'react';
-import { useTokens } from '../context/TokenContext';
+import { useAuth } from '../context/AuthContext';
 import { useDataContext } from '../context/DataContext';
 import { ApiEndpoints } from '../constants';
 import { useApi } from './useApi';
 
 export const useNavBar = () => {
   const { fetchWithTokens } = useApi();
-  const {
-    setUserToken,
-    setLoggedIn,
-    loggedIn,
-    username,
-    isAdmin,
-    setIsAdmin,
-    setUsername,
-  } = useTokens();
+  const { setUserToken, setLoggedIn, loggedIn, user, setUser } = useAuth();
   const { homePageFilterOpen, setHomePageFilterOpen } = useDataContext();
-
-  useEffect(() => {
-    const fetchUsername = async () => {
-      try {
-        const data = await fetchWithTokens(ApiEndpoints.GET_USERNAME);
-        setUsername(data.username);
-        setIsAdmin(data.is_admin || false);
-      } catch (error) {
-        console.error('Error fetching username:', error);
-      }
-    };
-
-    if (loggedIn && !username) {
-      fetchUsername();
-    }
-  }, [loggedIn, username, setIsAdmin, setUsername, fetchWithTokens]);
 
   const handleLogout = useCallback(async () => {
     try {
@@ -39,20 +15,28 @@ export const useNavBar = () => {
         method: 'POST',
       });
       if (response) {
+        setUser({
+          username: null,
+          isAdmin: null,
+          userId: null,
+        });
         setUserToken(null);
         setLoggedIn(false);
-        setIsAdmin(null);
         window.location.href = '/login';
       } else {
         console.error('Logout failed with status:', response.status);
       }
     } catch (error) {
       console.error('Error during logout:', error);
+      setUser({
+        username: null,
+        isAdmin: null,
+        userId: null,
+      });
       setUserToken(null);
       setLoggedIn(false);
-      setIsAdmin(null);
     }
-  }, [fetchWithTokens, setUserToken, setLoggedIn, setIsAdmin]);
+  }, [fetchWithTokens, setUserToken, setLoggedIn, setUser]);
 
   const handleLogin = useCallback(() => {
     window.location.href = '/login';
@@ -68,8 +52,7 @@ export const useNavBar = () => {
 
   return {
     loggedIn,
-    username,
-    isAdmin,
+    user,
     handleLogout,
     handleLogin,
     handleEventsButton,

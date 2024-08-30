@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import EventTable from '../components/layout/EventTable';
 import { useNavigate } from 'react-router-dom';
-import { useTokens } from '../context/TokenContext';
+import { useAuth } from '../context/AuthContext';
 import CreateEvent from '../components/layout/CreateEvent';
 import { Box, CircularProgress } from '@mui/material';
 
 const UserEvents = () => {
-  const { loggedIn } = useTokens();
+  const { loggedIn } = useAuth();
   const navigate = useNavigate();
   const [initialized, setInitialized] = useState(false);
   const [newEventCreated, setNewEventCreated] = useState(false);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box } from '@mui/material';
-import { useTokens } from '../../context/TokenContext';
+import { useAuth } from '../../context/AuthContext';
 import { NewEventCreatedProps } from '../../interfaces/types';
 import {
   eventTableFormatting,
@@ -16,7 +16,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
   newEventCreated,
   setNewEventCreated,
 }) => {
-  const { isAdmin } = useTokens();
+  const { user } = useAuth();
   const {
     userEvents,
     deleteSuccessMessage,
@@ -42,7 +42,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
           <DataGrid
             rows={userEvents}
             columns={
-              isAdmin
+              user.isAdmin
                 ? tableAdminColumns({
                     userEvents,
                     setSelectedEvent,

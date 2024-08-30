@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApi } from '../hooks/useApi';
 import { CreateUserFormProps } from '../interfaces/types';
 import { ErrorMessages } from '../constants';
-import { useTokens } from '../context/TokenContext';
+import { useAuth } from '../context/AuthContext';
 import { handleError } from '../errors/handleError';
 import PasswordInput from '../components/common/input/PasswordInput';
 import StatusAlert from '../components/common/StatusAlert';
@@ -21,7 +21,7 @@ const ValidateAdminPasswordForm: React.FC<CreateUserFormProps> = ({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
-  const { loggedIn, setAdminPassword, adminPassword } = useTokens();
+  const { loggedIn, setAdminPassword, adminPassword } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {

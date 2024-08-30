@@ -35,11 +35,12 @@ class EventSerializer(serializers.ModelSerializer):
             "title",
             "event_type",
             "description",
-            "average_rating_event",
             "user",
             "address",
+            "average_rating_event",
+            "average_rating_loudness",
         ]
-        read_only_fields = ["average_rating_event", "user"]
+        read_only_fields = ["average_rating_event", "average_rating_loudness", "user"]
 
     def get_user(self, obj):
         return obj.user.username

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { EventDBProps, EventTableProps } from '../interfaces/types';
-import { useTokens } from '../context/TokenContext';
+import { useAuth } from '../context/AuthContext';
 import { useApi } from './useApi';
 import { ApiEndpoints } from '../constants';
 import { mapEventTableData } from '../utils/mapping';
@@ -20,18 +20,18 @@ export const useEventTableData = (
   const [modalOpen, setModalOpen] = useState(false);
   const [modalUpdated, setModalUpdated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { username, isAdmin } = useTokens();
+  const { user } = useAuth();
   const { fetchWithTokens } = useApi();
 
   useEffect(() => {
-    if (!username) {
+    if (!user.username) {
       setErrorMessage('Username not found. No events to display.');
     } else {
       try {
         fetchWithTokens(
-          isAdmin
+          user.isAdmin
             ? ApiEndpoints.GET_ALL_EVENTS
-            : ApiEndpoints.GET_USER_EVENTS(username),
+            : ApiEndpoints.GET_USER_EVENTS(user.username),
           { method: 'GET' }
         )
           .then((data: EventDBProps[]) => {
@@ -48,7 +48,7 @@ export const useEventTableData = (
         setErrorMessage('Error fetching User Events.');
       }
     }
-  }, [username, modalUpdated, newEventCreated]);
+  }, [user, modalUpdated, newEventCreated]);
 
   useEffect(() => {
     if (newEventCreated || modalUpdated) {
