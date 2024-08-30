@@ -1,152 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Box, Typography } from '@mui/material';
-import { ApiEndpoints } from '../../constants';
-import { useApi } from '../../hooks/useApi';
+import React from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import { Box } from '@mui/material';
 import { useTokens } from '../../context/TokenContext';
+import { NewEventCreatedProps } from '../../interfaces/types';
 import {
-  EventDBProps,
-  EventTableProps,
-  NewEventCreatedProps,
-} from '../../interfaces/types';
-import { eventTableFormatting } from '../../config';
-import { mapEventTableData } from '../../utils/mapping';
+  eventTableFormatting,
+  tableAdminColumns,
+  tableColumns,
+} from '../../config';
 import EditEventModal from './EditEventModal';
-import StatusAlert from '../common/StatusAlert';
-import { renderEventCell } from '../../utils/renderEventCell';
+import EventTableHeader from '../common/EventTableHeader';
+import { useEventTableData } from '../../hooks/useEventTable';
 
 const EventTable: React.FC<NewEventCreatedProps> = ({
   newEventCreated,
   setNewEventCreated,
 }) => {
-  const [userEvents, setUserEvents] = useState<EventTableProps[]>([]);
-  const [deleteSuccessMessage, setDeleteSuccessMessage] = useState<
-    string | null
-  >(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [selectedEvent, setSelectedEvent] = useState<EventTableProps | null>(
-    null
-  );
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalUpdated, setModalUpdated] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const { username, isAdmin } = useTokens();
-  const { fetchWithTokens } = useApi();
-
-  useEffect(() => {
-    if (!username) {
-      setErrorMessage('Username not found. No events to display.');
-    } else {
-      try {
-        fetchWithTokens(
-          isAdmin
-            ? ApiEndpoints.GET_ALL_EVENTS
-            : ApiEndpoints.GET_USER_EVENTS(username),
-          {
-            method: 'GET',
-          }
-        )
-          .then((data: EventDBProps[]) => {
-            setUserEvents(mapEventTableData(data));
-            setModalUpdated(false);
-            setNewEventCreated(false);
-            setLoading(false);
-          })
-          .catch((error: any) => {
-            console.error('Error fetching event list:', error);
-            setErrorMessage('Error fetching event list.');
-          });
-      } catch (error) {
-        setErrorMessage('Error fetching User Events.');
-      }
-    }
-  }, [
-    username,
-    setUserEvents,
-    modalUpdated,
-    newEventCreated,
-    setNewEventCreated, // fetchWithTokens causes a cyclic dependency
-  ]);
-
-  useEffect(() => {
-    if (newEventCreated || modalUpdated) {
-      setLoading(true);
-    }
-  }, [newEventCreated, modalUpdated]);
-
-  useEffect(() => {
-    if (errorMessage) {
-      setLoading(false);
-    }
-  }, [errorMessage]);
-
-  useEffect(() => {
-    if (deleteSuccessMessage) {
-      const timer = setTimeout(() => {
-        setDeleteSuccessMessage(null);
-      }, 4000); // 4 seconds
-      return () => clearTimeout(timer);
-    }
-  }, [deleteSuccessMessage]);
-
-  const columns: GridColDef[] = [
-    {
-      field: 'title',
-      headerName: 'Event Title',
-      width: 200,
-      renderCell: renderEventCell(userEvents, setSelectedEvent, setModalOpen),
-    },
-    { field: 'eventType', headerName: 'Type', width: 130 },
-    { field: 'address', headerName: 'Address', width: 250 },
-    {
-      field: 'description',
-      headerName: 'Description',
-      width: 300,
-    },
-  ];
-
-  const adminColumns: GridColDef[] = [
-    {
-      field: 'title',
-      headerName: 'Event Title',
-      width: 200,
-      renderCell: renderEventCell(userEvents, setSelectedEvent, setModalOpen),
-    },
-    {
-      field: 'user',
-      headerName: 'Creator',
-      width: 130,
-    },
-    { field: 'eventType', headerName: 'Type', width: 130 },
-    { field: 'address', headerName: 'Address', width: 250 },
-    {
-      field: 'description',
-      headerName: 'Description',
-      width: 300,
-    },
-  ];
-
-  const handleCloseModal = (): void => {
-    setModalOpen(false);
-  };
+  const { isAdmin } = useTokens();
+  const {
+    userEvents,
+    deleteSuccessMessage,
+    errorMessage,
+    selectedEvent,
+    modalOpen,
+    loading,
+    setDeleteSuccessMessage,
+    setSelectedEvent,
+    setModalOpen,
+    setModalUpdated,
+    handleCloseModal,
+  } = useEventTableData(newEventCreated, setNewEventCreated);
 
   return (
     <div>
-      {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
       <Box sx={{ marginX: '20px' }}>
-        <Typography component="legend" variant="h5" gutterBottom>
-          Events created by you
-        </Typography>
-        <Typography component="legend" variant="body2" gutterBottom>
-          Click on an event to edit it.
-        </Typography>
-        {deleteSuccessMessage && (
-          <StatusAlert message={deleteSuccessMessage} severity="success" />
-        )}
+        <EventTableHeader
+          deleteSuccessMessage={deleteSuccessMessage}
+          errorMessage={errorMessage}
+        />
         <div style={{ height: 400, width: '100%' }}>
           <DataGrid
             rows={userEvents}
-            columns={isAdmin ? adminColumns : columns}
+            columns={
+              isAdmin
+                ? tableAdminColumns({
+                    userEvents,
+                    setSelectedEvent,
+                    setModalOpen,
+                  })
+                : tableColumns({ userEvents, setSelectedEvent, setModalOpen })
+            }
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 5 },

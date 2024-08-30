@@ -1,90 +1,29 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Box,
-  SelectChangeEvent,
   Typography,
 } from '@mui/material';
-import { ApiEndpoints } from '../../constants';
-import { useState } from 'react';
 import { AddCircle, ChevronRightRounded } from '@mui/icons-material';
-import { handleError } from '../../errors/handleError';
-import { useApi } from '../../hooks/useApi';
 import StatusAlert from '../common/StatusAlert';
 import EventForm from '../common/EventForm';
-import { EventTableProps } from '../../interfaces/types';
+import { CreateEventProps } from '../../interfaces/types';
 import FilledSubmitButton from '../common/buttons/FilledSubmitButton';
-import { eventEmptyData } from '../../config';
-
-interface CreateEventProps {
-  setNewEventCreated: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { useCreateEvent } from '../../hooks/useCreateEvent';
 
 const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { fetchWithTokens } = useApi();
-  const [expanded, setExpanded] = useState(false);
-  const [formData, setFormData] = useState<EventTableProps>(eventEmptyData);
-
-  useEffect(() => {
-    if (successMessage) {
-      const timer = setTimeout(() => {
-        setSuccessMessage(null);
-      }, 4000); // 4 seconds
-
-      return () => clearTimeout(timer);
-    }
-  }, [successMessage]);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSelectChange = (e: SelectChangeEvent<string>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetchWithTokens(ApiEndpoints.CREATE_EVENT, {
-        method: 'POST',
-        body: JSON.stringify({
-          title: formData.title,
-          description: formData.description,
-          event_type: formData.eventType,
-          address: formData.address,
-        }),
-      });
-
-      if (response !== undefined && response !== null) {
-        setSuccessMessage('Event created successfully!');
-        setErrorMessage(null);
-        setNewEventCreated(true);
-        setFormData(eventEmptyData);
-      }
-    } catch (error: any) {
-      handleError({
-        error,
-        setErrorMessage,
-        setSuccessMessage,
-      });
-    }
-  };
+  const {
+    successMessage,
+    errorMessage,
+    expanded,
+    formData,
+    setExpanded,
+    handleChange,
+    handleSelectChange,
+    handleSubmit,
+  } = useCreateEvent(setNewEventCreated);
 
   return (
     <div>

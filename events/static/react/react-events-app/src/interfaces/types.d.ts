@@ -144,7 +144,7 @@ export interface ConfirmActionProps {
   handleDelete: () => void;
 }
 
-interface StatusAlertProps {
+export interface StatusAlertProps {
   message: string | null;
   severity: 'success' | 'error' | 'info' | 'warning';
 }
@@ -155,4 +155,14 @@ interface EventFormProps {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   handleSelectChange: (e: SelectChangeEvent<string>) => void;
+}
+
+export interface TableColumnProps {
+  userEvents: EventTableProps[];
+  setSelectedEvent: (event: any) => void;
+  setModalOpen: (open: boolean) => void;
+}
+
+export interface CreateEventProps {
+  setNewEventCreated: React.Dispatch<React.SetStateAction<boolean>>;
 }

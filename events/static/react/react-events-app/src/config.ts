@@ -1,5 +1,7 @@
+import { GridColDef } from '@mui/x-data-grid';
 import { PlaceTypes } from './constants';
-import { EventTableProps } from './interfaces/types';
+import { EventTableProps, TableColumnProps } from './interfaces/types';
+import { renderEventCell } from './utils/renderEventCell';
 
 export const eventTableFormatting = {
   '& .MuiDataGrid-root': {
@@ -30,4 +32,53 @@ export const eventEmptyData: EventTableProps = {
   address: '',
   description: '',
   user: '',
+};
+
+export const tableColumns = ({
+  userEvents,
+  setSelectedEvent,
+  setModalOpen,
+}: TableColumnProps): GridColDef[] => {
+  return [
+    {
+      field: 'title',
+      headerName: 'Event Title',
+      width: 200,
+      renderCell: renderEventCell(userEvents, setSelectedEvent, setModalOpen),
+    },
+    { field: 'eventType', headerName: 'Type', width: 130 },
+    { field: 'address', headerName: 'Address', width: 250 },
+    {
+      field: 'description',
+      headerName: 'Description',
+      width: 300,
+    },
+  ];
+};
+
+export const tableAdminColumns = ({
+  userEvents,
+  setSelectedEvent,
+  setModalOpen,
+}: TableColumnProps): GridColDef[] => {
+  return [
+    {
+      field: 'title',
+      headerName: 'Event Title',
+      width: 200,
+      renderCell: renderEventCell(userEvents, setSelectedEvent, setModalOpen),
+    },
+    {
+      field: 'user',
+      headerName: 'Creator',
+      width: 130,
+    },
+    { field: 'eventType', headerName: 'Type', width: 130 },
+    { field: 'address', headerName: 'Address', width: 250 },
+    {
+      field: 'description',
+      headerName: 'Description',
+      width: 300,
+    },
+  ];
 };
