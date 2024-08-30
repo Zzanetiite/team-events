@@ -212,7 +212,6 @@
     "model": "events.ratingtype",
     "pk": 1,
     "fields": {
-      "id": 1,
       "name": "Place Rating"
     }
   },
@@ -220,7 +219,6 @@
     "model": "events.ratingtype",
     "pk": 2,
     "fields": {
-      "id": 1,
       "name": "Place Rating"
     }
   },
