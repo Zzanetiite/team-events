@@ -10,7 +10,7 @@ const EventTitleInput: React.FC<CreateUpdateEventInputProps> = ({
     <Box display="flex" alignItems="center">
       <TextField
         label="Event Title"
-        name="title"
+        name="eventTitle"
         value={value}
         onChange={onChange}
         variant="outlined"

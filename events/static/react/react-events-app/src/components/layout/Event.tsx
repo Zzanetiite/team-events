@@ -30,7 +30,7 @@ const Event: React.FC<EventProps> = (event) => {
           <EventHeader
             eventTitle={event.eventTitle}
             placeType={event.placeType}
-            address={event.address}
+            address={event.location.address}
           />
           <EventDescription description={event.description} />
           <CommentsSection event={event} />

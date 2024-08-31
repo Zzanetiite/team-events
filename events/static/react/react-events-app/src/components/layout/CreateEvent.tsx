@@ -18,12 +18,13 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
     successMessage,
     errorMessage,
     expanded,
-    formData,
+    event,
     submitClicked,
     setSubmitClicked,
     setExpanded,
     handleChange,
     handleSelectChange,
+    handleLocationChange,
     handleSubmit,
   } = useCreateEvent(setNewEventCreated);
 
@@ -59,9 +60,10 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
           <AccordionDetails>
             <form onSubmit={handleSubmit} style={{ width: '100%' }}>
               <EventForm
-                data={formData}
+                data={event}
                 handleChange={handleChange}
                 handleSelectChange={handleSelectChange}
+                handleLocationChange={handleLocationChange}
                 submitClicked={submitClicked}
                 setSubmitClicked={setSubmitClicked}
               />

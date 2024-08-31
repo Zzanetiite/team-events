@@ -88,149 +88,6 @@
     }
   },
   {
-    "model": "events.event",
-    "pk": 1,
-    "fields": {
-      "title": "Team Dinner",
-      "description": "Team dinner at a fine restaurant to celebrate project completion.",
-      "average_rating_event": 4,
-      "average_rating_loudness": 3,
-      "user": 1,
-      "event_type": 1,
-      "address": "123 Main St, Anytown, USA"
-    }
-  },
-  {
-    "model": "events.event",
-    "pk": 2,
-    "fields": {
-      "title": "Lunch Outing",
-      "description": "Casual lunch outing to a popular fast food spot for informal team bonding.",
-      "average_rating_event": 3,
-      "average_rating_loudness": 2,
-      "user": 1,
-      "event_type": 2,
-      "address": "456 Elm St, Anytown, USA"
-    }
-  },
-  {
-    "model": "events.event",
-    "pk": 3,
-    "fields": {
-      "title": "Escape Room Challenge",
-      "description": "Escape room challenge designed to enhance team problem-solving skills.",
-      "average_rating_event": 5,
-      "average_rating_loudness": 4,
-      "user": 1,
-      "event_type": 3,
-      "address": "789 Oak St, Anytown, USA"
-    }
-  },
-  {
-    "model": "events.event",
-    "pk": 4,
-    "fields": {
-      "title": "Outdoor Team Building",
-      "description": "Outdoor team-building activity involving obstacle courses and teamwork exercises.",
-      "average_rating_event": 4,
-      "average_rating_loudness": 5,
-      "user": 1,
-      "event_type": 4,
-      "address": "101 Pine St, Anytown, USA"
-    }
-  },
-  {
-    "model": "events.event",
-    "pk": 5,
-    "fields": {
-      "title": "Communication Workshop",
-      "description": "Skill-building workshop focused on communication and leadership.",
-      "average_rating_event": 4,
-      "average_rating_loudness": 3,
-      "user": 1,
-      "event_type": 5,
-      "address": "202 Maple St, Anytown, USA"
-    }
-  },
-  {
-    "model": "events.event",
-    "pk": 6,
-    "fields": {
-      "title": "Team Retreat",
-      "description": "Team-building retreat to foster collaboration and creativity.",
-      "average_rating_event": 5,
-      "average_rating_loudness": 4,
-      "user": 1,
-      "event_type": 6,
-      "address": "303 Birch St, Anytown, USA"
-    }
-  },
-  {
-    "model": "events.event",
-    "pk": 7,
-    "fields": {
-      "title": "Offsite Retreat",
-      "description": "Offsite retreat designed for team relaxation and brainstorming.",
-      "average_rating_event": 4,
-      "average_rating_loudness": 3,
-      "user": 1,
-      "event_type": 7,
-      "address": "404 Cedar St, Anytown, USA"
-    }
-  },
-  {
-    "model": "events.event",
-    "pk": 8,
-    "fields": {
-      "title": "Team Tournament",
-      "description": "Competitive tournament to encourage team strategy and collaboration.",
-      "average_rating_event": 4,
-      "average_rating_loudness": 5,
-      "user": 1,
-      "event_type": 8,
-      "address": "505 Spruce St, Anytown, USA"
-    }
-  },
-  {
-    "model": "events.event",
-    "pk": 9,
-    "fields": {
-      "title": "Charity Fundraiser",
-      "description": "Charity fundraiser event involving a variety of engaging activities.",
-      "average_rating_event": 5,
-      "average_rating_loudness": 4,
-      "user": 1,
-      "event_type": 9,
-      "address": "606 Walnut St, Anytown, USA"
-    }
-  },
-  {
-    "model": "events.event",
-    "pk": 10,
-    "fields": {
-      "title": "Team Party",
-      "description": "Team party to celebrate a successful quarter with fun and relaxation.",
-      "average_rating_event": 5,
-      "average_rating_loudness": 3,
-      "user": 1,
-      "event_type": 10,
-      "address": "707 Ash St, Anytown, USA"
-    }
-  },
-  {
-    "model": "events.event",
-    "pk": 11,
-    "fields": {
-      "title": "Art Workshop",
-      "description": "Art workshop to foster creativity and team interaction.",
-      "average_rating_event": 4,
-      "average_rating_loudness": 2,
-      "user": 1,
-      "event_type": 11,
-      "address": "808 Chestnut St, Anytown, USA"
-    }
-  },
-  {
     "model": "events.ratingtype",
     "pk": 1,
     "fields": {
@@ -245,33 +102,245 @@
     }
   },
   {
-    "model": "events.rating",
+    "model": "events.location",
+    "pk": 1,
+    "fields": {
+      "address": "Leisure Park, Clifton Way, Cambridge CB1 7DY, United Kingdom",
+      "lat": 52.1905653,
+      "lng": 0.1372707
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 1,
+    "fields": {
+      "title": "Team Dinner",
+      "description": "Team dinner at a fine restaurant to celebrate project completion.",
+      "average_rating_event": 4,
+      "average_rating_loudness": 3,
+      "user": 1,
+      "event_type": 1,
+      "location": 1
+    }
+  },
+  {
+    "model": "events.location",
     "pk": 2,
     "fields": {
-      "event": 1,
-      "user": 1,
-      "rating_type": 2,
-      "score": 3
+      "address": "37 Green Street, Cambridge CB2 3JH, United Kingdom",
+      "lat": 52.2044,
+      "lng": 0.1218
     }
   },
   {
-    "model": "events.rating",
+    "model": "events.location",
     "pk": 3,
     "fields": {
-      "event": 3,
-      "user": 1,
-      "rating_type": 1,
-      "score": 5
+      "address": "16 Mill Lane, Cambridge CB2 1RX, United Kingdom",
+      "lat": 52.2077,
+      "lng": 0.126
     }
   },
   {
-    "model": "events.rating",
+    "model": "events.location",
     "pk": 4,
     "fields": {
-      "event": 3,
+      "address": "Cambridge University Sports Centre, Philippa Fawcett Drive, Cambridge CB3 0AS, United Kingdom",
+      "lat": 52.2083,
+      "lng": 0.114
+    }
+  },
+  {
+    "model": "events.location",
+    "pk": 5,
+    "fields": {
+      "address": "The Cambridge Belfry, Back Lane, Cambourne, Cambridge CB23 6BW, United Kingdom",
+      "lat": 52.2194,
+      "lng": 0.1102
+    }
+  },
+  {
+    "model": "events.location",
+    "pk": 6,
+    "fields": {
+      "address": "St John's College, St John's Street, Cambridge CB2 1TP, United Kingdom",
+      "lat": 52.2044,
+      "lng": 0.1158
+    }
+  },
+  {
+    "model": "events.location",
+    "pk": 7,
+    "fields": {
+      "address": "The Cambridge Union Society, 9A Bridge Street, Cambridge CB2 1UB, United Kingdom",
+      "lat": 52.2053,
+      "lng": 0.1185
+    }
+  },
+  {
+    "model": "events.location",
+    "pk": 8,
+    "fields": {
+      "address": "Grafton Centre, 24 Grafton Street, Cambridge CB1 1PS, United Kingdom",
+      "lat": 52.2086,
+      "lng": 0.1265
+    }
+  },
+  {
+    "model": "events.location",
+    "pk": 9,
+    "fields": {
+      "address": "University of Cambridge, Newnham College, Cambridge CB3 9DF, United Kingdom",
+      "lat": 52.2071,
+      "lng": 0.1113
+    }
+  },
+  {
+    "model": "events.location",
+    "pk": 10,
+    "fields": {
+      "address": "The Fort St George, 54 Midsummer Common, Cambridge CB4 1HA, United Kingdom",
+      "lat": 52.2085,
+      "lng": 0.119
+    }
+  },
+  {
+    "model": "events.location",
+    "pk": 11,
+    "fields": {
+      "address": "Kettle's Yard, Castle Street, Cambridge CB3 0AQ, United Kingdom",
+      "lat": 52.2042,
+      "lng": 0.1114
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 2,
+    "fields": {
+      "title": "Lunch Outing",
+      "description": "Casual lunch outing to a popular fast food spot for informal team bonding.",
+      "average_rating_event": 3,
+      "average_rating_loudness": 2,
       "user": 1,
-      "rating_type": 2,
-      "score": 4
+      "event_type": 2,
+      "location": 2
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 3,
+    "fields": {
+      "title": "Escape Room Challenge",
+      "description": "Escape room challenge designed to enhance team problem-solving skills.",
+      "average_rating_event": 5,
+      "average_rating_loudness": 4,
+      "user": 1,
+      "event_type": 3,
+      "location": 3
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 4,
+    "fields": {
+      "title": "Outdoor Team Building",
+      "description": "Outdoor team-building activity involving obstacle courses and teamwork exercises.",
+      "average_rating_event": 4,
+      "average_rating_loudness": 5,
+      "user": 1,
+      "event_type": 4,
+      "location": 4
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 5,
+    "fields": {
+      "title": "Communication Workshop",
+      "description": "Skill-building workshop focused on communication and leadership.",
+      "average_rating_event": 4,
+      "average_rating_loudness": 3,
+      "user": 1,
+      "event_type": 5,
+      "location": 5
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 6,
+    "fields": {
+      "title": "Team Retreat",
+      "description": "Team-building retreat to foster collaboration and creativity.",
+      "average_rating_event": 5,
+      "average_rating_loudness": 4,
+      "user": 1,
+      "event_type": 6,
+      "location": 6
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 7,
+    "fields": {
+      "title": "Offsite Retreat",
+      "description": "Offsite retreat designed for team relaxation and brainstorming.",
+      "average_rating_event": 4,
+      "average_rating_loudness": 3,
+      "user": 1,
+      "event_type": 7,
+      "location": 7
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 8,
+    "fields": {
+      "title": "Team Tournament",
+      "description": "Competitive tournament to encourage team strategy and collaboration.",
+      "average_rating_event": 4,
+      "average_rating_loudness": 5,
+      "user": 1,
+      "event_type": 8,
+      "location": 8
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 9,
+    "fields": {
+      "title": "Charity Fundraiser",
+      "description": "Charity fundraiser event involving a variety of engaging activities.",
+      "average_rating_event": 5,
+      "average_rating_loudness": 4,
+      "user": 1,
+      "event_type": 9,
+      "location": 9
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 10,
+    "fields": {
+      "title": "Team Party",
+      "description": "Team party to celebrate a successful quarter with fun and relaxation.",
+      "average_rating_event": 5,
+      "average_rating_loudness": 3,
+      "user": 1,
+      "event_type": 10,
+      "location": 10
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 11,
+    "fields": {
+      "title": "Art Workshop",
+      "description": "Art workshop to foster creativity and team interaction.",
+      "average_rating_event": 4,
+      "average_rating_loudness": 2,
+      "user": 1,
+      "event_type": 11,
+      "location": 11
     }
   },
   {
@@ -302,6 +371,36 @@
       "user": 1,
       "date_created": "2024-01-11T12:00:00Z",
       "comment": "Quick and easy lunch spot. Perfect for casual team outings."
+    }
+  },
+  {
+    "model": "events.rating",
+    "pk": 4,
+    "fields": {
+      "event": 3,
+      "user": 1,
+      "rating_type": 2,
+      "score": 4
+    }
+  },
+  {
+    "model": "events.rating",
+    "pk": 3,
+    "fields": {
+      "event": 3,
+      "user": 1,
+      "rating_type": 1,
+      "score": 5
+    }
+  },
+  {
+    "model": "events.rating",
+    "pk": 2,
+    "fields": {
+      "event": 1,
+      "user": 1,
+      "rating_type": 2,
+      "score": 3
     }
   }
 ]

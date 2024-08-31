@@ -1,6 +1,7 @@
 import React from 'react';
 import { GridCellParams } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
+import { EventProps } from '../interfaces/types';
 
 export const renderEventCell =
   (
@@ -25,5 +26,13 @@ export const renderEventCell =
       >
         {value}
       </Button>
+    );
+  };
+
+export const renderAddressCell =
+  (userEvents: EventProps[]) => (params: GridCellParams<EventProps>) => {
+    const event = userEvents.find((e) => e.id === params.row.id);
+    return (
+      <div>{event ? event.location.address : 'Address not available'}</div>
     );
   };

@@ -1,9 +1,9 @@
 import { PlaceTypes, RatingTypes } from '../constants';
 import {
+  EventDBCreateProps,
   EventDBMinimumProps,
   EventDBProps,
   EventProps,
-  EventTableProps,
   RatingDBProps,
 } from '../interfaces/types';
 
@@ -18,9 +18,16 @@ export const mapEventData = (apiData: EventDBProps[]): EventProps[] => {
   console.log('API data:', apiData);
   return apiData.map((event) => ({
     id: event.id,
+    user: event.user,
     eventTitle: event.title,
     placeType: mapEventTypeToPlaceType(event.event_type),
-    address: event.address,
+    location: {
+      address: event.location.address,
+      location: {
+        lat: event.location.lat || 0,
+        lng: event.location.lng || 0,
+      },
+    },
     description: event.description,
     comments: event.comments,
     placeRating: event.average_rating_event || 0,
@@ -30,27 +37,34 @@ export const mapEventData = (apiData: EventDBProps[]): EventProps[] => {
   }));
 };
 
-export const mapEventTableData = (
-  apiData: EventDBProps[]
-): EventTableProps[] => {
-  return apiData.map((event) => ({
-    id: event.id,
-    title: event.title,
-    eventType: mapEventTypeToPlaceType(event.event_type),
-    address: event.address,
-    description: event.description,
-    user: event.user,
-  }));
-};
-
-export const mapEventToDBFormat = (
-  event: EventTableProps
+export const mapUpdateEventToDBFormat = (
+  event: EventProps
 ): EventDBMinimumProps => {
   return {
     id: event.id,
-    title: event.title,
-    event_type: event.eventType,
+    title: event.eventTitle,
     description: event.description,
+    event_type: event.placeType,
+    location: {
+      address: event.location.address,
+      lng: event.location.location.lng,
+      lat: event.location.location.lat,
+    },
+  };
+};
+
+export const mapCreateEventToDBFormat = (
+  event: EventProps
+): EventDBCreateProps => {
+  return {
+    title: event.eventTitle,
+    description: event.description,
+    event_type: event.placeType,
+    location: {
+      address: event.location.address,
+      lng: event.location.location.lng,
+      lat: event.location.location.lat,
+    },
   };
 };
 
@@ -62,7 +76,7 @@ export const mapEventToRatingDBFormat = (
 ): RatingDBProps => {
   return {
     event: event.id,
-    user: votingUserID, // TODO: Add user ID to context
+    user: votingUserID,
     rating_type: ratingType,
     score: rating,
   };

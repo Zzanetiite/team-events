@@ -30,7 +30,6 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
     setModalUpdated,
     handleCloseModal,
   } = useEventTableData(newEventCreated, setNewEventCreated);
-
   return (
     <div>
       <Box sx={{ marginX: '20px' }}>
@@ -64,7 +63,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
       <EditEventModal
         open={modalOpen}
         handleClose={handleCloseModal}
-        event={selectedEvent}
+        selectedEvent={selectedEvent}
         setModalUpdated={setModalUpdated}
         setDeleteSuccessMessage={setDeleteSuccessMessage}
       />

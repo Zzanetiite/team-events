@@ -4,32 +4,24 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from events.models.event import Event, EventType
+from events.models.location import Location
 from events.models.rating_type import RatingType
 from events.serializers import EventSerializer
+from events.tests.create_test_data import initialize_test_data
 
 
 class EventViewSetTests(APITestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username="testuser", password="password")
-        self.admin_user = User.objects.create_superuser(
-            username="adminuser", password="adminpassword"
-        )
-        self.other_user = User.objects.create_user(
-            username="otheruser", password="otherpassword"
-        )
+        data = initialize_test_data()
+        self.user = data["user"]
+        self.admin_user = data["admin_user"]
+        self.user1 = data["user1"]
+        self.user2 = data["user2"]
+        self.event_type = data["event_type"]
+        self.location = data["location"]
+        self.event = data["event"]
+
         self.client.login(username="testuser", password="password")
-        self.event_type = EventType.objects.create(
-            name="Restaurant", description="A large conference"
-        )
-        self.event = Event.objects.create(
-            title="Sample Event",
-            description="This is a sample event",
-            average_rating_event=5,
-            user=self.user,
-            event_type=self.event_type,
-        )
-        RatingType.objects.create(name="Loudness Rating")
-        RatingType.objects.create(name="Place Rating")
 
         self.url = reverse("event-list")
         self.detail_url = reverse("event-detail", kwargs={"pk": self.event.pk})
@@ -52,7 +44,7 @@ class EventViewSetTests(APITestCase):
             "title": "New Event",
             "description": "Description of the new event",
             "event_type": self.event_type.name,
-            "address": "123 Main St",
+            "location": {"address": "123 Main St", "lat": 1.0, "lng": 1.0},
         }
         response = self.client.post(self.url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -67,8 +59,8 @@ class EventViewSetTests(APITestCase):
         self.assertEqual(self.event.title, "Updated Event")
 
     def test_delete_event_by_non_creator_non_admin(self):
-        logged_in = self.client.login(username="otheruser", password="otherpassword")
-        self.assertTrue(logged_in, "Login failed for 'otheruser'")
+        logged_in = self.client.login(username="user1", password="otherpassword")
+        self.assertTrue(logged_in, "Login failed for 'user1'")
         response = self.client.delete(self.detail_url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(Event.objects.count(), 1)
@@ -88,20 +80,16 @@ class EventViewSetTests(APITestCase):
 
 class EventByUsernameViewTests(APITestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username="testuser", password="password")
+        data = initialize_test_data()
+        self.user = data["user"]
+        self.admin_user = data["admin_user"]
+        self.user1 = data["user1"]
+        self.user2 = data["user2"]
+        self.event_type = data["event_type"]
+        self.location = data["location"]
+        self.event = data["event"]
+
         self.client.login(username="testuser", password="password")
-        self.event_type = EventType.objects.create(
-            name="Workshop", description="A practical workshop"
-        )
-        self.event = Event.objects.create(
-            title="Event by User",
-            description="Event created by a specific user",
-            average_rating_event=3,
-            user=self.user,
-            event_type=self.event_type,
-        )
-        RatingType.objects.create(name="Loudness Rating")
-        RatingType.objects.create(name="Place Rating")
 
         self.url = reverse(
             "events-by-username", kwargs={"username": self.user.username}
@@ -117,24 +105,19 @@ class EventByUsernameViewTests(APITestCase):
 
 class EventByTypeViewTests(APITestCase):
     def setUp(self):
-        self.event_type = EventType.objects.create(
-            name="Restaurant", description="French cuisine"
-        )
-        self.other_event_type = EventType.objects.create(
-            name="Fast Food", description="KFC, McDonald's, etc."
-        )
+        data = initialize_test_data()
+        self.user = data["user"]
+        self.admin_user = data["admin_user"]
+        self.user1 = data["user1"]
+        self.user2 = data["user2"]
+        self.event_type = data["event_type"]
+        self.event_type_2 = data["event_type_2"]
+        self.location = data["location"]
+        self.event = data["event"]
 
-        self.event = Event.objects.create(
-            title="Event by Type",
-            description="Event of a specific type",
-            average_rating_event=2,
-            event_type=self.event_type,
-            user=User.objects.create_user(username="anotheruser", password="password"),
-        )
-        event_type_names = f"{self.event_type.name},{self.other_event_type.name}"
+        self.client.login(username="testuser", password="password")
 
-        RatingType.objects.create(name="Loudness Rating")
-        RatingType.objects.create(name="Place Rating")
+        event_type_names = f"{self.event_type.name},{self.event_type_2.name}"
 
         self.url = reverse(
             "events_by_type_names",
@@ -144,7 +127,7 @@ class EventByTypeViewTests(APITestCase):
     def test_get_events_by_type(self):
         response = self.client.get(self.url)
         events = Event.objects.filter(
-            event_type__name__in=[self.event_type.name, self.other_event_type.name]
+            event_type__name__in=[self.event_type.name, self.event_type_2.name]
         )
         serializer = EventSerializer(events, many=True)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -156,6 +139,11 @@ class LatestEventsViewTests(APITestCase):
         self.event_type = EventType.objects.create(
             name="Concert", description="Live music event"
         )
+
+        self.location = Location.objects.create(
+            address="Sample Address", lat=1.0, lng=1.0
+        )
+
         for i in range(15):  # Creating more than 10 events to test the latest
             Event.objects.create(
                 title=f"Event {i}",
@@ -163,6 +151,7 @@ class LatestEventsViewTests(APITestCase):
                 average_rating_event=i % 5,
                 user=User.objects.create_user(username=f"user{i}", password="password"),
                 event_type=self.event_type,
+                location=self.location,
             )
 
         RatingType.objects.create(name="Loudness Rating")

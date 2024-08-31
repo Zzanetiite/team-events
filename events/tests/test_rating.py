@@ -1,30 +1,29 @@
-from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from events.models.event import Event
 from events.models.rating import Rating
-from events.models.rating_type import RatingType
+from events.tests.create_test_data import initialize_test_data
 
 
 class RatingViewTest(TestCase):
 
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username="testuser", password="password")
+
+        data = initialize_test_data()
+        self.user = data["user"]
+        self.admin_user = data["admin_user"]
+        self.user1 = data["user1"]
+        self.user2 = data["user2"]
+        self.event_type = data["event_type"]
+        self.location = data["location"]
+        self.event = data["event"]
+        self.rating_loudness = data["rating_loudness"]
+        self.rating_place = data["rating_place"]
+
         self.client.login(username="testuser", password="password")
-
-        self.user2 = User.objects.create_user(username="testuser2", password="password")
-        self.user3 = User.objects.create_user(username="testuser3", password="password")
-
-        self.event = Event.objects.create(
-            title="Sample Event", description="This is a sample event", user=self.user
-        )
-
-        self.rating_type_event = RatingType.objects.create(name="Place Rating")
-        self.rating_type_loudness = RatingType.objects.create(name="Loudness Rating")
 
         self.url = reverse("rating-list")
 
@@ -32,7 +31,7 @@ class RatingViewTest(TestCase):
         data = {
             "event": self.event.id,
             "user": self.user.id,
-            "rating_type": self.rating_type_event.id,
+            "rating_type": self.rating_loudness.id,
             "score": 5,
         }
         response = self.client.post(self.url, data, format="json")
@@ -44,7 +43,7 @@ class RatingViewTest(TestCase):
         data = {
             "event": self.event.id,
             "user": self.user.id,
-            "rating_type": self.rating_type_event.id,
+            "rating_type": self.rating_loudness.id,
             "score": 4,
         }
         response = self.client.post(self.url, data, format="json")
@@ -55,20 +54,20 @@ class RatingViewTest(TestCase):
     def test_average_rating_update(self):
         Rating.objects.create(
             event=self.event,
-            user=self.user2,
-            rating_type=self.rating_type_event,
+            user=self.user1,
+            rating_type=self.rating_place,
             score=5,
         )
         Rating.objects.create(
             event=self.event,
-            user=self.user3,
-            rating_type=self.rating_type_loudness,
+            user=self.user2,
+            rating_type=self.rating_loudness,
             score=3,
         )
         data = {
             "event": self.event.id,
             "user": self.user.id,
-            "rating_type": self.rating_type_event.id,
+            "rating_type": self.rating_place.id,
             "score": 4,
         }
         response = self.client.post(self.url, data, format="json")

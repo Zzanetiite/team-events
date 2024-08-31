@@ -15,24 +15,25 @@ import EmptyCancelButton from '../common/buttons/EmptyCancelButton';
 import EmptyDeleteButton from '../common/buttons/EmptyDeleteButton';
 
 const EditEventModal = ({
+  selectedEvent,
   open,
   handleClose,
-  event,
   setModalUpdated,
   setDeleteSuccessMessage,
 }: EditEventModalProps) => {
   const {
-    eventData,
+    event,
     errorMessage,
     successMessage,
     confirmOpen,
     setConfirmOpen,
     handleChange,
     handleSelectChange,
+    handleLocationChange,
     handleSubmit,
     handleDelete,
   } = useEditEventModal({
-    event,
+    selectedEvent,
     setModalUpdated,
     setDeleteSuccessMessage,
     handleClose,
@@ -48,9 +49,10 @@ const EditEventModal = ({
       <DialogTitle>Edit Event</DialogTitle>
       <DialogContent>
         <EventForm
-          data={eventData}
+          data={event}
           handleChange={handleChange}
           handleSelectChange={handleSelectChange}
+          handleLocationChange={handleLocationChange}
         />
       </DialogContent>
       {errorMessage && <StatusAlert message={errorMessage} severity="error" />}

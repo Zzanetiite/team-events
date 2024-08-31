@@ -1,7 +1,7 @@
 import { GridColDef } from '@mui/x-data-grid';
 import { PlaceTypes } from './constants';
-import { EventTableProps, TableColumnProps } from './interfaces/types';
-import { renderEventCell } from './utils/renderEventCell';
+import { EventProps, TableColumnProps } from './interfaces/types';
+import { renderAddressCell, renderEventCell } from './utils/renderEventCell';
 import styled from '@emotion/styled';
 import { Rating } from '@mui/material';
 import { Libraries } from '@react-google-maps/api';
@@ -28,61 +28,65 @@ export const eventTableFormatting = {
   },
 };
 
-export const eventEmptyData: EventTableProps = {
+export const eventEmptyData: EventProps = {
   id: 0,
-  title: '',
-  eventType: PlaceTypes.TEAM_BUILDING,
-  address: '',
+  eventTitle: '',
+  placeType: PlaceTypes.TEAM_BUILDING,
+  location: {
+    address: '',
+    location: {
+      lat: 0,
+      lng: 0,
+    },
+  },
   description: '',
   user: '',
+  placeRating: 0,
+  loudnessRating: 0,
+  usersPlaceRating: null,
+  usersLoudnessRating: null,
+  comments: [],
 };
 
-export const tableColumns = ({
+const baseColumns = ({
   userEvents,
   setSelectedEvent,
   setModalOpen,
-}: TableColumnProps): GridColDef[] => {
-  return [
-    {
-      field: 'title',
-      headerName: 'Event Title',
-      width: 200,
-      renderCell: renderEventCell(userEvents, setSelectedEvent, setModalOpen),
-    },
-    { field: 'eventType', headerName: 'Type', width: 130 },
-    { field: 'address', headerName: 'Address', width: 250 },
-    {
-      field: 'description',
-      headerName: 'Description',
-      width: 300,
-    },
-  ];
+}: TableColumnProps): GridColDef[] => [
+  {
+    field: 'eventTitle',
+    headerName: 'Event Title',
+    width: 200,
+    renderCell: renderEventCell(userEvents, setSelectedEvent, setModalOpen),
+  },
+  { field: 'placeType', headerName: 'Type', width: 130 },
+  {
+    field: 'address',
+    headerName: 'Address',
+    width: 250,
+    renderCell: renderAddressCell(userEvents),
+  },
+  {
+    field: 'description',
+    headerName: 'Description',
+    width: 300,
+  },
+];
+
+export const tableColumns = (props: TableColumnProps): GridColDef[] => {
+  return baseColumns(props);
 };
 
-export const tableAdminColumns = ({
-  userEvents,
-  setSelectedEvent,
-  setModalOpen,
-}: TableColumnProps): GridColDef[] => {
+export const tableAdminColumns = (props: TableColumnProps): GridColDef[] => {
+  const columns = baseColumns(props);
   return [
-    {
-      field: 'title',
-      headerName: 'Event Title',
-      width: 200,
-      renderCell: renderEventCell(userEvents, setSelectedEvent, setModalOpen),
-    },
+    ...columns.slice(0, 1), // Include 'eventTitle' column
     {
       field: 'user',
       headerName: 'Creator',
       width: 130,
     },
-    { field: 'eventType', headerName: 'Type', width: 130 },
-    { field: 'address', headerName: 'Address', width: 250 },
-    {
-      field: 'description',
-      headerName: 'Description',
-      width: 300,
-    },
+    ...columns.slice(1), // Include remaining columns
   ];
 };
 
@@ -105,6 +109,7 @@ export const mapContainerStyle = {
 };
 
 export const mapsContainerStartingLocation = {
-  lat: -3.745,
-  lng: -38.523,
+  // Cambridge, UK
+  lat: 52.19105,
+  lng: 0.13502,
 };

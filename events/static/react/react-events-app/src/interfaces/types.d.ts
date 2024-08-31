@@ -1,9 +1,5 @@
 import { PlaceTypes, RatingTypes } from '../constants';
 
-export interface CounterButtonProps {
-  counterId: number;
-}
-
 export interface ShowCommentsButtonProps {
   showAllComments: boolean;
   setShowAllComments: (showAllComments: boolean) => void;
@@ -73,7 +69,9 @@ export interface InputProps {
   onChange: (value: string) => void;
 }
 
-export interface ChooseAddressProps extends CreateUpdateEventInputProps {
+export interface ChooseAddressProps {
+  value: LocationProps;
+  onChange: (location: LocationProps) => void;
   submitClicked: boolean;
   setSubmitClicked: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -90,17 +88,47 @@ export interface SelectInputProps {
   onChange: (e: SelectChangeEvent<string>) => void;
 }
 
+export interface EventDBProps extends EventDBMinimumProps {
+  user: string;
+  average_rating_event: number | null;
+  average_rating_loudness: number | null;
+  users_rating_event: number | null;
+  users_rating_loudness: number | null;
+  comments: CommentDBProps[];
+}
+
+export interface EventDBMinimumProps extends EventDBCreateProps {
+  id: number;
+}
+
+export interface EventDBCreateProps {
+  title: string;
+  event_type: string;
+  description: string;
+  location: {
+    address: string;
+    lng: number;
+    lat: number;
+  };
+}
+
 export interface EventProps {
   id: number;
+  user: string;
   eventTitle: string;
   placeType: PlaceTypes;
-  address: string;
+  location: LocationProps;
   description: string;
   placeRating: number;
   loudnessRating: number;
   usersPlaceRating: number | null;
   usersLoudnessRating: number | null;
   comments: CommentDBProps[];
+}
+
+export interface LocationProps {
+  address: string;
+  location: google.maps.LatLngLiteral;
 }
 
 export interface CommentDBProps {
@@ -124,39 +152,17 @@ export interface RatingDBProps {
   score: number | null;
 }
 
-export interface EventDBProps extends EventDBMinimumProps {
-  user: string;
-  address: string;
-  average_rating_event: number | null;
-  average_rating_loudness: number | null;
-  users_rating_event: number | null;
-  users_rating_loudness: number | null;
-  comments: CommentDBProps[];
-}
-
-export interface EventDBMinimumProps {
-  id: number;
-  title: string;
-  event_type: string;
-  description: string;
-}
-
-export interface EventTableProps extends CreateUpdateEventProps {
-  id: number;
-  user: string;
-}
-
 export interface CreateUpdateEventProps {
   title: string;
   eventType: PlaceTypes;
-  address: string;
+  location: LocationProps;
   description: string;
 }
 
 export interface EditEventModalProps {
+  selectedEvent: EventProps | null;
   open: boolean;
   handleClose: () => void;
-  event: EventTableProps | null;
   setModalUpdated: Dispatch<SetStateAction<boolean>>;
   setDeleteSuccessMessage: Dispatch<SetStateAction<string | null>>;
 }
@@ -183,13 +189,14 @@ export interface StatusAlertProps {
 }
 
 export interface EventFormProps {
-  data: EventTableProps;
+  data: EventProps;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   handleSelectChange: (e: SelectChangeEvent<string>) => void;
   submitClicked?: boolean;
   setSubmitClicked?: React.Dispatch<React.SetStateAction<boolean>>;
+  handleLocationChange: (location: LocationProps) => void;
 }
 
 export interface TableColumnProps {

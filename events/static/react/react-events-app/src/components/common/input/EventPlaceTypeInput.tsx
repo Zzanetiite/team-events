@@ -11,7 +11,7 @@ const EventPlaceTypeInput: React.FC<SelectInputProps> = ({
     <Box display="flex" alignItems="center">
       <Select
         label="Place Type"
-        name="eventType"
+        name="placeType"
         value={value}
         onChange={onChange}
         fullWidth

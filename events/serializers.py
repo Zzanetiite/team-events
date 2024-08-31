@@ -4,6 +4,7 @@ from rest_framework import serializers
 from events.models.comment import Comment
 from events.models.event import Event
 from events.models.event_type import EventType
+from events.models.location import Location
 from events.models.rating import Rating
 from events.models.rating_type import RatingType
 
@@ -52,12 +53,19 @@ class CommentSerializer(serializers.ModelSerializer):
         return obj.user.username
 
 
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = ["id", "address", "lat", "lng"]
+
+
 class EventSerializer(serializers.ModelSerializer):
     event_type = serializers.CharField(required=False)  # Accept name as string
     user = serializers.SerializerMethodField()
     users_rating_event = serializers.SerializerMethodField()
     users_rating_loudness = serializers.SerializerMethodField()
     comments = CommentSerializer(many=True, read_only=True)
+    location = LocationSerializer()
 
     class Meta:
         model = Event
@@ -67,7 +75,7 @@ class EventSerializer(serializers.ModelSerializer):
             "event_type",
             "description",
             "user",
-            "address",
+            "location",
             "average_rating_event",
             "average_rating_loudness",
             "users_rating_event",
@@ -130,4 +138,48 @@ class EventSerializer(serializers.ModelSerializer):
         raise serializers.ValidationError("Event type must be a valid ID or name.")
 
     def create(self, validated_data):
-        return super().create(validated_data)
+        location_data = validated_data.pop("location", None)
+        event_type_data = validated_data.pop("event_type", None)
+
+        if event_type_data:
+            event_type, created = EventType.objects.get_or_create(name=event_type_data)
+
+        if location_data:
+            location, created = Location.objects.get_or_create(
+                address=location_data.get("address"),
+                defaults={
+                    "lat": location_data.get("lat"),
+                    "lng": location_data.get("lng"),
+                },
+            )
+        else:
+            location = None
+
+        event = Event.objects.create(
+            **validated_data, location=location, event_type=event_type
+        )
+        return event
+
+    def update(self, instance, validated_data):
+        location_data = validated_data.pop("location", None)
+        event_type_data = validated_data.pop("event_type", None)
+
+        if event_type_data:
+            event_type, created = EventType.objects.get_or_create(name=event_type_data)
+            instance.event_type = event_type
+
+        if location_data:
+            location, created = Location.objects.get_or_create(
+                address=location_data.get("address"),
+                defaults={
+                    "lat": location_data.get("lat"),
+                    "lng": location_data.get("lng"),
+                },
+            )
+            instance.location = location
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+        return instance

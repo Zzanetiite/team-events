@@ -5,15 +5,24 @@ import { RouterProvider } from 'react-router-dom';
 import router from './router';
 import NavBar from './components/layout/NavBar';
 import { DataProvider } from './context/DataContext';
+import { APIProvider } from '@vis.gl/react-google-maps';
+import { REACT_APP_GOOGLE_MAPS_API_KEY } from './constants';
+import { libraries } from './config';
 
 const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <DataProvider>
-        <NavBar />
-        <RouterProvider router={router} />
-      </DataProvider>
-    </AuthProvider>
+    <APIProvider
+      libraries={libraries}
+      apiKey={REACT_APP_GOOGLE_MAPS_API_KEY}
+      onLoad={() => console.log('Maps API has loaded.')}
+    >
+      <AuthProvider>
+        <DataProvider>
+          <NavBar />
+          <RouterProvider router={router} />
+        </DataProvider>
+      </AuthProvider>
+    </APIProvider>
   );
 };
 

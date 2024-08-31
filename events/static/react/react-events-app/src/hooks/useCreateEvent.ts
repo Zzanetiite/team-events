@@ -1,44 +1,37 @@
 import { useState } from 'react';
-import { SelectChangeEvent } from '@mui/material';
-import { EventTableProps } from '../interfaces/types';
 import { useApi } from './useApi';
 import { eventEmptyData } from '../config';
 import { ApiEndpoints } from '../constants';
 import { handleError } from '../errors/handleError';
 import useAutoClearMessage from './useAutoClearMessage';
+import { useForm } from './useForm';
+import { mapCreateEventToDBFormat } from '../utils/mapping';
 
 export const useCreateEvent = (
   setNewEventCreated: (value: boolean) => void
 ) => {
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
-  const [formData, setFormData] = useState<EventTableProps>(eventEmptyData);
   const [submitClicked, setSubmitClicked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
+  const {
+    event,
+    setEvent,
+    handleLocationChange,
+    handleChange,
+    handleSelectChange,
+  } = useForm();
 
   useAutoClearMessage({
     message: successMessage,
     setMessage: setSuccessMessage,
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSelectChange = (e: SelectChangeEvent<string>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  useAutoClearMessage({
+    message: errorMessage,
+    setMessage: setErrorMessage,
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,19 +39,14 @@ export const useCreateEvent = (
     try {
       const response = await fetchWithTokens(ApiEndpoints.CREATE_EVENT, {
         method: 'POST',
-        body: JSON.stringify({
-          title: formData.title,
-          description: formData.description,
-          event_type: formData.eventType,
-          address: formData.address,
-        }),
+        body: JSON.stringify(mapCreateEventToDBFormat(event)),
       });
 
       if (response !== undefined && response !== null) {
         setSuccessMessage('Event created successfully!');
         setErrorMessage(null);
         setNewEventCreated(true);
-        setFormData(eventEmptyData);
+        setEvent(eventEmptyData);
         setSubmitClicked(true);
       }
     } catch (error: any) {
@@ -74,12 +62,13 @@ export const useCreateEvent = (
     successMessage,
     errorMessage,
     expanded,
-    formData,
+    event,
     submitClicked,
     setSubmitClicked,
     setExpanded,
     handleChange,
     handleSelectChange,
+    handleLocationChange,
     handleSubmit,
   };
 };

@@ -66,9 +66,9 @@ function getStartingUserRating(
   event: EventProps
 ): number {
   if (ratingType === RatingTypes.LOUDNESS) {
-    return event.loudnessRating || 0;
+    return event.usersLoudnessRating || 0;
   } else if (ratingType === RatingTypes.PLACE) {
-    return event.placeRating || 0;
+    return event.usersPlaceRating || 0;
   } else {
     return 0;
   }

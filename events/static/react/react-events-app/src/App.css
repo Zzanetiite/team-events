@@ -68,3 +68,27 @@
 .pac-matched {
   color: #ff5722;
 }
+
+.map-container {
+  height: 300px;
+  width: 100%;
+}
+
+.info-window {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+  width: 200px;
+}
+.info-window h2 {
+  margin: 0;
+  font-size: 16px;
+  color: #007bff;
+}
+.info-window p {
+  margin: 5px 0;
+}
+.info-window .address {
+  font-style: italic;
+  color: #555;
+}

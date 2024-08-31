@@ -4,24 +4,23 @@ import { useJsApiLoader } from '@react-google-maps/api';
 import { ChooseAddressProps } from '../../../interfaces/types';
 import { libraries } from '../../../config';
 import Loading from '../Loading';
-import './../../../App.css';
-import { REACT_APP_GOOGLE_MAPS_API_KEY } from '../../../constants';
+import { MAP_ID, REACT_APP_GOOGLE_MAPS_API_KEY } from '../../../constants';
 
 const EventAddressInput: React.FC<ChooseAddressProps> = ({
-  value,
+  value = { address: '', location: { lat: 0, lng: 0 } },
   onChange,
   submitClicked,
   setSubmitClicked,
 }) => {
   const [searchBox, setSearchBox] =
     useState<google.maps.places.SearchBox | null>(null);
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState<string>(value.address);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
-    id: 'google-map-script',
+    id: MAP_ID,
   });
 
   useEffect(() => {
@@ -33,42 +32,39 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
         const places = newSearchBox.getPlaces();
         if (places && places.length > 0) {
           const place = places[0];
-          if (place.formatted_address) {
+          if (place.formatted_address && place.geometry?.location) {
+            const lat = place.geometry.location.lat();
+            const lng = place.geometry.location.lng();
+            setInputValue(place.formatted_address);
             onChange({
-              target: { name: 'address', value: place.formatted_address },
-            } as React.ChangeEvent<HTMLInputElement>);
+              address: place.formatted_address,
+              location: { lat, lng },
+            });
           }
-          setInputValue(place.formatted_address || '');
         }
       });
     }
   }, [isLoaded]);
 
-  /*
-  To handle the first mount,
-  searche's default is empty so
-  passed in value gets ignored
-   */
   useEffect(() => {
-    setInputValue(value);
+    setInputValue(value.address || '');
   }, [value]);
 
   useEffect(() => {
     if (submitClicked) {
-      if (searchBox) {
-        setInputValue('');
-      }
+      setInputValue('');
       setSubmitClicked(false);
     }
-  }, [submitClicked, searchBox, setSubmitClicked]);
+  }, [submitClicked, setSubmitClicked]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    const newAddress = event.target.value;
+    setInputValue(newAddress);
+    onChange({ address: newAddress, location: { lat: 0, lng: 0 } });
     if (searchBox) {
       searchBox.setBounds(new google.maps.LatLngBounds());
       searchBox.getPlaces();
     }
-    onChange(event);
   };
 
   if (!isLoaded) return <Loading />;

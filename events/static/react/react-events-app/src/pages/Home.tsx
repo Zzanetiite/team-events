@@ -8,6 +8,7 @@ import StatusAlert from '../components/common/StatusAlert';
 import HomeEventsContainer from '../components/layout/HomeEventsContainer';
 import HomeEventsFilter from '../components/layout/HomeEventsFilter';
 import { PlaceTypes } from '../constants';
+import GoogleMap from '../components/layout/GoogleMap';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -47,6 +48,7 @@ const Home = () => {
 
   return (
     <div>
+      <GoogleMap events={eventData} />
       {homePageFilterOpen && (
         <HomeEventsFilter
           onApplyFilter={handleApplyFilter}

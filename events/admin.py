@@ -3,6 +3,7 @@ from django.contrib import admin
 from events.models.comment import Comment
 from events.models.event import Event
 from events.models.event_type import EventType
+from events.models.location import Location
 from events.models.rating import Rating
 from events.models.rating_type import RatingType
 
@@ -14,7 +15,15 @@ class EventTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ("id", "description", "average_rating_event", "user", "event_type")
+    list_display = (
+        "id",
+        "title",
+        "description",
+        "user",
+        "event_type",
+        "average_rating_event",
+        "location",
+    )
 
 
 @admin.register(Rating)
@@ -30,3 +39,8 @@ class RatingTypeAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ("id", "comment", "event", "user", "date_created")
+
+
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ("address", "lat", "lng")

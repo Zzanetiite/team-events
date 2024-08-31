@@ -1,31 +1,24 @@
-from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 from events.models.comment import Comment
-from events.models.event import Event, EventType
-from events.models.rating_type import RatingType
+from events.tests.create_test_data import initialize_test_data
 
 
 class CommentCreateViewTest(APITestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username="testuser", password="password")
-        self.client.login(username="testuser", password="password")
-        self.event_type = EventType.objects.create(
-            name="Restaurant", description="A large conference"
-        )
-        self.event = Event.objects.create(
-            title="Sample Event",
-            description="This is a sample event",
-            average_rating_event=5,
-            user=self.user,
-            event_type=self.event_type,
-        )
+        data = initialize_test_data()
+        self.user = data["user"]
+        self.admin_user = data["admin_user"]
+        self.user1 = data["user1"]
+        self.user2 = data["user2"]
+        self.event_type = data["event_type"]
+        self.location = data["location"]
+        self.event = data["event"]
 
-        RatingType.objects.create(name="Loudness Rating")
-        RatingType.objects.create(name="Place Rating")
+        self.client.login(username="testuser", password="password")
 
         self.url = reverse("comment-create")
 

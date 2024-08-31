@@ -1,24 +1,29 @@
-import { useState, useEffect } from 'react';
-import { SelectChangeEvent } from '@mui/material';
-import { EditEventModalProps, EventTableProps } from '../interfaces/types';
-import { eventEmptyData } from '../config';
+import { useEffect, useState } from 'react';
+import { EditEventModalProps } from '../interfaces/types';
 import { useApi } from './useApi';
 import { ApiEndpoints, ErrorMessages } from '../constants';
-import { mapEventToDBFormat } from '../utils/mapping';
+import { mapUpdateEventToDBFormat } from '../utils/mapping';
 import { handleError } from '../errors/handleError';
 import useAutoClearMessage from './useAutoClearMessage';
+import { useForm } from './useForm';
 
 export const useEditEventModal = ({
-  event,
+  selectedEvent,
   setModalUpdated,
   setDeleteSuccessMessage,
   handleClose,
 }: Omit<EditEventModalProps, 'open'>) => {
-  const [eventData, setEventData] = useState<EventTableProps>(eventEmptyData);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const { fetchWithTokens } = useApi();
+  const {
+    event,
+    setEvent,
+    handleLocationChange,
+    handleChange,
+    handleSelectChange,
+  } = useForm();
 
   useAutoClearMessage({
     message: successMessage,
@@ -26,28 +31,10 @@ export const useEditEventModal = ({
   });
 
   useEffect(() => {
-    if (event) {
-      setEventData(event);
+    if (selectedEvent) {
+      setEvent(selectedEvent);
     }
-  }, [event]);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setEventData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSelectChange = (e: SelectChangeEvent<string>) => {
-    const { name, value } = e.target;
-    setEventData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  }, [selectedEvent]);
 
   const handleSubmit = async () => {
     if (!event) return;
@@ -56,7 +43,7 @@ export const useEditEventModal = ({
         ApiEndpoints.UPDATE_OR_DELETE_EVENT(event.id),
         {
           method: 'PUT',
-          body: JSON.stringify(mapEventToDBFormat(eventData)),
+          body: JSON.stringify(mapUpdateEventToDBFormat(event)),
         }
       );
       if (response) {
@@ -103,10 +90,12 @@ export const useEditEventModal = ({
   };
 
   return {
-    eventData,
+    event,
+    setEvent,
     errorMessage,
     successMessage,
     confirmOpen,
+    handleLocationChange,
     setConfirmOpen,
     handleChange,
     handleSelectChange,
