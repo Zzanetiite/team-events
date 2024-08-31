@@ -4,6 +4,7 @@ import { EventTableProps, TableColumnProps } from './interfaces/types';
 import { renderEventCell } from './utils/renderEventCell';
 import styled from '@emotion/styled';
 import { Rating } from '@mui/material';
+import { Libraries } from '@react-google-maps/api';
 
 export const eventTableFormatting = {
   '& .MuiDataGrid-root': {
@@ -93,3 +94,17 @@ export const StyledLoudnessRating = styled(Rating)({
     color: '#cdf0f4',
   },
 });
+
+// Google Map settings
+// Google API library for place search
+export const libraries: Libraries = ['places'];
+
+export const mapContainerStyle = {
+  width: '100%',
+  height: '400px',
+};
+
+export const mapsContainerStartingLocation = {
+  lat: -3.745,
+  lng: -38.523,
+};

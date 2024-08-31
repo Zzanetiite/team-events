@@ -14,6 +14,8 @@ import {
 } from '@mui/icons-material';
 
 export const DOMAIN = window.DOMAIN || 'http://localhost:8000';
+export const REACT_APP_GOOGLE_MAPS_API_KEY =
+  'AIzaSyCL2I9nxOxPtkkPX7dAzDRys4jzOOvNj3g';
 
 export enum ErrorMessages {
   NETWORK_ERROR = 'Network error, please try again later.',

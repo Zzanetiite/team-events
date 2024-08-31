@@ -19,6 +19,8 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
     errorMessage,
     expanded,
     formData,
+    submitClicked,
+    setSubmitClicked,
     setExpanded,
     handleChange,
     handleSelectChange,
@@ -60,6 +62,8 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
                 data={formData}
                 handleChange={handleChange}
                 handleSelectChange={handleSelectChange}
+                submitClicked={submitClicked}
+                setSubmitClicked={setSubmitClicked}
               />
               {successMessage && (
                 <StatusAlert message={successMessage} severity="success" />

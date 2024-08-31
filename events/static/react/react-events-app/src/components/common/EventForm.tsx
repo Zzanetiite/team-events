@@ -9,11 +9,18 @@ const EventForm: React.FC<EventFormProps> = ({
   data,
   handleChange,
   handleSelectChange,
+  submitClicked,
+  setSubmitClicked,
 }) => {
   return (
     <>
       <EventTitleInput value={data.title} onChange={handleChange} />
-      <EventAddressInput value={data.address} onChange={handleChange} />
+      <EventAddressInput
+        value={data.address}
+        onChange={handleChange}
+        submitClicked={submitClicked ? submitClicked : false}
+        setSubmitClicked={setSubmitClicked ? setSubmitClicked : () => {}}
+      />
       <EventDescriptionInput value={data.description} onChange={handleChange} />
       <EventPlaceTypeInput
         value={data.eventType}

@@ -52,6 +52,7 @@ Then populate `.env` file with
 SECRET_KEY=[ASK_ADMIN]
 ALLOWED_HOSTS=localhost,127.0.0.1
 ADMIN_CREATE_PAGE_PASSWORD=[ASK_ADMIN]
+REACT_APP_GOOGLE_MAPS_API_KEY=[ASK_ADMIN]
 ```
 
 ### Running the project

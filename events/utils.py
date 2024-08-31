@@ -13,7 +13,9 @@ from team_events.settings import DOMAIN
 
 
 def global_settings(request):
-    return {"DOMAIN": DOMAIN}
+    return {
+        "DOMAIN": DOMAIN,
+    }
 
 
 class Utils:

@@ -4,7 +4,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Button,
 } from '@mui/material';
 import { EditEventModalProps } from '../../interfaces/types';
 import ConfirmAction from '../common/ConfirmAction';

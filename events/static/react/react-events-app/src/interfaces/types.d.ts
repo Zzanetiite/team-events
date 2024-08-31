@@ -73,6 +73,11 @@ export interface InputProps {
   onChange: (value: string) => void;
 }
 
+export interface ChooseAddressProps extends CreateUpdateEventInputProps {
+  submitClicked: boolean;
+  setSubmitClicked: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 export interface CreateUpdateEventInputProps {
   value: string;
   onChange: (
@@ -177,12 +182,14 @@ export interface StatusAlertProps {
   severity: 'success' | 'error' | 'info' | 'warning';
 }
 
-interface EventFormProps {
+export interface EventFormProps {
   data: EventTableProps;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   handleSelectChange: (e: SelectChangeEvent<string>) => void;
+  submitClicked?: boolean;
+  setSubmitClicked?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface TableColumnProps {

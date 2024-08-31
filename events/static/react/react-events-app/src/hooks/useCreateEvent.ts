@@ -14,6 +14,7 @@ export const useCreateEvent = (
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
   const [formData, setFormData] = useState<EventTableProps>(eventEmptyData);
+  const [submitClicked, setSubmitClicked] = useState(false);
   const { fetchWithTokens } = useApi();
 
   useAutoClearMessage({
@@ -58,6 +59,7 @@ export const useCreateEvent = (
         setErrorMessage(null);
         setNewEventCreated(true);
         setFormData(eventEmptyData);
+        setSubmitClicked(true);
       }
     } catch (error: any) {
       handleError({
@@ -73,6 +75,8 @@ export const useCreateEvent = (
     errorMessage,
     expanded,
     formData,
+    submitClicked,
+    setSubmitClicked,
     setExpanded,
     handleChange,
     handleSelectChange,
