@@ -15,7 +15,7 @@ import {
 
 export const DOMAIN = window.DOMAIN || 'http://localhost:8000';
 export const REACT_APP_GOOGLE_MAPS_API_KEY =
-  'AIzaSyCL2I9nxOxPtkkPX7dAzDRys4jzOOvNj3g';
+  process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 export const MAP_ID = 'TEAM_EVENTS_MAP';
 
 export enum ErrorMessages {

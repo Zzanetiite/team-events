@@ -18,7 +18,7 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: REACT_APP_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: REACT_APP_GOOGLE_MAPS_API_KEY || '',
     libraries,
     id: MAP_ID,
   });
