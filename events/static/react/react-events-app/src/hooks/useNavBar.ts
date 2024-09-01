@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useDataContext } from '../context/DataContext';
 import { ApiEndpoints } from '../constants';

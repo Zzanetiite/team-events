@@ -33,7 +33,7 @@ const useFetchEvents = ({
           })
         );
     }
-  }, [filterOn, setEventData, setErrorMessage]);
+  }, [filterOn, setEventData, setErrorMessage, fetchWithTokens]);
 
   useEffect(() => {
     if (filterOn) {
@@ -63,7 +63,13 @@ const useFetchEvents = ({
           })
         );
     }
-  }, [filterOn, selectedEventTypes, setEventData]);
+  }, [
+    filterOn,
+    selectedEventTypes,
+    setEventData,
+    fetchWithTokens,
+    setErrorMessage,
+  ]);
 };
 
 export default useFetchEvents;
