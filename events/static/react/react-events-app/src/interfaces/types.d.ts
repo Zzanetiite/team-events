@@ -217,3 +217,7 @@ export interface CreateEventProps {
 export interface RatingProps {
   event: EventProps;
 }
+
+export interface PoiMarkerProps {
+  events: EventProps[];
+}

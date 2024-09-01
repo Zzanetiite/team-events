@@ -44,7 +44,7 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
         }
       });
     }
-  }, [isLoaded]);
+  }, [isLoaded, onChange]);
 
   useEffect(() => {
     setInputValue(value.address || '');

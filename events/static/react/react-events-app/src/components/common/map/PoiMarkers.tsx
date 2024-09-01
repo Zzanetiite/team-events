@@ -1,18 +1,24 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useMap } from '@vis.gl/react-google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
-import { EventProps } from '../../../interfaces/types';
+import { PoiMarkerProps } from '../../../interfaces/types';
 
-const PoiMarkers = ({ events }: { events: EventProps[] }) => {
+const PoiMarkers: React.FC<PoiMarkerProps> = ({ events }) => {
   const map = useMap();
-  const [markers, setMarkers] = useState<google.maps.Marker[]>([]);
+  const markersRef = useRef<google.maps.Marker[]>([]);
   const clusterer = useRef<MarkerClusterer | null>(null);
   const infoWindow = useRef<google.maps.InfoWindow | null>(null);
 
   useEffect(() => {
+    if (map && !clusterer.current) {
+      clusterer.current = new MarkerClusterer({ map, markers: [] });
+    }
+  }, [map]);
+
+  useEffect(() => {
     if (!map) return;
 
-    markers.forEach((marker) => marker.setMap(null));
+    markersRef.current.forEach((marker) => marker.setMap(null));
 
     const newMarkers = events.map((event) => {
       const marker = new google.maps.Marker({
@@ -41,7 +47,7 @@ const PoiMarkers = ({ events }: { events: EventProps[] }) => {
       return marker;
     });
 
-    setMarkers(newMarkers);
+    markersRef.current = newMarkers;
 
     if (!clusterer.current) {
       clusterer.current = new MarkerClusterer({ map, markers: newMarkers });

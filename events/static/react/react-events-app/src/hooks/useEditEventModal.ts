@@ -34,7 +34,7 @@ export const useEditEventModal = ({
     if (selectedEvent) {
       setEvent(selectedEvent);
     }
-  }, [selectedEvent]);
+  }, [selectedEvent, setEvent]);
 
   const handleSubmit = async () => {
     if (!event) return;

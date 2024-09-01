@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { REACT_APP_ADMIN_CREATE_PAGE_PASSWORD } from '../constants';
 import { useValidateAdminPasswordProps } from '../interfaces/hookTypes';
-import { set } from 'date-fns';
 
 const useValidateAdminPassword = ({
   successMessageText,
