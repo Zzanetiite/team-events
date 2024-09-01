@@ -7,7 +7,11 @@ import useAutoClearMessage from '../hooks/useAutoClearMessage';
 import StatusAlert from '../components/common/StatusAlert';
 import HomeEventsContainer from '../components/layout/HomeEventsContainer';
 import HomeEventsFilter from '../components/layout/HomeEventsFilter';
-import { PlaceTypes } from '../constants';
+import {
+  REACT_APP_MAP_ENABLED,
+  PlaceTypes,
+  REACT_APP_GOOGLE_MAPS_API_KEY,
+} from '../constants';
 import GoogleMap from '../components/layout/GoogleMap';
 
 const Home = () => {
@@ -45,10 +49,10 @@ const Home = () => {
     setFilterOn(false);
     setSelectedEventTypes([]);
   };
-
+  console.log('map enabled', REACT_APP_MAP_ENABLED);
+  console.log('key', REACT_APP_GOOGLE_MAPS_API_KEY);
   return (
     <div>
-      <GoogleMap events={eventData} />
       {homePageFilterOpen && (
         <HomeEventsFilter
           onApplyFilter={handleApplyFilter}
@@ -57,6 +61,7 @@ const Home = () => {
       )}
       {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
       {infoMessage && <StatusAlert message={infoMessage} severity="info" />}
+      {REACT_APP_MAP_ENABLED === 'true' && <GoogleMap events={eventData} />}
       <HomeEventsContainer eventData={eventData} />
     </div>
   );

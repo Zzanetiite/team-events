@@ -14,7 +14,6 @@ const App: React.FC = () => {
     <APIProvider
       libraries={libraries}
       apiKey={REACT_APP_GOOGLE_MAPS_API_KEY || ''}
-      onLoad={() => console.log('Maps API has loaded.')}
     >
       <AuthProvider>
         <DataProvider>
