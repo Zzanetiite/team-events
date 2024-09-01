@@ -16,6 +16,8 @@ import {
 export const DOMAIN = window.DOMAIN || 'http://localhost:8000';
 export const REACT_APP_GOOGLE_MAPS_API_KEY =
   process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+export const REACT_APP_ADMIN_CREATE_PAGE_PASSWORD =
+  process.env.REACT_APP_ADMIN_CREATE_PAGE_PASSWORD;
 export const MAP_ID = 'TEAM_EVENTS_MAP';
 
 export enum ErrorMessages {
@@ -38,7 +40,6 @@ export const ApiEndpoints = {
   LOGOUT: 'api/user/logout/',
   GET_USERNAME: 'api/user/get-username/',
   CREATE_ADMIN_USER: 'api/user/create-admin/',
-  VALIDATE_ADMIN_PAGE_PASSWORD: 'api/security/validate-admin-password/',
   GET_USER_EVENTS: (username: string) => `api/events/username/${username}/`,
   GET_EVENTS_BY_TYPE: (event_types: string) =>
     `api/events/by-type/${event_types}/`,

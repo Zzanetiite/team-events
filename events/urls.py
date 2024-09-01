@@ -19,7 +19,6 @@ urlpatterns = [
         "api/user/<str:action>/", UserManagementView.as_view(), name="user-management"
     ),
     path("api/security/<str:action>/", SecurityView.as_view(), name="security"),
-    path("api/security/<str:action>/", SecurityView.as_view(), name="security"),
     # Event-specific endpoints
     path(
         "api/events/username/<str:username>/",

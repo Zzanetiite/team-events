@@ -1,20 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useApi } from './useApi';
 import { useAuth } from '../context/AuthContext';
-import { handleError } from '../errors/handleError';
-import { ErrorMessages } from '../constants';
+import { REACT_APP_ADMIN_CREATE_PAGE_PASSWORD } from '../constants';
 import { useValidateAdminPasswordProps } from '../interfaces/hookTypes';
+import { set } from 'date-fns';
 
 const useValidateAdminPassword = ({
-  apiEndpoint,
   successMessageText,
-  adminPage,
 }: useValidateAdminPasswordProps) => {
   const [password, setPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { fetchWithTokens } = useApi();
   const { loggedIn, setAdminPassword, adminPassword } = useAuth();
   const navigate = useNavigate();
 
@@ -28,33 +24,17 @@ const useValidateAdminPassword = ({
     if (adminPassword && !errorMessage) {
       navigate('/createadmin');
     }
-  }, [adminPage, adminPassword, errorMessage, navigate]);
+  }, [adminPassword, errorMessage, navigate]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const response = await fetchWithTokens(apiEndpoint, {
-        method: 'POST',
-        body: JSON.stringify({ password: password }),
-      });
-
-      if (response) {
-        setSuccessMessage(successMessageText);
-        setErrorMessage(null);
-        setAdminPassword(password);
-      }
-    } catch (error: any) {
-      handleError({
-        error,
-        setErrorMessage,
-        setSuccessMessage,
-        messageForBadRequest: ErrorMessages.INVALID_CREDENTIALS,
-        overrideErrorHandlers: {
-          403: (setErrorMessage) => {
-            setErrorMessage('Password wrong.');
-          },
-        },
-      });
+    if (REACT_APP_ADMIN_CREATE_PAGE_PASSWORD === password) {
+      setSuccessMessage(successMessageText);
+      setErrorMessage(null);
+      setAdminPassword(password);
+      return;
+    } else {
+      setErrorMessage('Password wrong.');
     }
   };
 

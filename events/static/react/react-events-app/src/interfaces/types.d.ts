@@ -30,6 +30,11 @@ export interface ApiResponseBody {
   message: string;
 }
 
+export interface ValidatePasswordProps {
+  title: string;
+  successMessageText: ReactNode;
+}
+
 export interface CreateUserFormProps {
   title: string;
   apiEndpoint: string;

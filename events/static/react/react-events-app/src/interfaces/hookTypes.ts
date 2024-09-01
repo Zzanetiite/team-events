@@ -35,7 +35,5 @@ export interface UseLoginProps {
 }
 
 export interface useValidateAdminPasswordProps {
-  apiEndpoint: string;
   successMessageText: string;
-  adminPage: boolean | undefined;
 }

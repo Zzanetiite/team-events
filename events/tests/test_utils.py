@@ -1,4 +1,3 @@
-import json
 from unittest.mock import MagicMock, mock_open, patch
 
 from django.db import IntegrityError
@@ -47,34 +46,6 @@ class UtilsTests(TestCase):
 
         result = Utils.get_manifest("nonexistent_file")
         self.assertEqual(result, "nonexistent_file")
-
-    @patch("events.utils.JsonResponse")
-    def test_validate_admin_page_password_correct(self, MockJsonResponse):
-        mock_correct_response = MockJsonResponse.return_value
-        mock_correct_response.status_code = status.HTTP_200_OK
-        mock_correct_response.content = b'{"message": "Success. Password correct."}'
-
-        correct_response = Utils.validate_admin_page_password("correct_password")
-        self.assertEqual(correct_response.status_code, status.HTTP_200_OK)
-        self.assertEqual(
-            json.loads(correct_response.content.decode("utf-8")),
-            {"message": "Success. Password correct."},
-        )
-
-    @patch("events.utils.JsonResponse")
-    def test_validate_admin_page_password_wrong(self, MockJsonResponse):
-        mock_incorrect_response = MockJsonResponse.return_value
-        mock_incorrect_response.status_code = 403
-        mock_incorrect_response.content = (
-            b'{"status": "error", "message": "Invalid password"}'
-        )
-
-        incorrect_response = Utils.validate_admin_page_password("wrong_password")
-        self.assertEqual(incorrect_response.status_code, 403)
-        self.assertEqual(
-            json.loads(incorrect_response.content.decode("utf-8")),
-            {"status": "error", "message": "Invalid password"},
-        )
 
     @patch("events.utils.User")
     def test_create_user_internal(self, MockUser):

@@ -4,19 +4,15 @@ import PasswordInput from '../components/common/input/PasswordInput';
 import StatusAlert from '../components/common/StatusAlert';
 import FilledSubmitButton from '../components/common/buttons/FilledSubmitButton';
 import useValidateAdminPassword from '../hooks/useValidateAdminPassword';
-import { CreateUserFormProps } from '../interfaces/types';
+import { ValidatePasswordProps } from '../interfaces/types';
 
-const ValidateAdminPasswordForm: React.FC<CreateUserFormProps> = ({
+const ValidateAdminPasswordForm: React.FC<ValidatePasswordProps> = ({
   title,
-  apiEndpoint,
   successMessageText,
-  adminPage,
 }) => {
   const { password, setPassword, successMessage, errorMessage, handleSubmit } =
     useValidateAdminPassword({
-      apiEndpoint,
       successMessageText,
-      adminPage,
     });
 
   return (

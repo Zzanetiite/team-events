@@ -25,7 +25,6 @@ class UserManagementView(APIView):
             password = request.data.get("password")
             return Utils.create_user_internal(username, password)
 
-        # TODO: Add secret password check to the request
         elif action == "create-admin":
             username = request.data.get("username")
             password = request.data.get("password")

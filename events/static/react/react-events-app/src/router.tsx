@@ -39,7 +39,6 @@ const router = createBrowserRouter([
     element: (
       <ValidateAdminPasswordForm
         title="Please enter secret password"
-        apiEndpoint={ApiEndpoints.VALIDATE_ADMIN_PAGE_PASSWORD}
         successMessageText={<span>Success! Password correct.</span>}
       />
     ),

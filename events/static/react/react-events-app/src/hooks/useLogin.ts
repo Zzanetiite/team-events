@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApi } from './useApi';
 import { useAuth } from '../context/AuthContext';
-import { ApiEndpoints } from '../constants';
+import {
+  ApiEndpoints,
+  REACT_APP_ADMIN_CREATE_PAGE_PASSWORD,
+} from '../constants';
 import { handleError } from '../errors/handleError';
 import { UseLoginProps } from '../interfaces/hookTypes';
 
@@ -17,7 +20,7 @@ const useLogin = ({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
-  const { setUser, setUserToken, loggedIn, adminPassword } = useAuth();
+  const { setUser, setUserToken, loggedIn } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,7 +52,7 @@ const useLogin = ({
         body: JSON.stringify({
           username: newUsername,
           password: password,
-          secret_admin_password: adminPassword,
+          secret_admin_password: REACT_APP_ADMIN_CREATE_PAGE_PASSWORD,
         }),
       });
 
