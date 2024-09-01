@@ -125,10 +125,11 @@ From the project root folder, to save dependencies installed during development 
 pip freeze > requirements.txt
 ```
 
-to verify that static files collect successfully run
+to verify that deployment will be successful run the deploy bash script in the root folder. If this output "Success! Deploy script complete.",
+the project is ready to be deployed. Otherwise, debug the errors.
 
 ```bash
-python manage.py collectstatic --noinput
+bash .deploy.sh
 ```
 
 Then add changes and commit them
