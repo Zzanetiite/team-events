@@ -14,14 +14,6 @@ const GoogleMap = ({ events }: { events: EventProps[] }) => {
           defaultZoom={13}
           defaultCenter={mapsContainerStartingLocation}
           mapId={MAP_ID}
-          onCameraChanged={(ev: MapCameraChangedEvent) =>
-            console.log(
-              'camera changed:',
-              ev.detail.center,
-              'zoom:',
-              ev.detail.zoom
-            )
-          }
         >
           <PoiMarkers events={events} />
         </Map>

@@ -49,8 +49,6 @@ const Home = () => {
     setFilterOn(false);
     setSelectedEventTypes([]);
   };
-  console.log('map enabled', REACT_APP_MAP_ENABLED);
-  console.log('key', REACT_APP_GOOGLE_MAPS_API_KEY);
   return (
     <div>
       {homePageFilterOpen && (

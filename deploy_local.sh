@@ -4,10 +4,6 @@
 set -e
 
 echo "===================================="
-echo "Setting up React environment..."
-bash create_react_env.sh
-
-echo "===================================="
 echo "Navigating to React app directory..."
 cd events/static/react/react-events-app/
 
@@ -41,21 +37,13 @@ cp $REACT_BUILD_PATH/asset-manifest.json $DJANGO_APP_PATH/
 echo "Build artifacts have been copied to Django static directory."
 
 echo "===================================="
-echo "Collecting static files..."
-python manage.py collectstatic --noinput
-
-echo "===================================="
 echo "Applying migrations..."
 python manage.py makemigrations
 python manage.py migrate
-
-echo "===================================="
-echo "Creating user..."
-python manage.py create_user
 
 echo "===================================="
 echo "Loading initial data..."
 python manage.py loaddata events/fixtures/initial_data.json
 
 echo "===================================="
-echo "Success! Deploy script complete."
+echo "Success! Local Deploy script complete."
