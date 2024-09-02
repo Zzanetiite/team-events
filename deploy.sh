@@ -4,6 +4,10 @@
 set -e
 
 echo "===================================="
+echo "Installing requirements..."
+pip install -r requirements.txt
+
+echo "===================================="
 echo "Setting up React environment..."
 bash create_react_env.sh
 

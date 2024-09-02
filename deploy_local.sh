@@ -23,6 +23,9 @@ REACT_BUILD_PATH=events/static/react/react-events-app/build
 DJANGO_APP_PATH=events
 DJANGO_STATIC_PATH=$DJANGO_APP_PATH/static
 
+mkdir -p $DJANGO_STATIC_PATH/js
+mkdir -p $DJANGO_STATIC_PATH/css
+
 echo "===================================="
 echo "Removing old build files..."
 rm -rf $DJANGO_STATIC_PATH/js/*
