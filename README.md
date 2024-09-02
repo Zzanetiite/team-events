@@ -129,7 +129,7 @@ to verify that deployment will be successful run the deploy bash script in the r
 the project is ready to be deployed. Otherwise, debug the errors. Keep in mind, this will wipe out the `.env` file if the variables are not exported as env variables are pasted from the global environment.
 
 ```bash
-bash .deploy.sh
+bash .deploy_local.sh
 ```
 
 Then add changes and commit them

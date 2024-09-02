@@ -13,7 +13,7 @@ bash create_react_env.sh
 
 echo "===================================="
 echo "Navigating to React app directory..."
-cd events/static/react/react-events-app/
+cd react-events-app/
 
 echo "===================================="
 echo "Installing React dependencies..."
@@ -25,9 +25,9 @@ npm run build
 
 echo "===================================="
 echo "Returning to project root..."
-cd ../../../../
+cd ../
 
-REACT_BUILD_PATH=events/static/react/react-events-app/build
+REACT_BUILD_PATH=react-events-app/build
 DJANGO_APP_PATH=events
 DJANGO_STATIC_PATH=$DJANGO_APP_PATH/static
 
