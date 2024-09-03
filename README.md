@@ -149,7 +149,7 @@ Before pushing anything to git, please ensure the changes are ready for prod. Re
 git push
 ```
 
-### Warning to know about
+### Warnings to know about
 
 #### Assistive technology warning
 
