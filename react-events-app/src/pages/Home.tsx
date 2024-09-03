@@ -7,11 +7,7 @@ import useAutoClearMessage from '../hooks/useAutoClearMessage';
 import StatusAlert from '../components/common/StatusAlert';
 import HomeEventsContainer from '../components/layout/HomeEventsContainer';
 import HomeEventsFilter from '../components/layout/HomeEventsFilter';
-import {
-  REACT_APP_MAP_ENABLED,
-  PlaceTypes,
-  REACT_APP_GOOGLE_MAPS_API_KEY,
-} from '../constants';
+import { REACT_APP_MAP_ENABLED, PlaceTypes } from '../constants';
 import GoogleMap from '../components/layout/GoogleMap';
 
 const Home = () => {

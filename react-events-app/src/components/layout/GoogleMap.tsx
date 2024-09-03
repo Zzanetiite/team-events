@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, MapCameraChangedEvent } from '@vis.gl/react-google-maps';
+import { Map } from '@vis.gl/react-google-maps';
 import { Box } from '@mui/material';
 import { MAP_ID } from '../../constants';
 import PoiMarkers from '../common/map/PoiMarkers';
