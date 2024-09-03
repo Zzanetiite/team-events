@@ -2,8 +2,10 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+jest.mock('./components/layout/NavBar', () => () => <div>Mocked NavBar</div>);
+
+test('renders NavBar component', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const navBarElement = screen.getByText(/Mocked NavBar/i);
+  expect(navBarElement).toBeInTheDocument();
 });

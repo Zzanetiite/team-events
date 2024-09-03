@@ -12,7 +12,6 @@ const EventTableHeader = ({
 }) => {
   const { user } = useAuth();
   const heading = user.isAdmin ? 'All User Events' : 'Events created by you';
-  console.log(user);
   return (
     <>
       <Typography component="legend" variant="h5" gutterBottom>

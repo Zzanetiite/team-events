@@ -14,7 +14,6 @@ const LocationSearch: React.FC = () => {
     libraries,
     id: 'google-map-script',
   });
-  console.log('address', address);
 
   const onPlaceSelected = (place: google.maps.places.PlaceResult) => {
     if (place.formatted_address) {

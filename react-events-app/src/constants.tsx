@@ -18,7 +18,6 @@ export const REACT_APP_GOOGLE_MAPS_API_KEY =
   process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 export const REACT_APP_ADMIN_CREATE_PAGE_PASSWORD =
   process.env.REACT_APP_ADMIN_CREATE_PAGE_PASSWORD;
-export const REACT_APP_MAP_ENABLED = process.env.REACT_APP_MAP_ENABLED;
 export const MAP_ID = 'TEAM_EVENTS_MAP';
 
 export enum ErrorMessages {

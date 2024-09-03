@@ -60,7 +60,6 @@ and `.env` file under `team_events/events/static/react/react-events-app/` with
 REACT_APP_ADMIN_CREATE_PAGE_PASSWORD=[ASK_ADMIN]
 REACT_APP_GOOGLE_MAPS_API_KEY=[ASK_ADMIN]
 REACT_APP_DOMAIN=http://localhost:8000
-REACT_APP_MAP_ENABLED=true
 ```
 
 ### Running the project

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map } from '@vis.gl/react-google-maps';
+import { Map, RenderingType } from '@vis.gl/react-google-maps';
 import { Box } from '@mui/material';
 import { MAP_ID } from '../../constants';
 import PoiMarkers from '../common/map/PoiMarkers';
@@ -14,6 +14,7 @@ const GoogleMap = ({ events }: { events: EventProps[] }) => {
           defaultZoom={13}
           defaultCenter={mapsContainerStartingLocation}
           mapId={MAP_ID}
+          renderingType={RenderingType.UNINITIALIZED}
         >
           <PoiMarkers events={events} />
         </Map>
