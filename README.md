@@ -20,7 +20,7 @@ Download the repository from git using:
 git clone https://github.com/Zzanetiite/team-events.git
 ```
 
-This application runs with Python. Therefore, it requires Python environment on the machine it is being ran. Ensure `pip` and `python` are installed on the machine prior to followin
+This application runs with Python. Therefore, it requires Python environment on the machine it is being ran. Ensure `pip` and `python` are installed on the machine prior to following
 
 1. Create environment using
 
@@ -54,12 +54,13 @@ ALLOWED_HOSTS=localhost,127.0.0.1
 ADMIN_CREATE_PAGE_PASSWORD=[ASK_ADMIN]
 ```
 
-and `.env` file under `team_events/events/static/react/react-events-app/` with
+and `.env` file under `team_events/events/static/react/react-events-app/` with values
 
 ```bash
 REACT_APP_ADMIN_CREATE_PAGE_PASSWORD=[ASK_ADMIN]
 REACT_APP_GOOGLE_MAPS_API_KEY=[ASK_ADMIN]
 REACT_APP_DOMAIN=http://localhost:8000
+DATABASE_URL=[ASK_ADMIN]
 ```
 
 ### Running the project
@@ -102,12 +103,10 @@ and
 python manage.py migrate
 ```
 
-Then, we need to populate the sqlite database with data used for this DEMO.
-
-! Note ! Since this project is a DEMO, it does not support real clients because it does not have a hosted database. Please keep in mind that the database will not be deployed and therefore prod will not have events and users created during development.
+Start the server with
 
 ```bash
-python manage.py loaddata events/fixtures/initial_data.json
+python manage.py runserver
 ```
 
 ### Development
@@ -124,11 +123,17 @@ From the project root folder, to save dependencies installed during development 
 pip freeze > requirements.txt
 ```
 
-to verify that deployment will be successful run the deploy bash script in the root folder. If this output "Success! Deploy script complete.",
-the project is ready to be deployed. Otherwise, debug the errors. Keep in mind, this will wipe out the `.env` file if the variables are not exported as env variables are pasted from the global environment.
+Export environment variables to global environment `.env` from `...TeamEvents/team_events/team_events` folder.
 
 ```bash
-bash .deploy_local.sh
+export $(grep -v '^#' .env | xargs)
+```
+
+To verify that deployment will be successful run the deploy bash script in the root folder. If this output "Success! Deploy script complete.",
+the project is ready to be deployed.
+
+```bash
+bash .deploy.sh
 ```
 
 Then add changes and commit them
@@ -142,6 +147,8 @@ git commit -m "Message of changes"
 ```
 
 After commit, pre-commit formatters will run. You may need to re-add files and run commit again.
+
+For any issues see - https://pre-commit.com/
 
 Before pushing anything to git, please ensure the changes are ready for prod. Render will automatically register new git pushes and start deploying them immediately.
 

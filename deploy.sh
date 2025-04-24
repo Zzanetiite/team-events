@@ -54,12 +54,4 @@ python manage.py makemigrations
 python manage.py migrate
 
 echo "===================================="
-echo "Creating user..."
-python manage.py create_user
-
-echo "===================================="
-echo "Loading initial data..."
-python manage.py loaddata events/fixtures/initial_data.json
-
-echo "===================================="
 echo "Success! Deploy script complete."
