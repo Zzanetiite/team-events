@@ -2,9 +2,8 @@ import React from 'react';
 import { Card, CardContent } from '@mui/material';
 import { EventProps } from '../../interfaces/types';
 import EventHeader from '../common/EventHeader';
-import CommentsSection from './CommentsSection';
 import EventDescription from '../common/EventDescription';
-import Ratings from '../common/rating/Ratings';
+import AverageRatings from '../common/rating/AverageRating';
 
 const Event: React.FC<EventProps> = (event) => {
   return (
@@ -13,7 +12,9 @@ const Event: React.FC<EventProps> = (event) => {
         elevation={0}
         sx={{
           overflow: 'initial',
-          maxWidth: 500,
+          maxWidth: 250,
+          height: 215,
+          display: 'flex',
           backgroundColor: 'transparent',
         }}
       >
@@ -33,8 +34,10 @@ const Event: React.FC<EventProps> = (event) => {
             address={event.location.address}
           />
           <EventDescription description={event.description} />
-          <CommentsSection event={event} />
-          <Ratings event={event} />
+          {/* <CommentsSection event={event} /> TODO: Move to page */}
+          {/* TODO: Replace ratings with average value & voting to page */}
+          {/* <Ratings event={event} /> */}
+          <AverageRatings event={event} />
         </CardContent>
       </Card>
     </div>

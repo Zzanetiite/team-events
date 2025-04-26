@@ -2,6 +2,7 @@ import * as React from 'react';
 import { LocationOn } from '@mui/icons-material';
 import { Box, SvgIconProps } from '@mui/material';
 import { PlaceTypeIcons, PlaceTypes } from '../../constants';
+import { extractPostcode } from '../../utils/address';
 
 interface EventHeaderProps {
   eventTitle: string;
@@ -11,7 +12,7 @@ interface EventHeaderProps {
 
 const iconStyle = {
   marginRight: '4px',
-  fontSize: 18,
+  fontSize: 16,
 };
 
 const createStyledIcon =
@@ -28,11 +29,11 @@ const EventHeader: React.FC<EventHeaderProps> = ({
   return (
     <div>
       <Box
-        component="h3"
+        component="h4"
         sx={{
+          mt: 0,
           mb: 0,
           fontWeight: 'bold',
-          fontSize: '1.35824rem',
           lineHeight: 1.45,
         }}
       >
@@ -50,8 +51,8 @@ const EventHeader: React.FC<EventHeaderProps> = ({
           <span>{placeType}</span>
         </Box>
         <Box color={'grey.500'} display={'flex'} alignItems={'center'} mb={1}>
-          <LocationOn sx={{ marginRight: '4px', fontSize: 18 }} />
-          <span>{address}</span>
+          <LocationOn sx={{ marginRight: '4px', fontSize: 16 }} />
+          <span>{extractPostcode(address)}</span>
         </Box>
       </Box>
     </div>
