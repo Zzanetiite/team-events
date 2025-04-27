@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { AddCircle, ChevronRightRounded } from '@mui/icons-material';
 import StatusAlert from '../common/StatusAlert';
-import EventForm from '../common/EventForm';
+import EventForm from '../common/event/EventForm';
 import { CreateEventProps } from '../../interfaces/types';
 import FilledSubmitButton from '../common/buttons/FilledSubmitButton';
 import { useCreateEvent } from '../../hooks/useCreateEvent';

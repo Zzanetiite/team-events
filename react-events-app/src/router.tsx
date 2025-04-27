@@ -2,11 +2,11 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import ValidateAdminPasswordForm from './pages/ValidateAdminPassword';
-import NotFound from './components/common/NotFound';
 import { ApiEndpoints } from './constants';
 import UserEvents from './pages/UserEvents';
 import Login from './pages/Login';
 import CreateUser from './pages/CreateUser';
+import NotFound from './components/layout/NotFound';
 
 const router = createBrowserRouter([
   {

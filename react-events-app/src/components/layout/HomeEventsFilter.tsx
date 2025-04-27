@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { PlaceTypes } from '../../constants';
 import { Box } from '@mui/material';
-import ResetButton from '../common/ResetButton';
 import ApplyButton from '../common/buttons/ApplyButton';
-import EventTypeSelect from '../common/EventTypeSelect';
+import EventTypeSelect from '../common/event/EventTypeSelect';
+import ResetButton from '../common/buttons/ResetButton';
 
 interface HomeEventsFilterProps {
   onApplyFilter: (selectedTypes: PlaceTypes[]) => void;

@@ -1,9 +1,9 @@
 import React from 'react';
-import EventTitleInput from './input/EventTitleInput';
-import EventAddressInput from './input/EventAddressInput';
-import EventDescriptionInput from './input/EventDescriptionInput';
-import EventPlaceTypeInput from './input/EventPlaceTypeInput';
-import { EventFormProps } from '../../interfaces/types';
+import EventTitleInput from '../input/EventTitleInput';
+import EventAddressInput from '../input/EventAddressInput';
+import EventDescriptionInput from '../input/EventDescriptionInput';
+import EventPlaceTypeInput from '../input/EventPlaceTypeInput';
+import { EventFormProps } from '../../../interfaces/types';
 
 const EventForm: React.FC<EventFormProps> = ({
   data,

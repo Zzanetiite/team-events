@@ -8,7 +8,7 @@ import {
 import { EditEventModalProps } from '../../interfaces/types';
 import ConfirmAction from '../common/ConfirmAction';
 import StatusAlert from '../common/StatusAlert';
-import EventForm from '../common/EventForm';
+import EventForm from '../common/event/EventForm';
 import { useEditEventModal } from '../../hooks/useEditEventModal';
 import EmptySubmitButton from '../common/buttons/EmptySubmitButton';
 import EmptyCancelButton from '../common/buttons/EmptyCancelButton';

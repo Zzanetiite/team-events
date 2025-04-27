@@ -55,7 +55,7 @@ const Home = () => {
       )}
       {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
       {infoMessage && <StatusAlert message={infoMessage} severity="info" />}
-      <GoogleMap events={eventData} />
+      {/* <GoogleMap events={eventData} /> */}
       <HomeEventsContainer eventData={eventData} />
     </div>
   );

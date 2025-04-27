@@ -1,6 +1,6 @@
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import React from 'react';
-import { PlaceTypeIcons, PlaceTypes } from '../../constants';
+import { PlaceTypeIcons, PlaceTypes } from '../../../constants';
 
 interface EventTypeSelectProps {
   selectedTypes: { [key in PlaceTypes]?: boolean };

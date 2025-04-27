@@ -1,8 +1,8 @@
 import React from 'react';
 import { Card, CardContent } from '@mui/material';
 import { EventProps } from '../../interfaces/types';
-import EventHeader from '../common/EventHeader';
-import EventDescription from '../common/EventDescription';
+import EventHeader from '../common/event/EventHeader';
+import EventDescription from '../common/event/EventDescription';
 import AverageRatings from '../common/rating/AverageRating';
 
 const Event: React.FC<EventProps> = (event) => {

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { LocationOn } from '@mui/icons-material';
 import { Box, SvgIconProps } from '@mui/material';
-import { PlaceTypeIcons, PlaceTypes } from '../../constants';
-import { extractPostcode } from '../../utils/address';
+import { PlaceTypeIcons, PlaceTypes } from '../../../constants';
+import { extractPostcode } from '../../../utils/address';
 
 interface EventHeaderProps {
   eventTitle: string;

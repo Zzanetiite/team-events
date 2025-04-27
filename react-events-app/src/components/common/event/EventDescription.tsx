@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { ChevronRightRounded } from '@mui/icons-material';
-import { CHAR_LIMITS } from '../../constants/EventConstants';
+import { CHAR_LIMITS } from '../../../constants/EventConstants';
 
 export default function EventDescription({
   description,
