@@ -7,6 +7,15 @@ echo "===================================="
 echo "Installing requirements..."
 pip install -r requirements.txt
 
+# Export .env for development
+cd team_events
+if [ -f ".env" ]; then
+    echo "===================================="
+    echo "Exporting environment variables..."
+    export $(grep -v '^#' .env | xargs)
+    fi
+cd ../
+
 echo "===================================="
 echo "Setting up React environment..."
 bash create_react_env.sh

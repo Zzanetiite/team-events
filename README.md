@@ -52,14 +52,8 @@ Then populate `.env` file under `team_events/team_events/` with
 SECRET_KEY=[ASK_ADMIN]
 ALLOWED_HOSTS=localhost,127.0.0.1
 ADMIN_CREATE_PAGE_PASSWORD=[ASK_ADMIN]
-```
-
-and `.env` file under `team_events/events/static/react/react-events-app/` with values
-
-```bash
-REACT_APP_ADMIN_CREATE_PAGE_PASSWORD=[ASK_ADMIN]
-REACT_APP_GOOGLE_MAPS_API_KEY=[ASK_ADMIN]
-REACT_APP_DOMAIN=http://localhost:8000
+GOOGLE_MAPS_API_KEY=[ASK_ADMIN]
+DOMAIN=http://localhost:8000
 DATABASE_URL=[ASK_ADMIN]
 ```
 
@@ -121,12 +115,6 @@ From the project root folder, to save dependencies installed during development 
 
 ```bash
 pip freeze > requirements.txt
-```
-
-Export environment variables to global environment `.env` from `...TeamEvents/team_events/team_events` folder.
-
-```bash
-export $(grep -v '^#' .env | xargs)
 ```
 
 To verify that deployment will be successful run the deploy bash script in the root folder. If this output "Success! Deploy script complete.",

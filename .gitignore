@@ -170,3 +170,4 @@ cython_debug/
 /events/static/js/*
 events/asset-manifest.json
 events/index.html
+react-events-app/package-lock.json

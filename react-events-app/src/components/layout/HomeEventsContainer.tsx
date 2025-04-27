@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Event from './Event';
 import { EventProps } from '../../interfaces/types';
 
