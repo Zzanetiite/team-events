@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Map, RenderingType, useMap } from '@vis.gl/react-google-maps';
 import { Box, Button } from '@mui/material';
-import { MAP_ID } from '../../constants';
-import PoiMarkers from '../common/map/PoiMarkers';
 import { EventProps } from '../../interfaces/types';
-import { defaultMapsContainerStartingLocation } from '../../config';
 import { UNKNOWN_LOCATION } from '../../constants/MapConstants';
+import { defaultMapsContainerStartingLocation } from '../../config';
+import PoiMarkers from '../common/map/PoiMarkers';
+import { MAP_ID } from '../../constants';
+import GoogleMapsSearchBar from './GoogleMapsSearchBar';
 
 const GoogleMap = ({
   events,
@@ -66,7 +67,6 @@ const GoogleMap = ({
   );
 
   useEffect(() => {
-    // Function to handle geolocation
     const getLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -98,21 +98,42 @@ const GoogleMap = ({
 
   const handleLocationUpdate = () => {
     if (map) {
-      const center = map.getCenter();
-      if (center) {
-        reverseGeocode({ lat: center.lat(), lng: center.lng() });
-      }
+      const center =
+        map.getCenter()?.toJSON() ?? defaultMapsContainerStartingLocation;
+      map.setCenter(center);
+      map.setZoom(12);
+      reverseGeocode(center);
     }
   };
+
+  const handleSearchLocation = (location: google.maps.LatLngLiteral) => {
+    if (location && window.google?.maps && map) {
+      console.log('Setting map center to:', location);
+      map.setCenter(location);
+      map.setZoom(12);
+      reverseGeocode(location);
+    } else {
+      console.warn(
+        'Could not update map location. Map or Google not available:',
+        {
+          hasLocation: !!location,
+          hasGoogle: !!window.google?.maps,
+          hasMap: !!map,
+        }
+      );
+    }
+  };
+
   return (
-    <Box>
-      <Box padding={2}>
+    <Box margin={0}>
+      <GoogleMapsSearchBar setLocation={handleSearchLocation} />
+      <Box paddingLeft={2} paddingRight={2} paddingBottom={2} paddingTop={0}>
         <div
           className="map-container"
           style={{ height: '500px', width: '100%' }}
         >
           <Map
-            defaultZoom={13}
+            defaultZoom={12}
             defaultCenter={userLocation || defaultMapsContainerStartingLocation}
             mapId={MAP_ID}
             renderingType={RenderingType.UNINITIALIZED}
@@ -134,7 +155,7 @@ const GoogleMap = ({
           color="primary"
           onClick={handleLocationUpdate}
         >
-          Search this Location
+          Search zoomed-in Location
         </Button>
       </Box>
     </Box>
