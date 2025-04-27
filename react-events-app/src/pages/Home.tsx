@@ -9,10 +9,14 @@ import HomeEventsContainer from '../components/layout/HomeEventsContainer';
 import HomeEventsFilter from '../components/layout/HomeEventsFilter';
 import { PlaceTypes } from '../constants';
 import GoogleMap from '../components/layout/GoogleMap';
+import { Box } from '@mui/material';
+import { UNKNOWN_LOCATION } from '../constants/MapConstants';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
+  const [currentLocation, setCurrentLocation] =
+    useState<string>(UNKNOWN_LOCATION);
   const { fetchWithTokens } = useApi();
   const { eventData, setEventData, homePageFilterOpen } = useDataContext();
   const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
@@ -55,7 +59,20 @@ const Home = () => {
       )}
       {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
       {infoMessage && <StatusAlert message={infoMessage} severity="info" />}
-      <GoogleMap events={eventData} />
+      <GoogleMap events={eventData} setCurrentLocation={setCurrentLocation} />
+      <Box
+        component="h2"
+        sx={{
+          mt: 1,
+          mb: 0,
+          fontWeight: 'bold',
+          lineHeight: 1.45,
+          textAlign: 'center',
+          color: 'primary.main',
+        }}
+      >
+        Events found near {currentLocation}
+      </Box>
       <HomeEventsContainer eventData={eventData} />
     </div>
   );
