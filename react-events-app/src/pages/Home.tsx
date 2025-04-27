@@ -17,7 +17,7 @@ const Home = () => {
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const [currentLocation, setCurrentLocation] =
     useState<string>(UNKNOWN_LOCATION);
-  const { fetchWithTokens } = useApi();
+  const { fetchWithTokens, loading } = useApi();
   const { eventData, setEventData, homePageFilterOpen } = useDataContext();
   const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
   const [filterOn, setFilterOn] = useEventFilter({
@@ -71,7 +71,8 @@ const Home = () => {
           color: 'primary.main',
         }}
       >
-        Events found near {currentLocation}
+        {loading ? 'Looking for events' : 'Events found'} near {currentLocation}
+        {loading ? '...' : ''}
       </Box>
       <HomeEventsContainer eventData={eventData} />
     </div>

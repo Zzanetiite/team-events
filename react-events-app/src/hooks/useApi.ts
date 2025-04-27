@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { DOMAIN } from '../constants';
 import { useAuth } from '../context/AuthContext';
 
@@ -8,9 +8,11 @@ interface FetchOptions extends RequestInit {
 
 export function useApi() {
   const { csrfToken, userToken } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const fetchWithTokens = useCallback(
     async (url: string, options: FetchOptions = {}) => {
+      setLoading(true);
       const headers: HeadersInit = {
         'X-CSRFToken': csrfToken || '',
         Authorization: userToken ? `Token ${userToken}` : '',
@@ -39,11 +41,11 @@ export function useApi() {
       if (!response.ok) {
         throw response;
       }
-
+      setLoading(false);
       return response.json();
     },
     [csrfToken, userToken]
   );
 
-  return { fetchWithTokens };
+  return { fetchWithTokens, loading };
 }
