@@ -20,7 +20,7 @@ const PoiMarkers: React.FC<PoiMarkerProps> = ({ events }) => {
         map: map,
         gmpClickable: true,
         gmpDraggable: false,
-        // title: event.eventTitle,
+        title: event.eventTitle,
       });
 
       // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener

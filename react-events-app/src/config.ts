@@ -108,7 +108,7 @@ export const mapContainerStyle = {
   height: '400px',
 };
 
-export const mapsContainerStartingLocation = {
+export const defaultMapsContainerStartingLocation = {
   // Cambridge, UK
   lat: 52.19105,
   lng: 0.13502,
