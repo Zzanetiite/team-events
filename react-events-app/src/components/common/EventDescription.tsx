@@ -1,5 +1,7 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { ChevronRightRounded } from '@mui/icons-material';
+import { CHAR_LIMITS } from '../../constants/EventConstants';
 
 export default function EventDescription({
   description,
@@ -8,10 +10,24 @@ export default function EventDescription({
 }) {
   return (
     <div>
-      <Box>
+      <Box height={70}>
         <Typography color={'Description'} variant={'body2'}>
-          {description}
+          {description.length >= CHAR_LIMITS.EventDescriptionMaxDisplayed
+            ? `${description.substring(0, CHAR_LIMITS.EventDescriptionMaxDisplayed - 1)}...`
+            : description}
         </Typography>
+        <Button
+          onClick={() => {}}
+          color={'primary'}
+          sx={{
+            mt: 0,
+            textTransform: 'initial',
+            padding: 0,
+            minHeight: 'auto',
+          }}
+        >
+          See full event details <ChevronRightRounded />
+        </Button>
       </Box>
     </div>
   );

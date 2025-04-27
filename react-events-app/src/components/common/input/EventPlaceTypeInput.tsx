@@ -8,7 +8,7 @@ const EventPlaceTypeInput: React.FC<SelectInputProps> = ({
   onChange,
 }) => {
   return (
-    <Box display="flex" alignItems="center">
+    <Box display="flex" alignItems="center" marginTop={2}>
       <Select
         label="Place Type"
         name="placeType"

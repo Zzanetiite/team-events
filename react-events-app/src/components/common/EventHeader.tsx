@@ -34,7 +34,8 @@ const EventHeader: React.FC<EventHeaderProps> = ({
           mt: 0,
           mb: 0,
           fontWeight: 'bold',
-          lineHeight: 1.45,
+          overflowWrap: 'break-word',
+          wordBreak: 'break-word',
         }}
       >
         {eventTitle}

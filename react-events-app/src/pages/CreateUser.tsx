@@ -3,13 +3,13 @@ import { Typography } from '@mui/material';
 import { CreateUserFormProps } from '../interfaces/types';
 import UsernameInput from '../components/common/input/UsernameInput';
 import PasswordInputValidated from '../components/common/input/PasswordInputValidated';
-import PasswordFeedback from '../components/common/input/PasswordFeedback';
 import EmailInput from '../components/common/input/EmailInput';
-import UserFormBox from '../components/common/UserFormBox';
-import UserInputInternalBox from '../components/common/UserInputInternalBox';
+import UserFormBox from '../components/base/UserFormBox';
+import UserInputInternalBox from '../components/base/UserInputInternalBox';
 import FilledSubmitButton from '../components/common/buttons/FilledSubmitButton';
 import StatusAlert from '../components/common/StatusAlert';
 import useCreateUserForm from '../hooks/useCreateUserForm';
+import PasswordFeedback from '../components/common/input/PasswordFeedback';
 
 const CreateUser: React.FC<CreateUserFormProps> = ({
   title,

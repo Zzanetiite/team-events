@@ -13,6 +13,8 @@ export const handleError = ({
   } else {
     switch (error.status) {
       case 400:
+        setErrorMessage(ErrorMessages.BAD_REQUEST);
+        break;
       case 409:
         if (messageForBadRequest) {
           setErrorMessage(messageForBadRequest);

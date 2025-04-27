@@ -12,6 +12,7 @@ import EventForm from '../common/EventForm';
 import { CreateEventProps } from '../../interfaces/types';
 import FilledSubmitButton from '../common/buttons/FilledSubmitButton';
 import { useCreateEvent } from '../../hooks/useCreateEvent';
+import { CHAR_LIMITS } from '../../constants/EventConstants';
 
 const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
   const {
@@ -28,6 +29,11 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
     handleSubmit,
   } = useCreateEvent(setNewEventCreated);
 
+  const invalidTextLength: boolean =
+    event.description.length >= CHAR_LIMITS.EventDescriptionMax ||
+    event.eventTitle.length >= CHAR_LIMITS.EventTitleMax ||
+    event.eventTitle.length <= CHAR_LIMITS.EventTitleMin ||
+    event.description.length <= CHAR_LIMITS.EventDescriptionMin;
   return (
     <div>
       <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
@@ -73,7 +79,10 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
               {errorMessage && (
                 <StatusAlert message={errorMessage} severity="error" />
               )}
-              <FilledSubmitButton style={{ marginTop: '10px' }} />
+              <FilledSubmitButton
+                style={{ marginTop: '10px' }}
+                disabled={invalidTextLength}
+              />
             </form>
           </AccordionDetails>
         )}

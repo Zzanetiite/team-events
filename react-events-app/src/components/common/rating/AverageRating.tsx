@@ -1,23 +1,23 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import { RatingProps } from '../../../interfaces/types';
-import { VolumeMute, VolumeUp } from '@mui/icons-material';
+import { Star, VolumeUp } from '@mui/icons-material';
+import { Tooltip } from '@mui/material';
+import Row from '../../base/Row';
 
 const AverageRatings: React.FC<RatingProps> = ({ event }) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'flex-left',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: 2,
-        padding: 0,
-      }}
-    >
-      <VolumeUp fontSize="inherit" /> {event.loudnessRating}
-      <VolumeMute fontSize="inherit" /> {event.placeRating}
-    </Box>
+    <Row>
+      <Tooltip key="volume" title="Average volume rating for this place=">
+        <div>
+          <VolumeUp fontSize="inherit" /> {event.loudnessRating}
+        </div>
+      </Tooltip>
+      <Tooltip key="place" title="Average place rating for this place">
+        <div>
+          <Star fontSize="inherit" /> {event.placeRating}
+        </div>
+      </Tooltip>
+    </Row>
   );
 };
 

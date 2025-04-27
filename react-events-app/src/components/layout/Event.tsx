@@ -12,8 +12,8 @@ const Event: React.FC<EventProps> = (event) => {
         elevation={0}
         sx={{
           overflow: 'initial',
-          maxWidth: 250,
-          height: 215,
+          width: 270,
+          height: 200,
           display: 'flex',
           backgroundColor: 'transparent',
         }}

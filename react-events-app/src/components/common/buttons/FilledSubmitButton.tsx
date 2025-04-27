@@ -1,9 +1,20 @@
 import { Button } from '@mui/material';
 import React from 'react';
 
-const FilledSubmitButton = ({ style }: { style?: React.CSSProperties }) => {
+interface Props {
+  style?: React.CSSProperties;
+  disabled?: boolean;
+}
+
+const FilledSubmitButton: React.FC<Props> = ({ style, disabled = false }) => {
   return (
-    <Button type="submit" variant="contained" color="primary" style={style}>
+    <Button
+      type="submit"
+      variant="contained"
+      color="primary"
+      style={style}
+      disabled={disabled}
+    >
       Submit
     </Button>
   );
