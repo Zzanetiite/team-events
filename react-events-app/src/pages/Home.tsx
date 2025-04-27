@@ -9,8 +9,8 @@ import HomeEventsContainer from '../components/layout/HomeEventsContainer';
 import HomeEventsFilter from '../components/layout/HomeEventsFilter';
 import { PlaceTypes } from '../constants';
 import GoogleMap from '../components/layout/GoogleMap';
-import { Box } from '@mui/material';
 import { UNKNOWN_LOCATION } from '../constants/MapConstants';
+import HomeSearchingText from '../components/layout/HomeSearchingText';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -60,20 +60,7 @@ const Home = () => {
       {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
       {infoMessage && <StatusAlert message={infoMessage} severity="info" />}
       <GoogleMap events={eventData} setCurrentLocation={setCurrentLocation} />
-      <Box
-        component="h2"
-        sx={{
-          mt: 1,
-          mb: 0,
-          fontWeight: 'bold',
-          lineHeight: 1.45,
-          textAlign: 'center',
-          color: 'primary.main',
-        }}
-      >
-        {loading ? 'Looking for events' : 'Events found'} near {currentLocation}
-        {loading ? '...' : ''}
-      </Box>
+      <HomeSearchingText loading={loading} currentLocation={currentLocation} />
       <HomeEventsContainer eventData={eventData} />
     </div>
   );
