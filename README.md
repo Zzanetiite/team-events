@@ -153,11 +153,3 @@ This warning is caused by the buttins in the Accordion and Dialog components. Fo
 ```bash
 Blocked aria-hidden on a <button> element because the element that just received focus must not be hidden from assistive technology users. Avoid using aria-hidden on a focused element or its ancestor. Consider using the inert attribute instead, which will also prevent focus. For more details, see the aria-hidden section of the WAI-ARIA specification at https://w3c.github.io/aria/#aria-hidden.
 ```
-
-#### Marker deprecated warning
-
-This warning is caused by the google Marker used in the code. Unfortunately, the new marker, suggested in the waring, does not have the same functionalities and can incur more costs. Since the old marker is still to be supported for the next 12 months, choosing to use it instead of the new marker.
-
-```bash
-As of February 21st, 2024, google.maps.Marker is deprecated. Please use google.maps.marker.AdvancedMarkerElement instead. At this time, google.maps.Marker is not scheduled to be discontinued, but google.maps.marker.AdvancedMarkerElement is recommended over google.maps.Marker. While google.maps.Marker will continue to receive bug fixes for any major regressions, existing bugs in google.maps.Marker will not be addressed. At least 12 months notice will be given before support is discontinued. Please see https://developers.google.com/maps/deprecations for additional details and https://developers.google.com/maps/documentation/javascript/advanced-markers/migration for the migration guide.
-```

@@ -6,7 +6,7 @@ const MapPinClusterer = ({
   markers,
 }: {
   map: google.maps.Map;
-  markers: google.maps.Marker[];
+  markers: google.maps.marker.AdvancedMarkerElement[];
 }) => {
   const clusterer = useRef<MarkerClusterer | null>(null);
 

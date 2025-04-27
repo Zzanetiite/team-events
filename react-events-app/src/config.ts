@@ -101,7 +101,7 @@ export const StyledLoudnessRating = styled(Rating)({
 
 // Google Map settings
 // Google API library for place search
-export const libraries: Libraries = ['places'];
+export const libraries: Libraries = ['places', 'marker'];
 
 export const mapContainerStyle = {
   width: '100%',
