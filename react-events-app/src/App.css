@@ -74,21 +74,35 @@
   width: 100%;
 }
 
-.info-window {
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  color: #333;
-  width: 200px;
-}
-.info-window h2 {
+.info-window-container {
+  padding: 0;
   margin: 0;
-  font-size: 16px;
-  color: #007bff;
+  display: block;
+  overflow: hidden;
 }
-.info-window p {
-  margin: 5px 0;
+
+.info-window-description {
+  margin: 0;
+  padding: 0;
+  width: 180px;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: Roboto, Arial, sans-serif;
+  color: #333;
 }
-.info-window .address {
-  font-style: italic;
-  color: #555;
+
+.info-window-link {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.info-window-link-text {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.info-window-link-text:hover {
+  text-decoration: underline;
 }

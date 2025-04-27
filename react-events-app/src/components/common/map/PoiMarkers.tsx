@@ -20,7 +20,7 @@ const PoiMarkers: React.FC<PoiMarkerProps> = ({ events }) => {
         map: map,
         gmpClickable: true,
         gmpDraggable: false,
-        title: event.eventTitle,
+        // title: event.eventTitle,
       });
 
       // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
@@ -32,9 +32,11 @@ const PoiMarkers: React.FC<PoiMarkerProps> = ({ events }) => {
         infoWindow.current = new google.maps.InfoWindow({
           headerContent: event.eventTitle,
           content: `
-            <div class="info-window">
-              <p>${event.description}</p>
-              <p class="address">${event.location.address}</p>
+            <div class="info-window-container">
+              <p class="info-window-description">${event.description}</p>
+              <p class="info-window-link">
+                <a href="https://www.google.com/maps?q=${event.location.location.lat},${event.location.location.lng}" target="_blank" class="info-window-link-text">View on Google Maps</a>
+              </p>
             </div>
           `,
           position: event.location.location,
