@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Map, RenderingType, useMap } from '@vis.gl/react-google-maps';
 import { Box, Button } from '@mui/material';
 import { EventProps } from '../../interfaces/types';
-import { UNKNOWN_LOCATION } from '../../constants/MapConstants';
+import { DEFAULT_ZOOM, UNKNOWN_LOCATION } from '../../constants/MapConstants';
 import { defaultMapsContainerStartingLocation } from '../../config';
 import PoiMarkers from '../common/map/PoiMarkers';
 import { MAP_ID } from '../../constants';
@@ -101,7 +101,7 @@ const GoogleMap = ({
       const center =
         map.getCenter()?.toJSON() ?? defaultMapsContainerStartingLocation;
       map.setCenter(center);
-      map.setZoom(12);
+      map.setZoom(DEFAULT_ZOOM);
       reverseGeocode(center);
     }
   };
@@ -110,7 +110,7 @@ const GoogleMap = ({
     if (location && window.google?.maps && map) {
       console.log('Setting map center to:', location);
       map.setCenter(location);
-      map.setZoom(12);
+      map.setZoom(DEFAULT_ZOOM);
       reverseGeocode(location);
     } else {
       console.warn(
@@ -133,7 +133,7 @@ const GoogleMap = ({
           style={{ height: '500px', width: '100%' }}
         >
           <Map
-            defaultZoom={12}
+            defaultZoom={DEFAULT_ZOOM}
             defaultCenter={userLocation || defaultMapsContainerStartingLocation}
             mapId={MAP_ID}
             renderingType={RenderingType.UNINITIALIZED}

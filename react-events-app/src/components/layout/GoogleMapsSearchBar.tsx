@@ -43,14 +43,13 @@ const GoogleMapsSearchBar: React.FC<Props> = ({ setLocation }) => {
   return (
     <Box alignItems="center" paddingRight={2} paddingLeft={2} paddingTop={1}>
       <TextField
-        label="Start typing to search events near a city ..."
+        label="Start typing to search for events near a place... "
         name="search-bar"
         value={value}
         onChange={handleInputChange}
         variant="outlined"
         fullWidth
         margin="dense"
-        required
         inputRef={inputRef}
         className="searchbox"
       />
