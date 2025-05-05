@@ -15,9 +15,13 @@ from pathlib import Path
 
 import dj_database_url
 import environ
+from dotenv import load_dotenv
+
+environ.Env.read_env()
+# Load env variables from the secret file location
+load_dotenv("/etc/secrets/.env")
 
 # Environment variables
-environ.Env.read_env()
 DOMAIN = os.environ.get("DOMAIN", "http://localhost:8000")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 ADMIN_CREATE_PAGE_PASSWORD = os.environ.get("ADMIN_CREATE_PAGE_PASSWORD")
@@ -33,6 +37,9 @@ CSRF_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_SAMESITE = "Lax"
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
+
+# For Geo points
+GDAL_LIBRARY_PATH = os.getenv("GDAL_LIBRARY_PATH", "/usr/lib/libgdal.so")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -59,6 +66,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "events",
+    "django.contrib.gis",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -118,13 +126,9 @@ WSGI_APPLICATION = "team_events.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-    )
-}
-
+DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
+# Force use of the GIS backend
+DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

@@ -43,4 +43,10 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ("address", "lat", "lng")
+    list_display = ("address", "get_lat", "get_lng")
+
+    def get_lat(self, obj):
+        return obj.coordinates.y
+
+    def get_lng(self, obj):
+        return obj.coordinates.x

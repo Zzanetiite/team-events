@@ -135,6 +135,9 @@ export interface LocationProps {
   address: string;
   location: google.maps.LatLngLiteral;
 }
+// id = models.AutoField(primary_key=True)
+// address = models.CharField(max_length=255)
+// coordinates = gis_models.PointField(null=True, blank=True, default=Point(0.0, 0.0))
 
 export interface CommentDBProps {
   id: number;

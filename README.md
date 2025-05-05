@@ -11,6 +11,7 @@ A full-stack web application to help organise team events. This app is a DEMO, i
 - `git` installed -> [git installation](https://github.com/git-guides/install-git)
 - macOS, Linux or Windows machine is being used.
 - IDE installed. Recommendation is to use Visual Studio.
+- Docker installed -> [docker installation](https://www.docker.com/products/docker-desktop)
 
 ### Setting up
 
@@ -22,31 +23,13 @@ git clone https://github.com/Zzanetiite/team-events.git
 
 This application runs with Python. Therefore, it requires Python environment on the machine it is being ran. Ensure `pip` and `python` are installed on the machine prior to following
 
-1. Create environment using
+1. Set up environment variables. Please ask administrator for the secret key. Firstly, create `.env` file in the main application directory like so
 
 ```bash
-python -m venv venv
+team_events/.env
 ```
 
-2. Activate the environment
-
-```bash
-source venv/bin/activate
-```
-
-3. Install dependencies from the root folder
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Set up environment variables. Please ask administrator for the secret key. Firstly, create `.env` file in the main application directory like so
-
-```bash
-team_events/team_events/.env
-```
-
-Then populate `.env` file under `team_events/team_events/` with
+Then populate `.env` file under `team_events/team_events` with
 
 ```bash
 SECRET_KEY=[ASK_ADMIN]
@@ -55,15 +38,22 @@ ADMIN_CREATE_PAGE_PASSWORD=[ASK_ADMIN]
 GOOGLE_MAPS_API_KEY=[ASK_ADMIN]
 DOMAIN=http://localhost:8000
 DATABASE_URL=[ASK_ADMIN]
+POSTGRES_DB=[ASK_ADMIN]
+POSTGRES_USER=[ASK_ADMIN]
+POSTGRES_PASSWORD=[ASK_ADMIN]
 ```
 
 ### Running the project
 
-Firstly, both packages need to be updated and built.
+Project is ran using docker. Start Docker, e.g., in Windows open "Docker Desktop", build and start the Docker container, and then run the following from the `team_events/` of the package:
+
+```bash
+docker run --rm -it   --env-file ./team_events/.env   -p 8000:8000   team_events   python manage.py runserver 0.0.0.0:8000
+```
 
 #### React
 
-Build React package by navigating to React project root
+Build the React package by navigating to React project root
 
 ```bash
 cd team_events/events/static/react/react-events-app/
@@ -103,6 +93,54 @@ Start the server with
 python manage.py runserver
 ```
 
+Run tests with
+
+```bash
+python manage.py test
+```
+
+#### Docker
+
+To build application with Docker:
+
+```bash
+docker build -t team_events .
+```
+
+To start Docker:
+
+```bash
+docker-compose up --build
+```
+
+To stop Docker:
+
+```bash
+docker-compose down
+```
+
+To migrate database changes in Docker.
+Create a container interactive shell session and then run Django migrations commands from shell.
+
+```bash
+docker run --rm -it -v "${PWD}:/app" team_events bash
+```
+
+To clean up Docker resources (needed if device is low on CPU):
+
+```bash
+docker-compose down --volumes --remove-orphans
+docker system prune -a --volumes
+```
+
+#### Database
+
+To connect to database
+
+```bash
+docker exec -it team_events-db-1 psql -U <your_user> -d postgres
+```
+
 ### Development
 
 See [React page](https://react.dev/learn/react-developer-tools) and `README.md` under React application for React development instructions. This project uses [Material UI components](https://mui.com/material-ui/), so please continue using these for new features.
@@ -117,14 +155,7 @@ From the project root folder, to save dependencies installed during development 
 pip freeze > requirements.txt
 ```
 
-To verify that deployment will be successful run the deploy bash script in the root folder. If this output "Success! Deploy script complete.",
-the project is ready to be deployed.
-
-```bash
-bash .deploy.sh
-```
-
-Then add changes and commit them
+Add changes and commit them
 
 ```bash
 git add -A

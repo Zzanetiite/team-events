@@ -15,8 +15,6 @@ const EventDescriptionInput: React.FC<CreateUpdateEventInputProps> = ({
       : value.length <= CHAR_LIMITS.EventDescriptionMin
         ? 'Please write a description that is at least 20 characters long.'
         : null;
-  const color: 'red' | 'primary' =
-    value.length >= CHAR_LIMITS.EventDescriptionMax ? 'red' : 'primary';
   return (
     <Row>
       <TextField
@@ -31,7 +29,7 @@ const EventDescriptionInput: React.FC<CreateUpdateEventInputProps> = ({
         margin="normal"
         required
       />
-      {helperText != null && <HelperText text={helperText} color={color} />}
+      {helperText != null && <HelperText text={helperText} color={'red'} />}
     </Row>
   );
 };

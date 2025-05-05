@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.gis.geos import Point
 from rest_framework import serializers
 
 from events.models.comment import Comment
@@ -54,9 +55,38 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class LocationSerializer(serializers.ModelSerializer):
+    lat = serializers.FloatField(write_only=True)
+    lng = serializers.FloatField(write_only=True)
+    # Include lat/lng as read-only fields by extracting from PointField
+    latitude = serializers.SerializerMethodField(read_only=True)
+    longitude = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Location
-        fields = ["id", "address", "lat", "lng"]
+        fields = ["id", "address", "lat", "lng", "latitude", "longitude"]
+
+    def get_latitude(self, obj):
+        if obj.coordinates:
+            return obj.coordinates.y  # latitude
+        return None
+
+    def get_longitude(self, obj):
+        if obj.coordinates:
+            return obj.coordinates.x  # longitude
+        return None
+
+    def create(self, validated_data):
+        lat = validated_data.pop("lat")
+        lng = validated_data.pop("lng")
+        validated_data["coordinates"] = Point(lng, lat)
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        lat = validated_data.pop("lat", None)
+        lng = validated_data.pop("lng", None)
+        if lat is not None and lng is not None:
+            instance.coordinates = Point(lng, lat)
+        return super().update(instance, validated_data)
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -148,8 +178,9 @@ class EventSerializer(serializers.ModelSerializer):
             location, created = Location.objects.get_or_create(
                 address=location_data.get("address"),
                 defaults={
-                    "lat": location_data.get("lat"),
-                    "lng": location_data.get("lng"),
+                    "coordinates": Point(
+                        location_data.get("lng"), location_data.get("lat")
+                    ),
                 },
             )
         else:
