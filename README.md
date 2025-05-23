@@ -12,6 +12,7 @@ A full-stack web application to help organise team events. This app is a DEMO, i
 - macOS, Linux or Windows machine is being used.
 - IDE installed. Recommendation is to use Visual Studio.
 - Docker installed -> [docker installation](https://www.docker.com/products/docker-desktop)
+- FOR DEVELOPING UNIT TESTS ONLY, install GDAL libraries -> https://pypi.org/project/GDAL/
 
 ### Setting up
 
@@ -96,7 +97,7 @@ python manage.py runserver
 Run tests with
 
 ```bash
-python manage.py test
+python manage.py test --keepdb
 ```
 
 #### Docker
@@ -146,6 +147,46 @@ docker exec -it team_events-db-1 psql -U <your_user> -d postgres
 See [React page](https://react.dev/learn/react-developer-tools) and `README.md` under React application for React development instructions. This project uses [Material UI components](https://mui.com/material-ui/), so please continue using these for new features.
 
 See support materials provided in [Django page](https://www.djangoproject.com/) for back end development.
+
+### Unit Testing
+
+To run unit tests in a local machine using the GDAL library:
+
+1. Deactivate the python environment
+
+```bash
+deactivate
+```
+
+2. Initialise Conda (in Windows, check online for other OS). View environments with `conda info --envs`.
+
+```bash
+conda activate $MY_ENV_NAME
+```
+
+3. Install GDAL dependency
+
+```bash
+conda install -c conda-forge gdal
+```
+
+4. Install all other dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+5. Export path for installed GDAL library
+
+```bash
+export GDAL_LIBRARY_PATH="C:/Users/zanet/Miniconda3/envs/myenv/Library/bin/gdal.dll"
+```
+
+6. Run tests with Django
+
+```bash
+python manage.py test --keepdb
+```
 
 ### Pre-deployment steps
 

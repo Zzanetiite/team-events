@@ -17,6 +17,9 @@ class UserManagementViewTests(APITestCase):
         self.token, _ = Token.objects.get_or_create(user=self.user)
         self.base_url = "/api/user/"
 
+    def tearDown(self):
+        User.objects.all().delete()
+
     def test_create_user(self):
         url = self.base_url + "create-user/"
         response = self.client.post(
@@ -75,7 +78,8 @@ class UserManagementViewTests(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response.data, {"id": 1, "username": self.username, "is_admin": False}
+            response.data,
+            {"id": self.user.id, "username": self.username, "is_admin": False},
         )
 
     def test_invalid_action(self):

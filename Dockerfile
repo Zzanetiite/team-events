@@ -46,9 +46,15 @@ RUN mkdir -p events/static/js && \
     cp -r react-events-app/build/static/css/* events/static/css/ && \
     cp react-events-app/build/asset-manifest.json events/
 
+# Migrate Django database changes
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+
+# Run Django tests
+RUN python manage.py test --keepdb
+
 # Collect Django static files
 RUN python manage.py collectstatic --noinput
-RUN python manage.py migrate
 
 # Default command (can be overridden by docker-compose)
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

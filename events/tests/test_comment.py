@@ -1,12 +1,12 @@
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITestCase
 
 from events.models.comment import Comment
+from events.tests.base_test_case import BaseTestCase
 from events.tests.create_test_data import initialize_test_data
 
 
-class CommentCreateViewTest(APITestCase):
+class CommentCreateViewTest(BaseTestCase):
 
     def setUp(self):
         data = initialize_test_data()

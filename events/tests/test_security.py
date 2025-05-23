@@ -27,6 +27,7 @@ class SecurityViewTests(APITestCase):
 
     def tearDown(self):
         settings.ADMIN_CREATE_PAGE_PASSWORD = self.original_password
+        User.objects.all().delete()
 
     @patch("events.utils.Utils.get_csrf_token")
     def test_get_csrf_token(self, mock_get_csrf_token):

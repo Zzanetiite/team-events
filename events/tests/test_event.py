@@ -1,16 +1,17 @@
 from django.contrib.auth.models import User
+from django.contrib.gis.geos import Point
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITestCase
 
 from events.models.event import Event, EventType
 from events.models.location import Location
 from events.models.rating_type import RatingType
 from events.serializers import EventSerializer
+from events.tests.base_test_case import BaseTestCase
 from events.tests.create_test_data import initialize_test_data
 
 
-class EventViewSetTests(APITestCase):
+class EventViewSetTests(BaseTestCase):
     def setUp(self):
         data = initialize_test_data()
         self.user = data["user"]
@@ -78,7 +79,7 @@ class EventViewSetTests(APITestCase):
         self.assertEqual(Event.objects.count(), 0)
 
 
-class EventByUsernameViewTests(APITestCase):
+class EventByUsernameViewTests(BaseTestCase):
     def setUp(self):
         data = initialize_test_data()
         self.user = data["user"]
@@ -103,7 +104,7 @@ class EventByUsernameViewTests(APITestCase):
         self.assertEqual(response.data, serializer.data)
 
 
-class EventByTypeViewTests(APITestCase):
+class EventByTypeViewTests(BaseTestCase):
     def setUp(self):
         data = initialize_test_data()
         self.user = data["user"]
@@ -134,16 +135,15 @@ class EventByTypeViewTests(APITestCase):
         self.assertEqual(response.data, serializer.data)
 
 
-class LatestEventsViewTests(APITestCase):
+class LatestEventsViewTests(BaseTestCase):
     def setUp(self):
         self.event_type = EventType.objects.create(
             name="Concert", description="Live music event"
         )
 
         self.location = Location.objects.create(
-            address="Sample Address", lat=1.0, lng=1.0
+            address="Sample Address", coordinates=Point(1.0, 2.0)
         )
-
         for i in range(15):  # Creating more than 10 events to test the latest
             Event.objects.create(
                 title=f"Event {i}",

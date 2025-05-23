@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.gis.geos import Point
 
 from events.models.event import Event, EventType
 from events.models.location import Location
@@ -20,7 +21,9 @@ def initialize_test_data():
 
     event_type_2 = EventType.objects.create(name="Fast Food", description="Fast Food")
 
-    location = Location.objects.create(address="Sample Address", lat=1.0, lng=1.0)
+    location = Location.objects.create(
+        address="123 Test Street", coordinates=Point(1.0, 2.0)
+    )
 
     event = Event.objects.create(
         title="Sample Event",
