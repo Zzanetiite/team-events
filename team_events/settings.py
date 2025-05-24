@@ -32,6 +32,7 @@ CSRF_COOKIE_HTTPONLY = False  # To allow handling via Javascript
 CSRF_USE_SESSIONS = False  # Using CSRF token from cookies instead
 CSRF_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_SAMESITE = "Lax"
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
