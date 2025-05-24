@@ -34,5 +34,9 @@ RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt
 # Copy project files
 COPY . .
 
+# Install React dependencies
+WORKDIR /app/react-events-app
+RUN npm install
+
 # Default command to run the app: can be overridden by Render or locally
 CMD bash start.sh

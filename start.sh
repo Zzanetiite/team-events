@@ -21,10 +21,6 @@ echo "Navigating to React app directory..."
 cd react-events-app/
 
 echo "===================================="
-echo "Installing React dependencies..."
-npm install
-
-echo "===================================="
 echo "Building React app..."
 npm run build
 
