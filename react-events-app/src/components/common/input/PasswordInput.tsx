@@ -8,7 +8,7 @@ const PasswordInput: React.FC<InputProps> = ({ value, onChange }) => {
     <Box display="flex" alignItems="center">
       <KeyIcon style={{ marginRight: '10px' }} />
       <TextField
-        label="Password"
+        label="Secret Admin Password"
         type="password"
         variant="outlined"
         value={value}

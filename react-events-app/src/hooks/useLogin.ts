@@ -2,10 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApi } from './useApi';
 import { useAuth } from '../context/AuthContext';
-import {
-  ApiEndpoints,
-  REACT_APP_ADMIN_CREATE_PAGE_PASSWORD,
-} from '../constants';
+import { ApiEndpoints } from '../constants';
 import { handleError } from '../errors/handleError';
 import { UseLoginProps } from '../interfaces/hookTypes';
 
@@ -52,7 +49,6 @@ const useLogin = ({
         body: JSON.stringify({
           username: newUsername,
           password: password,
-          secret_admin_password: REACT_APP_ADMIN_CREATE_PAGE_PASSWORD,
         }),
       });
 

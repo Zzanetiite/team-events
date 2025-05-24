@@ -10,6 +10,7 @@ import FilledSubmitButton from '../components/common/buttons/FilledSubmitButton'
 import StatusAlert from '../components/common/StatusAlert';
 import useCreateUserForm from '../hooks/useCreateUserForm';
 import PasswordFeedback from '../components/common/input/PasswordFeedback';
+import PasswordInput from '../components/common/input/PasswordInput';
 
 const CreateUser: React.FC<CreateUserFormProps> = ({
   title,
@@ -26,6 +27,8 @@ const CreateUser: React.FC<CreateUserFormProps> = ({
     password,
     handlePasswordChange,
     passwordFeedback,
+    adminPassword,
+    setAdminPassword,
     email,
     setEmail,
     successMessage,
@@ -56,6 +59,9 @@ const CreateUser: React.FC<CreateUserFormProps> = ({
           />
           {passwordFeedback && <PasswordFeedback feedback={passwordFeedback} />}
           {adminPage && <EmailInput value={email} onChange={setEmail} />}
+          {adminPage && (
+            <PasswordInput value={adminPassword} onChange={setAdminPassword} />
+          )}
           {successMessage && (
             <StatusAlert message={successMessage} severity="success" />
           )}

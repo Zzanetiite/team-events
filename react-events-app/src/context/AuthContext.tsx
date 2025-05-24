@@ -23,8 +23,6 @@ interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<UserType>>;
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  adminPassword: string;
-  setAdminPassword: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -41,7 +39,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.getItem('userToken') || Cookies.get('userToken') || null
   );
   const [loggedIn, setLoggedIn] = useState<boolean>(userToken !== null);
-  const [adminPassword, setAdminPassword] = useState<string>('');
   const [user, setUser] = useState<UserType>({
     username:
       localStorage.getItem('username') || Cookies.get('username') || null,
@@ -117,8 +114,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUser,
         loggedIn,
         setLoggedIn,
-        adminPassword,
-        setAdminPassword,
       }}
     >
       {children}

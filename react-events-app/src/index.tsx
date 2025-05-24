@@ -15,7 +15,7 @@ console.warn = (...args) => {
     args[0] &&
     args[0].includes('As of March 1st, 2025, google.maps.places.Autocomplete')
   ) {
-    return; // Suppress specific warning
+    return;
   }
   originalWarn(...args); // Log other warnings
 };

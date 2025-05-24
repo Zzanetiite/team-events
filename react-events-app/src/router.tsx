@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
-import ValidateAdminPasswordForm from './pages/ValidateAdminPassword';
 import { ApiEndpoints } from './constants';
 import UserEvents from './pages/UserEvents';
 import Login from './pages/Login';
@@ -31,15 +30,6 @@ const router = createBrowserRouter([
           </span>
         }
         messageForBadRequest="Admin user already exists. Please choose a different username."
-      />
-    ),
-  },
-  {
-    path: '/validateadmin',
-    element: (
-      <ValidateAdminPasswordForm
-        title="Please enter secret password"
-        successMessageText={<span>Success! Password correct.</span>}
       />
     ),
   },

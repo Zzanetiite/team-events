@@ -35,9 +35,18 @@ RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt
 COPY . .
 
 # Install React dependencies
+RUN echo "REACT_APP_GOOGLE_MAPS_API_KEY=${REACT_APP_GOOGLE_MAPS_API_KEY}" > react-events-app/.env && \
+    echo "REACT_APP_DOMAIN=${DOMAIN}" >> react-events-app/.env
 WORKDIR /app/react-events-app
-RUN npm install
+RUN npm install && npm run build
 
+# Copy build artifacts into Django static folder
 WORKDIR /app
+RUN mkdir -p events/static/js && \
+    mkdir -p events/static/css && \
+    cp -r react-events-app/build/static/js/* events/static/js/ && \
+    cp -r react-events-app/build/static/css/* events/static/css/ && \
+    cp react-events-app/build/asset-manifest.json events/
+
 # Default command to run the app: can be overridden by Render or locally
 CMD bash start.sh

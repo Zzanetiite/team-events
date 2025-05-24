@@ -19,11 +19,12 @@ const useFormLogic = ({
   const [newUsername, setNewUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordFeedback, setPasswordFeedback] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
   const [email, setEmail] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
-  const { setUserToken, loggedIn, adminPassword } = useAuth();
+  const { setUserToken, loggedIn } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,12 +37,6 @@ const useFormLogic = ({
     message: successMessage,
     setMessage: setSuccessMessage,
   });
-
-  useEffect(() => {
-    if (adminPage && !adminPassword) {
-      navigate('/validateadmin');
-    }
-  }, [adminPage, adminPassword, navigate]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -65,6 +60,7 @@ const useFormLogic = ({
         setErrorMessage(null);
         setNewUsername('');
         setPassword('');
+        setAdminPassword('');
         setEmail('');
         if (loginPage) {
           setUserToken(response.token);
@@ -100,6 +96,8 @@ const useFormLogic = ({
     setPassword,
     passwordFeedback,
     setPasswordFeedback,
+    adminPassword,
+    setAdminPassword,
     email,
     setEmail,
     successMessage,
