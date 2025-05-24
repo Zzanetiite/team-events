@@ -38,5 +38,6 @@ COPY . .
 WORKDIR /app/react-events-app
 RUN npm install
 
+WORKDIR /app
 # Default command to run the app: can be overridden by Render or locally
 CMD bash start.sh
