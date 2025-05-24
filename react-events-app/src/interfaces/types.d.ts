@@ -93,8 +93,18 @@ export interface SelectInputProps {
   onChange: (e: SelectChangeEvent<string>) => void;
 }
 
-export interface EventDBProps extends EventDBMinimumProps {
+export interface EventDBProps {
+  id: number;
   user: string;
+  title: string;
+  event_type: string;
+  description: string;
+  location: {
+    id: number;
+    address: string;
+    longitude: number;
+    latitude: number;
+  };
   average_rating_event: number | null;
   average_rating_loudness: number | null;
   users_rating_event: number | null;

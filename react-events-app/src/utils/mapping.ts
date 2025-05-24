@@ -23,8 +23,8 @@ export const mapEventData = (apiData: EventDBProps[]): EventProps[] => {
     location: {
       address: event.location.address,
       location: {
-        lat: event.location.lat || 0,
-        lng: event.location.lng || 0,
+        lat: event.location.latitude || 0,
+        lng: event.location.longitude || 0,
       },
     },
     description: event.description,

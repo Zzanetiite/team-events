@@ -108,7 +108,6 @@ const GoogleMap = ({
 
   const handleSearchLocation = (location: google.maps.LatLngLiteral) => {
     if (location && window.google?.maps && map) {
-      console.log('Setting map center to:', location);
       map.setCenter(location);
       map.setZoom(DEFAULT_ZOOM);
       reverseGeocode(location);
@@ -130,7 +129,7 @@ const GoogleMap = ({
       <Box paddingLeft={2} paddingRight={2} paddingBottom={2} paddingTop={0}>
         <div
           className="map-container"
-          style={{ height: '500px', width: '100%' }}
+          style={{ height: '250px', width: '100%' }}
         >
           <Map
             defaultZoom={DEFAULT_ZOOM}
