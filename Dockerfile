@@ -34,17 +34,5 @@ RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt
 # Copy project files
 COPY . .
 
-# Build React
-WORKDIR /app/react-events-app
-RUN npm install && npm run build
-
-# Copy build artifacts into Django static folder
-WORKDIR /app
-RUN mkdir -p events/static/js && \
-    mkdir -p events/static/css && \
-    cp -r react-events-app/build/static/js/* events/static/js/ && \
-    cp -r react-events-app/build/static/css/* events/static/css/ && \
-    cp react-events-app/build/asset-manifest.json events/
-
 # Default command to run the app: can be overridden by Render or locally
-CMD python manage.py collectstatic --noinput && gunicorn team_events.wsgi:application --bind 0.0.0.0:$PORT --workers 3
+CMD bash start.sh
