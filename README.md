@@ -106,13 +106,19 @@ python manage.py test --keepdb
 To build application with Docker:
 
 ```bash
-docker build -t team_events .
+docker build --no-cache -t team_events .
 ```
 
 To start Docker:
 
 ```bash
 docker-compose up --build
+```
+
+OR to include newest React changes (requires exported env variables `export $(grep -v '^#' .env | xargs)`)
+
+```
+docker run -e PORT=8000 -p 8000:8000 team_events:latest
 ```
 
 To stop Docker:

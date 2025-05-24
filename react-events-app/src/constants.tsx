@@ -14,8 +14,6 @@ import {
 } from '@mui/icons-material';
 
 export const DOMAIN = process.env.REACT_APP_DOMAIN || window.location.origin;
-export const REACT_APP_GOOGLE_MAPS_API_KEY =
-  process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
 export const MAP_ID = 'TEAM_EVENTS_MAP';
 

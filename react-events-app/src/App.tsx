@@ -6,7 +6,6 @@ import router from './router';
 import NavBar from './components/layout/NavBar';
 import { DataProvider } from './context/DataContext';
 import { APIProvider } from '@vis.gl/react-google-maps';
-import { REACT_APP_GOOGLE_MAPS_API_KEY } from './constants';
 import { libraries } from './config';
 import { useReactEnv } from './hooks/useReactEnv';
 import { Box, CircularProgress } from '@mui/material';
@@ -33,7 +32,7 @@ const InnerApp: React.FC = () => {
   return (
     <APIProvider
       libraries={libraries}
-      apiKey={REACT_APP_GOOGLE_MAPS_API_KEY || ''}
+      apiKey={envVars.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
     >
       <DataProvider>
         <NavBar />
