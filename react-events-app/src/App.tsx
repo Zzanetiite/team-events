@@ -8,7 +8,7 @@ import { DataProvider } from './context/DataContext';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import { libraries } from './config';
 import { useReactEnv } from './hooks/useReactEnv';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 
 const App: React.FC = () => {
   return (
@@ -23,8 +23,19 @@ const InnerApp: React.FC = () => {
 
   if (!envVars) {
     return (
-      <Box sx={{ display: 'flex' }}>
+      <Box
+        sx={{
+          height: '100vh',
+          width: '100vw',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <CircularProgress />
+        <Typography variant="h6" sx={{ color: 'text.primary', padding: 2 }}>
+          Loading...
+        </Typography>
       </Box>
     );
   }
