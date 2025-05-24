@@ -7,6 +7,9 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from team_events import settings
 
 
 class Utils:
@@ -61,3 +64,14 @@ class Utils:
             return Response(
                 {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+
+class ReactEnvVariableView(APIView):
+    def get(self, request):
+        data = {
+            "REACT_APP_DOMAIN": settings.DOMAIN,
+            "REACT_APP_GOOGLE_MAPS_API_KEY": os.getenv(
+                "REACT_APP_GOOGLE_MAPS_API_KEY", ""
+            ),
+        }
+        return Response(data)

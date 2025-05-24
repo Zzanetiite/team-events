@@ -35,8 +35,6 @@ RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt
 COPY . .
 
 # Install React dependencies
-RUN echo "REACT_APP_GOOGLE_MAPS_API_KEY=${REACT_APP_GOOGLE_MAPS_API_KEY}" > react-events-app/.env && \
-    echo "REACT_APP_DOMAIN=${DOMAIN}" >> react-events-app/.env
 WORKDIR /app/react-events-app
 RUN npm install && npm run build
 

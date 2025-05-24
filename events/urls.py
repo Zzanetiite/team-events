@@ -7,7 +7,7 @@ from events.views.event import (
     LatestEventsView,
 )
 
-from .utils import Utils
+from .utils import ReactEnvVariableView, Utils
 from .views.comment import CommentCreateView
 from .views.rating import RatingView
 from .views.security import SecurityView
@@ -18,6 +18,7 @@ urlpatterns = [
     path(
         "api/user/<str:action>/", UserManagementView.as_view(), name="user-management"
     ),
+    path("api/get-react-env/", ReactEnvVariableView.as_view(), name="react-env"),
     path("api/security/<str:action>/", SecurityView.as_view(), name="security"),
     # Event-specific endpoints
     path(

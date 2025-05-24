@@ -36,6 +36,7 @@ const EventHeader: React.FC<EventHeaderProps> = ({
           fontWeight: 'bold',
           overflowWrap: 'break-word',
           wordBreak: 'break-word',
+          wordWrap: 'break-word',
         }}
       >
         {eventTitle}

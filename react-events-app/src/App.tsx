@@ -8,19 +8,37 @@ import { DataProvider } from './context/DataContext';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import { REACT_APP_GOOGLE_MAPS_API_KEY } from './constants';
 import { libraries } from './config';
+import { useReactEnv } from './hooks/useReactEnv';
+import { Box, CircularProgress } from '@mui/material';
 
 const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <InnerApp />
+    </AuthProvider>
+  );
+};
+
+const InnerApp: React.FC = () => {
+  const { envVars } = useReactEnv();
+
+  if (!envVars) {
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <APIProvider
       libraries={libraries}
       apiKey={REACT_APP_GOOGLE_MAPS_API_KEY || ''}
     >
-      <AuthProvider>
-        <DataProvider>
-          <NavBar />
-          <RouterProvider router={router} />
-        </DataProvider>
-      </AuthProvider>
+      <DataProvider>
+        <NavBar />
+        <RouterProvider router={router} />
+      </DataProvider>
     </APIProvider>
   );
 };

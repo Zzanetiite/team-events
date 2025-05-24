@@ -34,7 +34,7 @@ export enum ErrorMessages {
 
 export const ApiEndpoints = {
   GET_CSRF_TOKEN: 'api/security/get-csrf-token/',
-  GET_ENV_CONFIG: 'api/env-config',
+  GET_REACT_ENV: 'api/get-react-env/',
   CREATE_USER: 'api/user/create-user/',
   LOGIN: 'api/user/login/',
   LOGOUT: 'api/user/logout/',

@@ -11,7 +11,15 @@ export default function EventDescription({
   return (
     <div>
       <Box height={70}>
-        <Typography color={'Description'} variant={'body2'}>
+        <Typography
+          color={'Description'}
+          variant={'body2'}
+          sx={{
+            wordWrap: 'break-word',
+            overflowWrap: 'break-word',
+            wordBreak: 'break-word',
+          }}
+        >
           {description.length >= CHAR_LIMITS.EventDescriptionMaxDisplayed
             ? `${description.substring(0, CHAR_LIMITS.EventDescriptionMaxDisplayed - 1)}...`
             : description}
