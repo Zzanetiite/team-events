@@ -46,9 +46,6 @@ RUN mkdir -p events/static/js && \
     cp -r react-events-app/build/static/css/* events/static/css/ && \
     cp react-events-app/build/asset-manifest.json events/
 
-# Collect Django static files
-RUN python manage.py collectstatic --noinput
-
 # Expose port for Django app
 EXPOSE 8000
 ENV PORT=8000
