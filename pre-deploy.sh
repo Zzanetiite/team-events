@@ -4,6 +4,10 @@
 set -e
 
 echo "===================================="
+echo "Dumping env variables for docker-compose..."
+printenv > ./team_events/.env
+
+echo "===================================="
 echo "Applying migrations..."
 python manage.py makemigrations
 python manage.py migrate
