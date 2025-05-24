@@ -1,10 +1,12 @@
 #!/bin/bash
-
-# Exit script on any error
 set -e
 
 echo "===================================="
-echo "Collecting static files for Django..."
+echo "Creating staticfiles directory..."
+mkdir -p /app/staticfiles
+
+echo "===================================="
+echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
 echo "===================================="
