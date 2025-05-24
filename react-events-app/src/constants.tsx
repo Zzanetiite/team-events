@@ -16,6 +16,8 @@ import {
 export const DOMAIN = process.env.REACT_APP_DOMAIN || window.location.origin;
 export const REACT_APP_GOOGLE_MAPS_API_KEY =
   process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+console.log('Google Maps API key in constants:', REACT_APP_GOOGLE_MAPS_API_KEY);
+
 export const REACT_APP_ADMIN_CREATE_PAGE_PASSWORD =
   process.env.REACT_APP_ADMIN_CREATE_PAGE_PASSWORD;
 export const MAP_ID = 'TEAM_EVENTS_MAP';

@@ -10,6 +10,7 @@ import { REACT_APP_GOOGLE_MAPS_API_KEY } from './constants';
 import { libraries } from './config';
 
 const App: React.FC = () => {
+  console.log('Google Maps API key:', REACT_APP_GOOGLE_MAPS_API_KEY);
   return (
     <APIProvider
       libraries={libraries}
