@@ -8,9 +8,4 @@ echo "Dumping env variables for docker-compose..."
 printenv > ./team_events/.env
 
 echo "===================================="
-echo "Applying migrations..."
-python manage.py makemigrations
-python manage.py migrate
-
-echo "===================================="
 echo "Success! Pre-Deploy script complete."

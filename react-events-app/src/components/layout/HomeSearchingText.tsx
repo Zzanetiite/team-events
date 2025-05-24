@@ -10,7 +10,7 @@ const HomeSearchingText = ({
 }) => {
   return (
     <Box
-      component="h2"
+      component="h3"
       sx={{
         mt: 1,
         mb: 0,

@@ -153,6 +153,7 @@ const GoogleMap = ({
           variant="contained"
           color="primary"
           onClick={handleLocationUpdate}
+          size="small"
         >
           Search zoomed-in Location
         </Button>
