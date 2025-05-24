@@ -18,8 +18,10 @@ import environ
 
 environ.Env.read_env()
 
+SITE = "https://team-events-8xoz.onrender.com"
+
 # Environment variables
-DOMAIN = os.environ.get("DOMAIN", "http://localhost:8000")
+DOMAIN = os.environ.get("DOMAIN", SITE)
 SECRET_KEY = os.environ.get("SECRET_KEY")
 ADMIN_CREATE_PAGE_PASSWORD = os.environ.get("ADMIN_CREATE_PAGE_PASSWORD")
 DEBUG = os.environ.get("DEBUG", "True") == "True"
@@ -77,6 +79,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -84,7 +87,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "team_events.urls"
@@ -92,14 +94,14 @@ ROOT_URLCONF = "team_events.urls"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:8000",
-    "https://team-events-cvm0.onrender.com",
+    SITE,
 ]
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:8000",
-    "https://team-events-cvm0.onrender.com",
+    SITE,
 ]
 
 TEMPLATES = [

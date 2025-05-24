@@ -13,7 +13,7 @@ import {
   Signpost,
 } from '@mui/icons-material';
 
-export const DOMAIN = process.env.REACT_APP_DOMAIN;
+export const DOMAIN = process.env.REACT_APP_DOMAIN || window.location.origin;
 export const REACT_APP_GOOGLE_MAPS_API_KEY =
   process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 export const REACT_APP_ADMIN_CREATE_PAGE_PASSWORD =
