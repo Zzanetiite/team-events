@@ -148,6 +148,24 @@ See [React page](https://react.dev/learn/react-developer-tools) and `README.md` 
 
 See support materials provided in [Django page](https://www.djangoproject.com/) for back end development.
 
+#### Updating packages
+
+Check for all outdated packages
+
+```bash
+npm outdated
+```
+
+Auto upgrade
+
+```bash
+npm install -g npm-check-updates
+ncu -u
+npm install
+```
+
+WARNING: Upgrades can and sometimes do break things! Verify the app still works before deploying.
+
 ### Unit Testing
 
 To run unit tests in a local machine using the GDAL library:

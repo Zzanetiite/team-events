@@ -13,7 +13,7 @@ const HomeEventsContainer = ({ eventData }: { eventData: EventProps[] }) => {
         justifyContent="center"
       >
         {eventData.map((event, index) => (
-          <Grid item key={index}>
+          <Grid key={index}>
             <Event {...event} />
           </Grid>
         ))}
