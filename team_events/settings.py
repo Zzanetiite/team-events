@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+import pathlib
 from pathlib import Path
 
 import dj_database_url
@@ -20,6 +21,10 @@ from dotenv import load_dotenv
 environ.Env.read_env()
 # Load env variables from the secret file location
 load_dotenv("/etc/secrets/.env")
+
+# Temp test to check Render set up
+print("Exists /etc/secrets/.env:", pathlib.Path("/etc/secrets/.env").exists())
+print("ALLOWED_HOSTS raw:", os.environ.get("ALLOWED_HOSTS"))
 
 # Environment variables
 DOMAIN = os.environ.get("DOMAIN", "http://localhost:8000")

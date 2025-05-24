@@ -49,7 +49,7 @@ POSTGRES_PASSWORD=[ASK_ADMIN]
 Project is ran using docker. Start Docker, e.g., in Windows open "Docker Desktop", build and start the Docker container, and then run the following from the `team_events/` of the package:
 
 ```bash
-docker run --rm -it   --env-file ./team_events/.env   -p 8000:8000   team_events   python manage.py runserver 0.0.0.0:8000
+docker-compose up --build
 ```
 
 #### React
