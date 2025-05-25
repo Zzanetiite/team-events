@@ -43,6 +43,7 @@ export const ApiEndpoints = {
     `api/events/by-type/${event_types}/`,
   GET_ALL_EVENTS: 'api/events/',
   GET_LATEST_EVENTS: 'api/events/latest/',
+  GET_NEARBY_EVENTS: 'api/events/nearby/',
   CREATE_EVENT: 'api/events/',
   UPDATE_OR_DELETE_EVENT: (event_id: number) => `api/events/${event_id}/`,
   SUBMIT_OR_UPDATE_RATING: 'api/ratings/',

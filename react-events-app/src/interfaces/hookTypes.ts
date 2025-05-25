@@ -25,6 +25,7 @@ export interface FetchEventsProps {
   setErrorMessage: (message: string | null) => void;
   setEventData: (data: any) => void;
   fetchWithTokens: (url: string, options: any) => Promise<any>;
+  currentCoordinates: google.maps.LatLngLiteral | null;
 }
 
 export interface UseLoginProps {

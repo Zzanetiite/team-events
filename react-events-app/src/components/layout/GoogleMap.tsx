@@ -11,12 +11,16 @@ import GoogleMapsSearchBar from './GoogleMapsSearchBar';
 const GoogleMap = ({
   events,
   setCurrentLocation,
+  currentCoordinates,
+  setCurrentCoordinates,
 }: {
   events: EventProps[];
   setCurrentLocation: React.Dispatch<React.SetStateAction<string>>;
+  currentCoordinates: google.maps.LatLngLiteral | null;
+  setCurrentCoordinates: React.Dispatch<
+    React.SetStateAction<google.maps.LatLngLiteral | null>
+  >;
 }) => {
-  const [userLocation, setUserLocation] =
-    useState<google.maps.LatLngLiteral | null>(null);
   const map = useMap();
 
   // Function to reverse geocode and get city name
@@ -75,7 +79,7 @@ const GoogleMap = ({
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
-            setUserLocation(location);
+            setCurrentCoordinates(location);
             reverseGeocode(location); // update city name
           },
           () => {
@@ -83,18 +87,18 @@ const GoogleMap = ({
             console.log(
               'Error or denied geolocation request. Setting default starting location.'
             );
-            setUserLocation(defaultMapsContainerStartingLocation);
+            setCurrentCoordinates(defaultMapsContainerStartingLocation);
             reverseGeocode(defaultMapsContainerStartingLocation);
           }
         );
       } else {
         console.log('Geolocation not supported by the browser.');
-        setUserLocation(null);
+        setCurrentCoordinates(null);
       }
     };
 
     getLocation();
-  }, [reverseGeocode]);
+  }, [reverseGeocode, setCurrentCoordinates]);
 
   const handleLocationUpdate = () => {
     if (map) {
@@ -102,6 +106,7 @@ const GoogleMap = ({
         map.getCenter()?.toJSON() ?? defaultMapsContainerStartingLocation;
       map.setCenter(center);
       map.setZoom(DEFAULT_ZOOM);
+      setCurrentCoordinates(center);
       reverseGeocode(center);
     }
   };
@@ -110,6 +115,7 @@ const GoogleMap = ({
     if (location && window.google?.maps && map) {
       map.setCenter(location);
       map.setZoom(DEFAULT_ZOOM);
+      setCurrentCoordinates(location);
       reverseGeocode(location);
     } else {
       console.warn(
@@ -133,7 +139,9 @@ const GoogleMap = ({
         >
           <Map
             defaultZoom={DEFAULT_ZOOM}
-            defaultCenter={userLocation || defaultMapsContainerStartingLocation}
+            defaultCenter={
+              currentCoordinates || defaultMapsContainerStartingLocation
+            }
             mapId={MAP_ID}
             renderingType={RenderingType.UNINITIALIZED}
           >

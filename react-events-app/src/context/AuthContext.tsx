@@ -23,6 +23,12 @@ interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<UserType>>;
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  reactEnvVars: ReactEnvVars | undefined | null;
+}
+
+interface ReactEnvVars {
+  REACT_APP_DOMAIN: string;
+  REACT_APP_GOOGLE_MAPS_API_KEY: string;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -49,17 +55,43 @@ export function AuthProvider({ children }: AuthProviderProps) {
         10
       ) || null,
   });
+  const [reactEnvVars, setReactEnvVars] = useState<
+    ReactEnvVars | undefined | null
+  >(undefined);
 
   useEffect(() => {
-    if (!csrfToken) {
-      fetchCSRFToken().then((token) => {
-        if (token) {
-          setCSRFToken(token);
-          Cookies.set('csrftoken', token, { expires: 1 });
-        }
-      });
+    const cachedToken = Cookies.get('csrfToken');
+    if (cachedToken) {
+      setCSRFToken(cachedToken);
+      return;
     }
-  }, [csrfToken]);
+
+    fetchCSRFToken().then((token) => {
+      if (token) {
+        setCSRFToken(token);
+        Cookies.set('csrfToken', token, { expires: 1 });
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    const cachedVars = Cookies.get('reactEnvVars');
+    if (cachedVars) {
+      try {
+        setReactEnvVars(JSON.parse(cachedVars));
+        return;
+      } catch (e) {
+        console.warn('Failed to parse cached env vars:', e);
+      }
+    }
+
+    fetchReactEnvVars().then((vars) => {
+      if (vars) {
+        setReactEnvVars(vars);
+        Cookies.set('reactEnvVars', JSON.stringify(vars), { expires: 1 }); // 1 day
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (userToken) {
@@ -114,6 +146,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUser,
         loggedIn,
         setLoggedIn,
+        reactEnvVars,
       }}
     >
       {children}
@@ -134,13 +167,27 @@ async function fetchCSRFToken(): Promise<string | null> {
     const response = await fetch(`${DOMAIN}/${ApiEndpoints.GET_CSRF_TOKEN}`, {
       credentials: 'include',
     });
-    if (response.ok) {
-      const csrfToken = Cookies.get('csrftoken');
-      return csrfToken || null;
+    if (!response.ok) {
+      throw new Error(`'Failed to fetch CSRF token': ${response.status}`);
     }
-    throw new Error('Failed to fetch CSRF token');
+    const csrfToken = await response.json();
+    return csrfToken;
   } catch (error) {
     console.error('Error fetching CSRF token:', error);
+    return null;
+  }
+}
+
+async function fetchReactEnvVars(): Promise<ReactEnvVars | null> {
+  try {
+    const response = await fetch(`${DOMAIN}/api/get-react-env/`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch env vars: ${response.status}`);
+    }
+    const data: ReactEnvVars = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching React env vars:', error);
     return null;
   }
 }

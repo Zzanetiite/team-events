@@ -9,6 +9,7 @@ from events.views.event import (
 
 from .utils import ReactEnvVariableView, Utils
 from .views.comment import CommentCreateView
+from .views.nearby_events import NearbyEventsView
 from .views.rating import RatingView
 from .views.security import SecurityView
 from .views.user_management import UserManagementView
@@ -32,6 +33,7 @@ urlpatterns = [
         name="events_by_type_names",
     ),
     path("api/events/latest/", LatestEventsView.as_view(), name="latest-events"),
+    path("api/events/nearby/", NearbyEventsView.as_view(), name="nearby-events"),
     path(
         "api/events/<int:pk>/",
         EventViewSet.as_view(

@@ -5,7 +5,10 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -66,7 +69,10 @@ class Utils:
             )
 
 
+@method_decorator(csrf_exempt, name="dispatch")
 class ReactEnvVariableView(APIView):
+    permission_classes = [AllowAny]
+
     def get(self, request):
         data = {
             "REACT_APP_DOMAIN": settings.DOMAIN,

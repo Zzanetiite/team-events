@@ -17,6 +17,8 @@ const Home = () => {
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const [currentLocation, setCurrentLocation] =
     useState<string>(UNKNOWN_LOCATION);
+  const [currentCoordinates, setCurrentCoordinates] =
+    useState<google.maps.LatLngLiteral | null>(null);
   const { fetchWithTokens, loading } = useApi();
   const { eventData, setEventData, homePageFilterOpen } = useDataContext();
   const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
@@ -31,8 +33,10 @@ const Home = () => {
     setErrorMessage,
     setEventData,
     fetchWithTokens,
+    currentCoordinates,
   });
 
+  console.log(currentCoordinates);
   useAutoClearMessage({ message: errorMessage, setMessage: setErrorMessage });
   useAutoClearMessage({ message: infoMessage, setMessage: setInfoMessage });
 
@@ -60,7 +64,12 @@ const Home = () => {
       )}
       {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
       {infoMessage && <StatusAlert message={infoMessage} severity="info" />}
-      <GoogleMap events={eventData} setCurrentLocation={setCurrentLocation} />
+      <GoogleMap
+        events={eventData}
+        setCurrentLocation={setCurrentLocation}
+        currentCoordinates={currentCoordinates}
+        setCurrentCoordinates={setCurrentCoordinates}
+      />
       <HomeSearchingText loading={loading} currentLocation={currentLocation} />
       <HomeEventsContainer eventData={eventData} />
     </div>

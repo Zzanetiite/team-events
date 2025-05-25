@@ -11,13 +11,40 @@ const useFetchEvents = ({
   setErrorMessage,
   setEventData,
   fetchWithTokens,
+  currentCoordinates,
 }: FetchEventsProps) => {
   useEffect(() => {
-    if (!filterOn) {
-      fetchWithTokens(ApiEndpoints.GET_LATEST_EVENTS, { method: 'GET' })
+    if (!filterOn && currentCoordinates) {
+      const { lat, lng } = currentCoordinates;
+      const default_radius_km = 50;
+
+      const url = `${ApiEndpoints.GET_NEARBY_EVENTS}?lat=${lat}&lng=${lng}&radius_km=${default_radius_km}`;
+      fetchWithTokens(url, { method: 'GET' })
         .then((data: EventDBProps[]) => {
-          const mappedEvents = mapEventData(data);
-          setEventData(mappedEvents);
+          if (data.length > 0) {
+            const mappedEvents = mapEventData(data);
+            setEventData(mappedEvents);
+          } else {
+            // Fallback to latest events
+            fetchWithTokens(ApiEndpoints.GET_LATEST_EVENTS, { method: 'GET' })
+              .then((data: EventDBProps[]) => {
+                const mappedEvents = mapEventData(data);
+                setEventData(mappedEvents);
+              })
+              .catch((error: any) =>
+                handleError({
+                  error,
+                  setErrorMessage,
+                  overrideErrorHandlers: {
+                    403: (setErrorMessage) => {
+                      setErrorMessage(
+                        'Error loading Event data. Please try clearing site cookies.'
+                      );
+                    },
+                  },
+                })
+              );
+          }
         })
         .catch((error: any) =>
           handleError({
@@ -33,7 +60,13 @@ const useFetchEvents = ({
           })
         );
     }
-  }, [filterOn, setEventData, setErrorMessage, fetchWithTokens]);
+  }, [
+    filterOn,
+    setEventData,
+    setErrorMessage,
+    fetchWithTokens,
+    currentCoordinates,
+  ]);
 
   useEffect(() => {
     if (filterOn) {
