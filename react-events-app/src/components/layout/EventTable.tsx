@@ -41,6 +41,26 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
     selectionModel,
     setSelectionModel
   );
+
+  const SEARCHABLE_FIELDS = [
+    'user',
+    'eventTitle',
+    'placeType',
+    'address',
+    'description',
+  ];
+  const columns = user.isAdmin
+    ? tableAdminColumns({
+        userEvents,
+        setSelectedEvent,
+        setModalOpen,
+      })
+    : tableColumns({ userEvents, setSelectedEvent, setModalOpen });
+  const columnsFiltered = React.useMemo(
+    () => columns.filter((column) => SEARCHABLE_FIELDS.includes(column.field)),
+    [userEvents]
+  );
+
   return (
     <div>
       <Box sx={{ marginX: '20px' }}>
@@ -54,15 +74,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
           <DataGrid
             rows={userEvents}
             rowHeight={120}
-            columns={
-              user.isAdmin
-                ? tableAdminColumns({
-                    userEvents,
-                    setSelectedEvent,
-                    setModalOpen,
-                  })
-                : tableColumns({ userEvents, setSelectedEvent, setModalOpen })
-            }
+            columns={columnsFiltered}
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 5 },
@@ -75,6 +87,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
             onRowSelectionModelChange={(newSelection) => {
               setSelectionModel(newSelection);
             }}
+            showToolbar
           />
         </div>
       </Box>
