@@ -50,7 +50,7 @@ class EventViewSet(viewsets.ViewSet):
 
 class EventByUsernameView(APIView):
     def get(self, request, username):
-        events = Event.objects.filter(user__username=username)
+        events = Event.objects.filter(user__username=username).order_by("-created_at")
         serializer = EventSerializer(events, many=True, context={"request": request})
         return Response(serializer.data)
 
