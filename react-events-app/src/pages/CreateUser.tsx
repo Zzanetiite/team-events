@@ -60,7 +60,11 @@ const CreateUser: React.FC<CreateUserFormProps> = ({
           {passwordFeedback && <PasswordFeedback feedback={passwordFeedback} />}
           {adminPage && <EmailInput value={email} onChange={setEmail} />}
           {adminPage && (
-            <PasswordInput value={adminPassword} onChange={setAdminPassword} />
+            <PasswordInput
+              value={adminPassword}
+              onChange={setAdminPassword}
+              label={'Secret Admin Password'}
+            />
           )}
           {successMessage && (
             <StatusAlert message={successMessage} severity="success" />

@@ -8,7 +8,7 @@ const EmailInput: React.FC<InputProps> = ({ value, onChange }) => {
     <Box display="flex" alignItems="center">
       <Email style={{ marginRight: '10px' }} />
       <TextField
-        label="Email"
+        label="Email *"
         type="email"
         variant="outlined"
         value={value}
