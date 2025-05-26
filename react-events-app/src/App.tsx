@@ -9,6 +9,7 @@ import { APIProvider } from '@vis.gl/react-google-maps';
 import { libraries } from './config';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import StatusAlert from './components/common/StatusAlert';
+import Footer from './components/layout/Footer';
 
 const App: React.FC = () => {
   return (
@@ -46,14 +47,25 @@ const InnerApp: React.FC = () => {
       apiKey={reactEnvVars?.REACT_APP_GOOGLE_MAPS_API_KEY || ''}
     >
       <DataProvider>
-        <NavBar />
-        {reactEnvVars == null && (
-          <StatusAlert
-            message={'Failed to load Google Map credentials.'}
-            severity="error"
-          />
-        )}
-        <RouterProvider router={router} />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
+          }}
+        >
+          <Box component="main" sx={{ flexGrow: 1 }}>
+            <NavBar />
+            {reactEnvVars == null && (
+              <StatusAlert
+                message={'Failed to load Google Map credentials.'}
+                severity="error"
+              />
+            )}
+            <RouterProvider router={router} />
+          </Box>
+          <Footer />
+        </Box>
       </DataProvider>
     </APIProvider>
   );
