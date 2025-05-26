@@ -34,6 +34,12 @@ export const eventTableFormatting = {
   '& .MuiDataGrid-row:nth-of-type(even)': {
     backgroundColor: '#fff',
   },
+  '& .MuiDataGrid-cell.MuiDataGrid-cell--checkbox': {
+    justifyContent: 'center',
+  },
+  '& .MuiDataGrid-columnHeader.MuiDataGrid-columnHeader--checkbox': {
+    justifyContent: 'center',
+  },
 };
 
 export const eventEmptyData: EventProps = {

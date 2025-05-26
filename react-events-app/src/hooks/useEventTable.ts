@@ -5,10 +5,14 @@ import { useApi } from './useApi';
 import { ApiEndpoints } from '../constants';
 import { mapEventData } from '../utils/mapping';
 import useAutoClearMessage from './useAutoClearMessage';
+import { GridRowSelectionModel } from '@mui/x-data-grid';
+import { handleError } from '../errors/handleError';
 
 export const useEventTableData = (
   newEventCreated: boolean,
-  setNewEventCreated: (value: boolean) => void
+  setNewEventCreated: (value: boolean) => void,
+  selectionModel: GridRowSelectionModel,
+  setSelectionModel: React.Dispatch<React.SetStateAction<GridRowSelectionModel>>
 ) => {
   const [userEvents, setUserEvents] = useState<EventProps[]>([]);
   const [deleteSuccessMessage, setDeleteSuccessMessage] = useState<
@@ -68,6 +72,63 @@ export const useEventTableData = (
     setMessage: setDeleteSuccessMessage,
   });
 
+  const deleteEventById = async (id: number | number) => {
+    const response = await fetchWithTokens(
+      ApiEndpoints.UPDATE_OR_DELETE_EVENT(id),
+      {
+        method: 'DELETE',
+      }
+    );
+    return response;
+  };
+
+  const handleBulkDelete = async () => {
+    const selectedIds = selectionModel.ids;
+
+    if (selectedIds.size === 0) return;
+
+    const selectedEvents = userEvents.filter((event) =>
+      selectedIds.has(event.id)
+    );
+
+    const successIds: (string | number)[] = [];
+    const failedIds: (string | number)[] = [];
+
+    for (const event of selectedEvents) {
+      try {
+        const response = await deleteEventById(event.id);
+
+        if (response.deleted) {
+          successIds.push(event.id);
+        } else {
+          failedIds.push(event.id);
+        }
+      } catch (err) {
+        failedIds.push(event.id);
+      }
+    }
+
+    // Build messages
+    if (successIds.length > 0) {
+      setDeleteSuccessMessage(
+        `${successIds.length} event(s) deleted successfully.`
+      );
+    }
+
+    if (failedIds.length > 0) {
+      setErrorMessage(
+        `Failed to delete ${failedIds.length} event(s): ${failedIds.join(', ')}.`
+      );
+    }
+
+    if (successIds.length > 0) {
+      setModalUpdated(true); // Refresh list only if something was deleted
+    }
+
+    // Clear selection
+    setSelectionModel({ type: 'include', ids: new Set() });
+  };
+
   return {
     userEvents,
     deleteSuccessMessage,
@@ -81,5 +142,6 @@ export const useEventTableData = (
     setModalUpdated,
     setLoading,
     handleCloseModal: () => setModalOpen(false),
+    handleBulkDelete,
   };
 };

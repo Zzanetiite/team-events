@@ -1,25 +1,51 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import StatusAlert from './StatusAlert';
 import { useAuth } from '../../context/AuthContext';
+import { GridRowSelectionModel } from '@mui/x-data-grid';
+import Row from '../base/Row';
 
 const EventTableHeader = ({
   deleteSuccessMessage,
   errorMessage,
+  selectionModel,
+  handleBulkDelete,
 }: {
   deleteSuccessMessage: string | null;
   errorMessage: string | null;
+  selectionModel: GridRowSelectionModel;
+  handleBulkDelete: () => void;
 }) => {
   const { user } = useAuth();
   const heading = user.isAdmin ? 'All User Events' : 'Events created by you';
+  const selectedLength = selectionModel.ids.size;
   return (
     <>
       <Typography component="legend" variant="h5" gutterBottom>
         {heading}
       </Typography>
-      <Typography variant="body2" sx={{ mb: 1, color: 'primary.main' }}>
-        Click on an event to edit it
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          mb: 2,
+        }}
+      >
+        <Typography variant="body2" sx={{ color: 'primary.main' }}>
+          Click on an event to edit it
+        </Typography>
+
+        <Button
+          variant="outlined"
+          size="small"
+          color="error"
+          onClick={handleBulkDelete}
+        >
+          Delete All Selected ({selectedLength})
+        </Button>
+      </Box>
       {deleteSuccessMessage && (
         <StatusAlert message={deleteSuccessMessage} severity="success" />
       )}

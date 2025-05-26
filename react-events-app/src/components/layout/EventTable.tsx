@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridRowId, GridRowSelectionModel } from '@mui/x-data-grid';
 import { Box } from '@mui/material';
 import { useAuth } from '../../context/AuthContext';
 import { NewEventCreatedProps } from '../../interfaces/types';
@@ -17,6 +17,11 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
   setNewEventCreated,
 }) => {
   const { user } = useAuth();
+  const [selectionModel, setSelectionModel] =
+    React.useState<GridRowSelectionModel>({
+      type: 'include',
+      ids: new Set<GridRowId>(),
+    });
   const {
     userEvents,
     deleteSuccessMessage,
@@ -29,13 +34,21 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
     setModalOpen,
     setModalUpdated,
     handleCloseModal,
-  } = useEventTableData(newEventCreated, setNewEventCreated);
+    handleBulkDelete,
+  } = useEventTableData(
+    newEventCreated,
+    setNewEventCreated,
+    selectionModel,
+    setSelectionModel
+  );
   return (
     <div>
       <Box sx={{ marginX: '20px' }}>
         <EventTableHeader
           deleteSuccessMessage={deleteSuccessMessage}
           errorMessage={errorMessage}
+          selectionModel={selectionModel}
+          handleBulkDelete={handleBulkDelete}
         />
         <div style={{ height: 600, width: '100%' }}>
           <DataGrid
@@ -58,6 +71,10 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
             pageSizeOptions={[5, 10]}
             loading={loading}
             sx={eventTableFormatting}
+            checkboxSelection
+            onRowSelectionModelChange={(newSelection) => {
+              setSelectionModel(newSelection);
+            }}
           />
         </div>
       </Box>
