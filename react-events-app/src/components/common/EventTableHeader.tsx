@@ -17,8 +17,8 @@ const EventTableHeader = ({
       <Typography component="legend" variant="h5" gutterBottom>
         {heading}
       </Typography>
-      <Typography component="legend" variant="body2" gutterBottom>
-        Click on an event to edit it.
+      <Typography variant="body2" sx={{ mb: 1, color: 'primary.main' }}>
+        Click on an event to edit it
       </Typography>
       {deleteSuccessMessage && (
         <StatusAlert message={deleteSuccessMessage} severity="success" />

@@ -22,7 +22,16 @@ export const renderEventCell =
           }
           setModalOpen(true);
         }}
-        sx={{ textTransform: 'none' }}
+        sx={{
+          textTransform: 'none',
+          whiteSpace: 'normal',
+          wordWrap: 'break-word',
+          overflowWrap: 'break-word',
+          textAlign: 'left',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          height: '100%',
+        }}
       >
         {value}
       </Button>

@@ -37,9 +37,10 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
           deleteSuccessMessage={deleteSuccessMessage}
           errorMessage={errorMessage}
         />
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: 600, width: '100%' }}>
           <DataGrid
             rows={userEvents}
+            rowHeight={120}
             columns={
               user.isAdmin
                 ? tableAdminColumns({

@@ -19,6 +19,14 @@ export const eventTableFormatting = {
   },
   '& .MuiDataGrid-cell': {
     borderColor: '#e0f7fa',
+    whiteSpace: 'normal',
+    wordWrap: 'break-word',
+    wordBreak: 'break-word',
+    overflowWrap: 'break-word',
+    lineHeight: '1.2em',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'left',
   },
   '& .MuiDataGrid-row:nth-of-type(odd)': {
     backgroundColor: '#f0f8ff',
