@@ -21,30 +21,8 @@ const useFetchEvents = ({
       const url = `${ApiEndpoints.GET_NEARBY_EVENTS}?lat=${lat}&lng=${lng}&radius_km=${default_radius_km}`;
       fetchWithTokens(url, { method: 'GET' })
         .then((data: EventDBProps[]) => {
-          if (data.length > 0) {
-            const mappedEvents = mapEventData(data);
-            setEventData(mappedEvents);
-          } else {
-            // Fallback to latest events
-            fetchWithTokens(ApiEndpoints.GET_LATEST_EVENTS, { method: 'GET' })
-              .then((data: EventDBProps[]) => {
-                const mappedEvents = mapEventData(data);
-                setEventData(mappedEvents);
-              })
-              .catch((error: any) =>
-                handleError({
-                  error,
-                  setErrorMessage,
-                  overrideErrorHandlers: {
-                    403: (setErrorMessage) => {
-                      setErrorMessage(
-                        'Error loading Event data. Please try clearing site cookies.'
-                      );
-                    },
-                  },
-                })
-              );
-          }
+          const mappedEvents = mapEventData(data);
+          setEventData(mappedEvents);
         })
         .catch((error: any) =>
           handleError({

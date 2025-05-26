@@ -70,7 +70,7 @@ const Home = () => {
         setCurrentCoordinates={setCurrentCoordinates}
       />
       <HomeSearchingText loading={loading} currentLocation={currentLocation} />
-      <HomeEventsContainer eventData={eventData} />
+      <HomeEventsContainer eventData={eventData} loading={loading} />
     </div>
   );
 };

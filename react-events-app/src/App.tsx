@@ -7,9 +7,10 @@ import NavBar from './components/layout/NavBar';
 import { DataProvider } from './context/DataContext';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import { libraries } from './config';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import StatusAlert from './components/common/StatusAlert';
 import Footer from './components/layout/Footer';
+import LoadingWithText from './components/common/LoadingWithText';
 
 const App: React.FC = () => {
   return (
@@ -23,22 +24,7 @@ const InnerApp: React.FC = () => {
   const { reactEnvVars } = useAuth();
 
   if (reactEnvVars === undefined) {
-    return (
-      <Box
-        sx={{
-          height: '100vh',
-          width: '100vw',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <CircularProgress />
-        <Typography variant="h6" sx={{ color: 'text.primary', padding: 2 }}>
-          Loading...
-        </Typography>
-      </Box>
-    );
+    return <LoadingWithText />;
   }
 
   return (
