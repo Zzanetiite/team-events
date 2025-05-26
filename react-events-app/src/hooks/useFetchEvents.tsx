@@ -16,7 +16,7 @@ const useFetchEvents = ({
   useEffect(() => {
     if (!filterOn && currentCoordinates) {
       const { lat, lng } = currentCoordinates;
-      const default_radius_km = 50;
+      const default_radius_km = 30;
 
       const url = `${ApiEndpoints.GET_NEARBY_EVENTS}?lat=${lat}&lng=${lng}&radius_km=${default_radius_km}`;
       fetchWithTokens(url, { method: 'GET' })

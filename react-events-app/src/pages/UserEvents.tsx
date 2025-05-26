@@ -3,7 +3,7 @@ import EventTable from '../components/layout/EventTable';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import CreateEvent from '../components/layout/CreateEvent';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Divider } from '@mui/material';
 
 const UserEvents = () => {
   const { loggedIn } = useAuth();
@@ -38,13 +38,14 @@ const UserEvents = () => {
   return (
     <div>
       <Box marginTop={1} marginBottom={1}>
-        <CreateEvent setNewEventCreated={setNewEventCreated} />
-      </Box>
-      <Box marginTop={1} marginBottom={1}>
         <EventTable
           newEventCreated={newEventCreated}
           setNewEventCreated={setNewEventCreated}
         />
+      </Box>
+      <Divider />
+      <Box marginTop={1} marginBottom={1}>
+        <CreateEvent setNewEventCreated={setNewEventCreated} />
       </Box>
     </div>
   );

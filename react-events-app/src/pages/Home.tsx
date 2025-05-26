@@ -11,6 +11,7 @@ import { PlaceTypes } from '../constants';
 import { UNKNOWN_LOCATION } from '../constants/MapConstants';
 import HomeSearchingText from '../components/layout/HomeSearchingText';
 import GoogleMap from '../components/layout/GoogleMap';
+import DraggablePinMap from '../components/common/map/DraggablePinMap';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -36,7 +37,6 @@ const Home = () => {
     currentCoordinates,
   });
 
-  console.log(currentCoordinates);
   useAutoClearMessage({ message: errorMessage, setMessage: setErrorMessage });
   useAutoClearMessage({ message: infoMessage, setMessage: setInfoMessage });
 

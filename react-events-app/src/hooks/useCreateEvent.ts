@@ -10,7 +10,6 @@ import { mapCreateEventToDBFormat } from '../utils/mapping';
 export const useCreateEvent = (
   setNewEventCreated: (value: boolean) => void
 ) => {
-  const [expanded, setExpanded] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -61,11 +60,9 @@ export const useCreateEvent = (
   return {
     successMessage,
     errorMessage,
-    expanded,
     event,
     submitClicked,
     setSubmitClicked,
-    setExpanded,
     handleChange,
     handleSelectChange,
     handleLocationChange,

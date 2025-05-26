@@ -13,7 +13,12 @@ const originalWarn = console.warn;
 console.warn = (...args) => {
   if (
     args[0] &&
-    args[0].includes('As of March 1st, 2025, google.maps.places.Autocomplete')
+    (args[0].includes(
+      'As of March 1st, 2025, google.maps.places.Autocomplete'
+    ) ||
+      args[0].includes(
+        'As of March 1st, 2025, google.maps.places.Autocomplete'
+      ))
   ) {
     return;
   }

@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Typography,
-} from '@mui/material';
-import { AddCircle, ChevronRightRounded } from '@mui/icons-material';
+import { Box, Typography } from '@mui/material';
 import StatusAlert from '../common/StatusAlert';
 import EventForm from '../common/event/EventForm';
 import { CreateEventProps } from '../../interfaces/types';
@@ -18,11 +11,9 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
   const {
     successMessage,
     errorMessage,
-    expanded,
     event,
     submitClicked,
     setSubmitClicked,
-    setExpanded,
     handleChange,
     handleSelectChange,
     handleLocationChange,
@@ -35,59 +26,42 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
     event.eventTitle.length <= CHAR_LIMITS.EventTitleMin ||
     event.description.length <= CHAR_LIMITS.EventDescriptionMin;
   return (
-    <div>
-      <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
-        <AccordionSummary
-          expandIcon={<ChevronRightRounded sx={{ color: 'primary.main' }} />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-left',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: 1,
-              padding: 0,
-            }}
-          >
-            <AddCircle sx={{ color: 'primary.main', fontSize: '24px' }} />
-            <Typography variant="h6" sx={{ color: 'text.primary' }}>
-              Create a new event?
-            </Typography>
-          </Box>
-        </AccordionSummary>
-        {expanded && (
-          <AccordionDetails>
-            <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-              <EventForm
-                data={event}
-                handleChange={handleChange}
-                handleSelectChange={handleSelectChange}
-                handleLocationChange={handleLocationChange}
-                submitClicked={submitClicked}
-                setSubmitClicked={setSubmitClicked}
-              />
-              {successMessage && (
-                <StatusAlert message={successMessage} severity="success" />
-              )}
-              {errorMessage && (
-                <StatusAlert message={errorMessage} severity="error" />
-              )}
-              <FilledSubmitButton
-                style={{ marginTop: '10px' }}
-                disabled={invalidTextLength}
-              />
-            </form>
-          </AccordionDetails>
+    <Box padding={2}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-left',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: 1,
+          padding: 0,
+        }}
+      >
+        <Typography variant="h5" sx={{ color: 'text.primary' }}>
+          Create a new event
+        </Typography>
+      </Box>
+      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+        <EventForm
+          data={event}
+          handleChange={handleChange}
+          handleSelectChange={handleSelectChange}
+          handleLocationChange={handleLocationChange}
+          submitClicked={submitClicked}
+          setSubmitClicked={setSubmitClicked}
+        />
+        {successMessage && (
+          <StatusAlert message={successMessage} severity="success" />
         )}
-      </Accordion>
-    </div>
+        {errorMessage && (
+          <StatusAlert message={errorMessage} severity="error" />
+        )}
+        <FilledSubmitButton
+          style={{ marginTop: '10px' }}
+          disabled={invalidTextLength}
+        />
+      </form>
+    </Box>
   );
 };
 

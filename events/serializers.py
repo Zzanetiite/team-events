@@ -175,7 +175,7 @@ class EventSerializer(serializers.ModelSerializer):
             event_type, created = EventType.objects.get_or_create(name=event_type_data)
 
         if location_data:
-            location, created = Location.objects.get_or_create(
+            location, created = Location.objects.update_or_create(
                 address=location_data.get("address"),
                 defaults={
                     "coordinates": Point(
@@ -200,11 +200,12 @@ class EventSerializer(serializers.ModelSerializer):
             instance.event_type = event_type
 
         if location_data:
-            location, created = Location.objects.get_or_create(
+            location, created = Location.objects.update_or_create(
                 address=location_data.get("address"),
                 defaults={
-                    "lat": location_data.get("lat"),
-                    "lng": location_data.get("lng"),
+                    "coordinates": Point(
+                        location_data.get("lng"), location_data.get("lat")
+                    ),
                 },
             )
             instance.location = location

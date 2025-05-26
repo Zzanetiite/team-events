@@ -12,7 +12,7 @@ A full-stack web application to help organise team events. This app is a DEMO, i
 - macOS, Linux or Windows machine is being used.
 - IDE installed. Recommendation is to use Visual Studio.
 - Docker installed -> [docker installation](https://www.docker.com/products/docker-desktop)
-- FOR DEVELOPING UNIT TESTS ONLY, install GDAL libraries -> https://pypi.org/project/GDAL/
+- For local development, install GDAL libraries -> https://pypi.org/project/GDAL/
 
 ### Setting up
 
@@ -239,14 +239,4 @@ Before pushing anything to git, please ensure the changes are ready for prod. Re
 
 ```bash
 git push
-```
-
-### Warnings to know about
-
-#### Assistive technology warning
-
-This warning is caused by the buttins in the Accordion and Dialog components. For this project, pop ups are part of the design that has not been develped for accessibility. The design would be different if accessibility was a requirement, but it is not. Therefore, please ignore the warnings.
-
-```bash
-Blocked aria-hidden on a <button> element because the element that just received focus must not be hidden from assistive technology users. Avoid using aria-hidden on a focused element or its ancestor. Consider using the inert attribute instead, which will also prevent focus. For more details, see the aria-hidden section of the WAI-ARIA specification at https://w3c.github.io/aria/#aria-hidden.
 ```
