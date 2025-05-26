@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Logo from '../common/Logo';
 import NavBarUsername from '../common/NavBarUserName';
-import NavBarFilterButton from '../common/buttons/NavBarFilterButton';
 import { useNavBar } from '../../hooks/useNavBar';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -24,7 +23,6 @@ export default function NavBar() {
     handleLogout,
     handleLogin,
     handleEventsButton,
-    handleFilterOpen,
     handleSignUpButton,
     handleHome,
   } = useNavBar();
@@ -43,7 +41,6 @@ export default function NavBar() {
       <AppBar position="static">
         <Toolbar>
           <Logo />
-          <NavBarFilterButton handleFilterOpen={handleFilterOpen} />
           <Box sx={{ flexGrow: 1 }} />
           <NavBarUsername username={user.username} isAdmin={user.isAdmin} />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>

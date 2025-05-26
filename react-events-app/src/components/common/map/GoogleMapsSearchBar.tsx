@@ -37,7 +37,7 @@ const GoogleMapsSearchBar: React.FC<Props> = ({ setLocation }) => {
   if (!placesLibrary) return <Loading />;
 
   return (
-    <Box alignItems="center" paddingRight={2} paddingLeft={2} paddingTop={2}>
+    <Box alignItems="center" paddingRight={2} paddingLeft={2} paddingTop={1}>
       <AddressInput
         name="search-bar-home"
         value={value}

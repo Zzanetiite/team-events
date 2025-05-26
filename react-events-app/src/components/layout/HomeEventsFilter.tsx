@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PlaceTypes } from '../../constants';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import ApplyButton from '../common/buttons/ApplyButton';
 import EventTypeSelect from '../common/event/EventTypeSelect';
 import ResetButton from '../common/buttons/ResetButton';
@@ -39,15 +39,25 @@ const HomeEventsFilter = ({
 
   return (
     <div>
-      <Box padding={1}>
+      <Box paddingRight={2} paddingLeft={2}>
+        <Box
+          mt={2}
+          gap={2}
+          display="flex"
+          justifyContent="flex-start"
+          alignItems="center"
+          p={1}
+        >
+          <Typography variant="body1" sx={{ fontWeight: 500 }}>
+            Filter by Type
+          </Typography>
+          <ApplyButton handleApply={handleApply} />
+          <ResetButton handleReset={handleReset} />
+        </Box>
         <EventTypeSelect
           selectedTypes={selectedTypes}
           handleCheckboxChange={handleCheckboxChange}
         />
-        <Box mt={2} gap={3} display="flex" justifyContent="flex-start">
-          <ApplyButton handleApply={handleApply} />
-          <ResetButton handleReset={handleReset} />
-        </Box>
       </Box>
     </div>
   );

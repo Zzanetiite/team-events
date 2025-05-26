@@ -11,6 +11,7 @@ import { PlaceTypes } from '../constants';
 import { UNKNOWN_LOCATION } from '../constants/MapConstants';
 import HomeSearchingText from '../components/layout/HomeSearchingText';
 import GoogleMap from '../components/common/map/GoogleMap';
+import { FilterAlt } from '@mui/icons-material';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -21,12 +22,9 @@ const Home = () => {
     useState<google.maps.LatLngLiteral | null>(null);
   const [eventDataLoading, setEventDataLoading] = useState(true);
   const { fetchWithTokens } = useApi();
-  const { eventData, setEventData, homePageFilterOpen } = useDataContext();
+  const { eventData, setEventData } = useDataContext();
   const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
-  const [filterOn, setFilterOn] = useEventFilter({
-    homePageFilterOpen,
-    selectedEventTypes,
-  });
+  const [filterOn, setFilterOn] = useState(false);
 
   useFetchEvents({
     filterOn,
@@ -57,12 +55,10 @@ const Home = () => {
 
   return (
     <div>
-      {homePageFilterOpen && (
-        <HomeEventsFilter
-          onApplyFilter={handleApplyFilter}
-          onResetFilter={handleResetFilter}
-        />
-      )}
+      <HomeEventsFilter
+        onApplyFilter={handleApplyFilter}
+        onResetFilter={handleResetFilter}
+      />
       {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
       {infoMessage && <StatusAlert message={infoMessage} severity="info" />}
       <GoogleMap

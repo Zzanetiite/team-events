@@ -1,13 +1,11 @@
 import { useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useDataContext } from '../context/DataContext';
 import { ApiEndpoints } from '../constants';
 import { useApi } from './useApi';
 
 export const useNavBar = () => {
   const { fetchWithTokens } = useApi();
   const { setUserToken, setLoggedIn, loggedIn, user, setUser } = useAuth();
-  const { homePageFilterOpen, setHomePageFilterOpen } = useDataContext();
 
   const handleLogout = useCallback(async () => {
     try {
@@ -54,17 +52,12 @@ export const useNavBar = () => {
     window.location.href = '/signup';
   }, []);
 
-  const handleFilterOpen = useCallback(() => {
-    setHomePageFilterOpen(!homePageFilterOpen);
-  }, [homePageFilterOpen, setHomePageFilterOpen]);
-
   return {
     loggedIn,
     user,
     handleLogout,
     handleLogin,
     handleEventsButton,
-    handleFilterOpen,
     handleSignUpButton,
     handleHome,
   };

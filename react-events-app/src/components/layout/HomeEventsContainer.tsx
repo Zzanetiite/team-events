@@ -15,7 +15,6 @@ const HomeEventsContainer = ({
   if (loading) {
     return <LoadingWithText height={60} />;
   } else if (eventData.length === 0 && !loading) {
-    console.log(eventData);
     return (
       <Box
         sx={{

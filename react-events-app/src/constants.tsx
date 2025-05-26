@@ -54,30 +54,20 @@ export const COMMENT_LIMIT = 1;
 
 export enum PlaceTypes {
   RESTAURANT = 'Restaurant',
-  FAST_FOOD = 'Fast Food',
   ESCAPE_ROOM = 'Escape Room',
-  OUTDOOR_ACTIVITY = 'Outdoor Activity',
-  CLASSES = 'Classes',
+  OUTDOOR_ACTIVITY = 'Outdoors',
   TEAM_BUILDING = 'Team Building',
-  OFFSITE_RETREAT = 'Offsite Retreat',
   TOURNAMENT = 'Tournament',
-  FUNDRAISER = 'Fundraiser',
   PARTY = 'Party',
-  ART = 'Art',
 }
 
 export const PlaceTypeIcons: Record<PlaceTypes, React.ComponentType> = {
   [PlaceTypes.RESTAURANT]: DinnerDining,
-  [PlaceTypes.FAST_FOOD]: Fastfood,
   [PlaceTypes.ESCAPE_ROOM]: SensorDoor,
   [PlaceTypes.OUTDOOR_ACTIVITY]: NaturePeople,
-  [PlaceTypes.CLASSES]: School,
   [PlaceTypes.TEAM_BUILDING]: Diversity3,
-  [PlaceTypes.OFFSITE_RETREAT]: Signpost,
   [PlaceTypes.TOURNAMENT]: MilitaryTech,
-  [PlaceTypes.FUNDRAISER]: Paid,
   [PlaceTypes.PARTY]: Celebration,
-  [PlaceTypes.ART]: Brush,
 };
 
 export const MINIMUM_PASSWORD_LENGTH = 8;

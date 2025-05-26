@@ -1,5 +1,5 @@
-import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import React from 'react';
+import { Box, Checkbox, FormControlLabel } from '@mui/material';
 import { PlaceTypeIcons, PlaceTypes } from '../../../constants';
 
 interface EventTypeSelectProps {
@@ -13,18 +13,15 @@ const EventTypeSelect = ({
 }: EventTypeSelectProps) => {
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
-        Filter by Type
-      </Typography>
       <Box
         display="grid"
         gridTemplateColumns="repeat(auto-fill, minmax(150px, 1fr))"
-        gap={2}
-        mb={2}
+        gap={0}
+        mb={0}
         sx={{
           maxHeight: 250,
           overflowY: 'auto',
-          padding: 2,
+          padding: 1,
           border: '1px solid #ccc',
           borderRadius: 2,
           backgroundColor: '#fff',
@@ -38,6 +35,7 @@ const EventTypeSelect = ({
               key={type}
               control={
                 <Checkbox
+                  size="small"
                   checked={!!selectedTypes[type]}
                   onChange={() => handleCheckboxChange(type)}
                   icon={<Icon />}
