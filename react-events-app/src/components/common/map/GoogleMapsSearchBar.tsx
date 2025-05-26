@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, TextField } from '@mui/material';
 import { useMapsLibrary } from '@vis.gl/react-google-maps';
-import Loading from '../common/Loading';
+import Loading from '../Loading';
 
 interface Props {
   setLocation: (location: google.maps.LatLngLiteral) => void;

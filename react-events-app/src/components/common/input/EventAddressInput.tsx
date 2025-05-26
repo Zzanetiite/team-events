@@ -13,7 +13,7 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
   setSubmitClicked,
   loading,
 }) => {
-  const [inputValue, setInputValue] = useState<string>(value.address);
+  const [address, setAddress] = useState<string>(value.address);
   const [coordinates, setCoordinates] = useState(
     defaultMapsContainerStartingLocation
   );
@@ -34,7 +34,7 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
           const lng = place.geometry.location.lng();
 
           const newLocation = { lat, lng };
-          setInputValue(place.formatted_address);
+          setAddress(place.formatted_address);
           setCoordinates(newLocation);
 
           onChange({
@@ -50,23 +50,23 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
   // update parent with latest coordinates
   useEffect(() => {
     onChange({
-      address: inputValue,
+      address: address,
       location: coordinates,
     });
-  }, [coordinates, inputValue, onChange]);
+  }, [coordinates, address, onChange]);
 
   // Reset input field if the form submit button
   // was clicked and reset is triggered
   useEffect(() => {
     if (submitClicked) {
-      setInputValue('');
+      setAddress('');
       setSubmitClicked(false);
     }
   }, [submitClicked, setSubmitClicked]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newAddress = event.target.value;
-    setInputValue(newAddress);
+    setAddress(newAddress);
     onChange({ address: newAddress, location: coordinates });
   };
 
@@ -77,7 +77,7 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
       <TextField
         label="Search Address"
         name="address"
-        value={inputValue}
+        value={address}
         onChange={handleInputChange}
         inputRef={inputRef}
         fullWidth
@@ -94,6 +94,8 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
       <DraggablePinMap
         coordinates={coordinates}
         setCoordinates={setCoordinates}
+        address={address}
+        setAddress={setAddress}
       />
     </Box>
   );

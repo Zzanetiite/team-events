@@ -6,7 +6,6 @@ import { ApiEndpoints } from '../constants';
 import { mapEventData } from '../utils/mapping';
 import useAutoClearMessage from './useAutoClearMessage';
 import { GridRowSelectionModel } from '@mui/x-data-grid';
-import { handleError } from '../errors/handleError';
 
 export const useEventTableData = (
   newEventCreated: boolean,

@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Map, RenderingType, useMap } from '@vis.gl/react-google-maps';
 import { Box, Button } from '@mui/material';
-import { EventProps } from '../../interfaces/types';
-import { DEFAULT_ZOOM, UNKNOWN_LOCATION } from '../../constants/MapConstants';
-import { defaultMapsContainerStartingLocation } from '../../config';
-import PoiMarkers from '../common/map/PoiMarkers';
-import { MAP_ID } from '../../constants';
+import { EventProps } from '../../../interfaces/types';
+import {
+  DEFAULT_ZOOM,
+  UNKNOWN_LOCATION,
+} from '../../../constants/MapConstants';
+import { defaultMapsContainerStartingLocation } from '../../../config';
+import PoiMarkers from './PoiMarkers';
+import { MAP_ID } from '../../../constants';
 import GoogleMapsSearchBar from './GoogleMapsSearchBar';
 
 const GoogleMap = ({

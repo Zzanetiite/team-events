@@ -10,7 +10,7 @@ import HomeEventsFilter from '../components/layout/HomeEventsFilter';
 import { PlaceTypes } from '../constants';
 import { UNKNOWN_LOCATION } from '../constants/MapConstants';
 import HomeSearchingText from '../components/layout/HomeSearchingText';
-import GoogleMap from '../components/layout/GoogleMap';
+import GoogleMap from '../components/common/map/GoogleMap';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

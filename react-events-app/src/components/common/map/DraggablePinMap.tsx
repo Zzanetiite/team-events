@@ -6,9 +6,13 @@ import { MAP_ID } from '../../../constants';
 const DraggablePinMap = ({
   coordinates,
   setCoordinates,
+  address,
+  setAddress,
 }: {
   coordinates: google.maps.LatLngLiteral;
   setCoordinates: (coords: google.maps.LatLngLiteral) => void;
+  address: string;
+  setAddress: (address: string) => void;
   mapHeight?: string;
 }) => {
   const map = useMap();
@@ -33,10 +37,13 @@ const DraggablePinMap = ({
     });
 
     // Listen for the dragend event
-    newMarker.element.addEventListener('dragend', () => {
+    newMarker.addListener('dragend', () => {
       const pos = newMarker.position;
       if (pos) {
         setCoordinates({ lat: Number(pos.lat), lng: Number(pos.lng) });
+        if (address.length === 0) {
+          setAddress(`lat: ${pos.lat}, lng: ${pos.lng}`);
+        }
       }
     });
 
@@ -48,7 +55,7 @@ const DraggablePinMap = ({
     return () => {
       newMarker.map = null;
     };
-  }, [coordinates, map, setCoordinates]);
+  }, [address.length, coordinates, map, setAddress, setCoordinates]);
 
   return (
     <div
