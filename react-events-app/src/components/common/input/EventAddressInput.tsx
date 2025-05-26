@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { ChooseAddressProps } from '../../../interfaces/types';
 import Loading from '../Loading';
 import { useMapsLibrary } from '@vis.gl/react-google-maps';
 import DraggablePinMap from '../map/DraggablePinMap';
 import { defaultMapsContainerStartingLocation } from '../../../config';
+import AddressInput from './AddressInput';
 
 const EventAddressInput: React.FC<ChooseAddressProps> = ({
   value,
@@ -64,26 +65,16 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
     }
   }, [submitClicked, setSubmitClicked]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newAddress = event.target.value;
-    setAddress(newAddress);
-    onChange({ address: newAddress, location: coordinates });
-  };
-
   if (!placesLibrary) return <Loading />;
 
   return (
     <Box>
-      <TextField
-        label="Search Address"
-        name="address"
+      <AddressInput
+        name="search-bar-create-event"
         value={address}
-        onChange={handleInputChange}
-        inputRef={inputRef}
-        fullWidth
-        required
-        margin="normal"
-        disabled={loading}
+        onChange={setAddress}
+        ref={inputRef}
+        label="Search for an address or drag the pin..."
       />
       <Typography
         variant="body2"

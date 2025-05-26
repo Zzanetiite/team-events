@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, TextField } from '@mui/material';
+import { Box } from '@mui/material';
 import { useMapsLibrary } from '@vis.gl/react-google-maps';
 import Loading from '../Loading';
+import AddressInput from '../input/AddressInput';
 
 interface Props {
   setLocation: (location: google.maps.LatLngLiteral) => void;
@@ -33,25 +34,16 @@ const GoogleMapsSearchBar: React.FC<Props> = ({ setLocation }) => {
     }
   }, [placesLibrary, setLocation]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newAddress = event.target.value;
-    setValue(newAddress);
-  };
-
   if (!placesLibrary) return <Loading />;
 
   return (
-    <Box alignItems="center" paddingRight={2} paddingLeft={2} paddingTop={1}>
-      <TextField
-        label="Start typing to search for events near a place... "
-        name="search-bar"
+    <Box alignItems="center" paddingRight={2} paddingLeft={2} paddingTop={2}>
+      <AddressInput
+        name="search-bar-home"
         value={value}
-        onChange={handleInputChange}
-        variant="outlined"
-        fullWidth
-        margin="dense"
-        inputRef={inputRef}
-        className="searchbox"
+        onChange={setValue}
+        ref={inputRef}
+        label="Start typing to search for events near a place..."
       />
     </Box>
   );

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Map, RenderingType, useMap } from '@vis.gl/react-google-maps';
 import { Box, Button } from '@mui/material';
 import { EventProps } from '../../../interfaces/types';
