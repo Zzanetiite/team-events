@@ -24,6 +24,7 @@ const GoogleMap = ({
     React.SetStateAction<google.maps.LatLngLiteral | null>
   >;
 }) => {
+  const [locationReady, setLocationReady] = React.useState(false);
   const map = useMap();
 
   // Function to reverse geocode and get city name
@@ -48,6 +49,7 @@ const GoogleMap = ({
               );
               if (city) {
                 setCurrentLocation(city.formatted_address);
+                setLocationReady(true);
               } else {
                 // Handle cases where no city is found
                 const postalCode = results.find((result) =>
@@ -59,12 +61,15 @@ const GoogleMap = ({
                   setCurrentLocation(
                     postalCodeParts[0] || postalCode.formatted_address
                   );
+                  setLocationReady(true);
                 } else {
                   setCurrentLocation(UNKNOWN_LOCATION);
+                  setLocationReady(true);
                 }
               }
             } else {
               setCurrentLocation(UNKNOWN_LOCATION);
+              setLocationReady(true);
             }
           });
         });
@@ -92,11 +97,13 @@ const GoogleMap = ({
             );
             setCurrentCoordinates(defaultMapsContainerStartingLocation);
             reverseGeocode(defaultMapsContainerStartingLocation);
+            setLocationReady(true);
           }
         );
       } else {
-        console.log('Geolocation not supported by the browser.');
-        setCurrentCoordinates(null);
+        setCurrentCoordinates(defaultMapsContainerStartingLocation);
+        reverseGeocode(defaultMapsContainerStartingLocation);
+        setLocationReady(true);
       }
     };
 
@@ -140,16 +147,18 @@ const GoogleMap = ({
           className="map-container"
           style={{ height: '250px', width: '100%' }}
         >
-          <Map
-            defaultZoom={DEFAULT_ZOOM}
-            defaultCenter={
-              currentCoordinates || defaultMapsContainerStartingLocation
-            }
-            mapId={MAP_ID}
-            renderingType={RenderingType.UNINITIALIZED}
-          >
-            <PoiMarkers events={events} />
-          </Map>
+          {locationReady && (
+            <Map
+              defaultZoom={DEFAULT_ZOOM}
+              defaultCenter={
+                currentCoordinates || defaultMapsContainerStartingLocation
+              }
+              mapId={MAP_ID}
+              renderingType={RenderingType.UNINITIALIZED}
+            >
+              <PoiMarkers events={events} />
+            </Map>
+          )}
         </div>
       </Box>
       <Box
