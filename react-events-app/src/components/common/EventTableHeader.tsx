@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import StatusAlert from './StatusAlert';
 import { useAuth } from '../../context/AuthContext';
 import { GridRowSelectionModel } from '@mui/x-data-grid';
-import Row from '../base/Row';
+import ConfirmAction from './ConfirmAction';
 
 const EventTableHeader = ({
   deleteSuccessMessage,
@@ -16,9 +16,13 @@ const EventTableHeader = ({
   selectionModel: GridRowSelectionModel;
   handleBulkDelete: () => void;
 }) => {
+  const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+
   const { user } = useAuth();
+
   const heading = user.isAdmin ? 'All User Events' : 'Events created by you';
   const selectedLength = selectionModel.ids.size;
+
   return (
     <>
       <Typography component="legend" variant="h5" gutterBottom>
@@ -41,7 +45,8 @@ const EventTableHeader = ({
           variant="outlined"
           size="small"
           color="error"
-          onClick={handleBulkDelete}
+          onClick={() => setConfirmOpen(true)}
+          disabled={selectedLength === 0}
         >
           Delete All Selected ({selectedLength})
         </Button>
@@ -50,6 +55,14 @@ const EventTableHeader = ({
         <StatusAlert message={deleteSuccessMessage} severity="success" />
       )}
       {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
+      {/* Confirmation Modal */}
+      <ConfirmAction
+        confirmOpen={confirmOpen}
+        setConfirmOpen={setConfirmOpen}
+        handleDelete={handleBulkDelete}
+        title="Delete Selected Events"
+        description={`Are you sure you want to delete ${selectedLength} selected event(s)? This action cannot be undone.`}
+      />
     </>
   );
 };

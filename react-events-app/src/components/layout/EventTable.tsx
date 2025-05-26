@@ -42,13 +42,6 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
     setSelectionModel
   );
 
-  const SEARCHABLE_FIELDS = [
-    'user',
-    'eventTitle',
-    'placeType',
-    'address',
-    'description',
-  ];
   const columns = user.isAdmin
     ? tableAdminColumns({
         userEvents,
@@ -57,8 +50,13 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
       })
     : tableColumns({ userEvents, setSelectedEvent, setModalOpen });
   const columnsFiltered = React.useMemo(
-    () => columns.filter((column) => SEARCHABLE_FIELDS.includes(column.field)),
-    [userEvents]
+    () =>
+      columns.filter((column) =>
+        ['user', 'eventTitle', 'placeType', 'address', 'description'].includes(
+          column.field
+        )
+      ),
+    [columns]
   );
 
   return (

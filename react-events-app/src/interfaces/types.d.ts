@@ -196,6 +196,8 @@ export interface ConfirmActionProps {
   confirmOpen: boolean;
   setConfirmOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleDelete: () => void;
+  title?: string;
+  description?: string;
 }
 
 export interface StatusAlertProps {

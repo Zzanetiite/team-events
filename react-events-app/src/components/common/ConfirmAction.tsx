@@ -13,16 +13,15 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
   confirmOpen,
   setConfirmOpen,
   handleDelete,
+  title = 'Are you sure?',
+  description = 'Do you really want to perform this action? This cannot be undone.',
 }) => {
   return (
     <div>
       <Dialog open={confirmOpen} onClose={() => setConfirmOpen(false)}>
-        <DialogTitle>Are you sure?</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Do you really want to delete this event? This action cannot be
-            undone.
-          </DialogContentText>
+          <DialogContentText>{description}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setConfirmOpen(false)} color="primary">
