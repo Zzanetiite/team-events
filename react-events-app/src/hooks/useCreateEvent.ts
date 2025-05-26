@@ -45,7 +45,7 @@ export const useCreateEvent = (
         setSuccessMessage('Event created successfully!');
         setErrorMessage(null);
         setNewEventCreated(true);
-        setEvent(eventEmptyData);
+        setEvent(() => eventEmptyData);
         setSubmitClicked(true);
       }
     } catch (error: any) {

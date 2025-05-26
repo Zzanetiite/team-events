@@ -7,7 +7,7 @@ import DraggablePinMap from '../map/DraggablePinMap';
 import { defaultMapsContainerStartingLocation } from '../../../config';
 
 const EventAddressInput: React.FC<ChooseAddressProps> = ({
-  value = { address: '', location: defaultMapsContainerStartingLocation },
+  value,
   onChange,
   submitClicked,
   setSubmitClicked,
