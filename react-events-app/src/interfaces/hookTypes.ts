@@ -26,6 +26,7 @@ export interface FetchEventsProps {
   setEventData: (data: any) => void;
   fetchWithTokens: (url: string, options: any) => Promise<any>;
   currentCoordinates: google.maps.LatLngLiteral | null;
+  setEventDataLoading: (loading: boolean) => void;
 }
 
 export interface UseLoginProps {

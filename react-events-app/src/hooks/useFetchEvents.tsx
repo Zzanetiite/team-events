@@ -12,6 +12,7 @@ const useFetchEvents = ({
   setEventData,
   fetchWithTokens,
   currentCoordinates,
+  setEventDataLoading,
 }: FetchEventsProps) => {
   useEffect(() => {
     if (!filterOn && currentCoordinates) {
@@ -23,6 +24,7 @@ const useFetchEvents = ({
         .then((data: EventDBProps[]) => {
           const mappedEvents = mapEventData(data);
           setEventData(mappedEvents);
+          setEventDataLoading(false);
         })
         .catch((error: any) =>
           handleError({
@@ -44,6 +46,7 @@ const useFetchEvents = ({
     setErrorMessage,
     fetchWithTokens,
     currentCoordinates,
+    setEventDataLoading,
   ]);
 
   useEffect(() => {
@@ -58,6 +61,7 @@ const useFetchEvents = ({
           }
           const mappedEvents = mapEventData(data);
           setEventData(mappedEvents);
+          setEventDataLoading(false);
         })
         .catch((error: any) =>
           handleError({
@@ -80,6 +84,7 @@ const useFetchEvents = ({
     setEventData,
     fetchWithTokens,
     setErrorMessage,
+    setEventDataLoading,
   ]);
 };
 

@@ -19,7 +19,8 @@ const Home = () => {
     useState<string>(UNKNOWN_LOCATION);
   const [currentCoordinates, setCurrentCoordinates] =
     useState<google.maps.LatLngLiteral | null>(null);
-  const { fetchWithTokens, loading } = useApi();
+  const [eventDataLoading, setEventDataLoading] = useState(true);
+  const { fetchWithTokens } = useApi();
   const { eventData, setEventData, homePageFilterOpen } = useDataContext();
   const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
   const [filterOn, setFilterOn] = useEventFilter({
@@ -34,6 +35,7 @@ const Home = () => {
     setEventData,
     fetchWithTokens,
     currentCoordinates,
+    setEventDataLoading,
   });
 
   useAutoClearMessage({ message: errorMessage, setMessage: setErrorMessage });
@@ -69,8 +71,11 @@ const Home = () => {
         currentCoordinates={currentCoordinates}
         setCurrentCoordinates={setCurrentCoordinates}
       />
-      <HomeSearchingText loading={loading} currentLocation={currentLocation} />
-      <HomeEventsContainer eventData={eventData} loading={loading} />
+      <HomeSearchingText
+        loading={eventDataLoading}
+        currentLocation={currentLocation}
+      />
+      <HomeEventsContainer eventData={eventData} loading={eventDataLoading} />
     </div>
   );
 };

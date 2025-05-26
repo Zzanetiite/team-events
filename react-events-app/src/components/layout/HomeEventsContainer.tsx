@@ -14,9 +14,8 @@ const HomeEventsContainer = ({
 }) => {
   if (loading) {
     return <LoadingWithText height={60} />;
-  }
-
-  if (eventData.length === 0 && !loading) {
+  } else if (eventData.length === 0 && !loading) {
+    console.log(eventData);
     return (
       <Box
         sx={{
@@ -34,24 +33,24 @@ const HomeEventsContainer = ({
         </Typography>
       </Box>
     );
+  } else {
+    return (
+      <div>
+        <Grid
+          container
+          spacing={2}
+          sx={{ paddingX: 1, marginTop: 2, marginBottom: 2 }}
+          justifyContent="center"
+        >
+          {eventData.map((event, index) => (
+            <Grid key={index}>
+              <Event {...event} />
+            </Grid>
+          ))}
+        </Grid>
+      </div>
+    );
   }
-
-  return (
-    <div>
-      <Grid
-        container
-        spacing={2}
-        sx={{ paddingX: 1, marginTop: 2, marginBottom: 2 }}
-        justifyContent="center"
-      >
-        {eventData.map((event, index) => (
-          <Grid key={index}>
-            <Event {...event} />
-          </Grid>
-        ))}
-      </Grid>
-    </div>
-  );
 };
 
 export default HomeEventsContainer;
