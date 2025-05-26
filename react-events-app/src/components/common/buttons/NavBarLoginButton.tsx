@@ -1,5 +1,4 @@
-import { Login, Logout } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import React from 'react';
 import { NavBarLoginButtonProps } from '../../../interfaces/types';
 
@@ -10,14 +9,14 @@ const NavBarLoginButton: React.FC<NavBarLoginButtonProps> = ({
 }) => {
   return (
     <>
-      <IconButton
-        size="large"
-        aria-label={loggedIn ? 'logout' : 'login'}
+      <Button
         color="inherit"
+        variant="text"
+        sx={{ textTransform: 'none' }}
         onClick={loggedIn ? handleLogout : handleLogin}
       >
-        {loggedIn ? <Logout /> : <Login />}
-      </IconButton>
+        {loggedIn ? 'Logout' : 'Login'}
+      </Button>
     </>
   );
 };
