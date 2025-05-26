@@ -13,7 +13,7 @@ const EventTitleInput: React.FC<CreateUpdateEventInputProps> = ({
     value.length >= CHAR_LIMITS.EventTitleMax
       ? 'Title limit is 40 characters.'
       : value.length <= CHAR_LIMITS.EventTitleMin && value.length > 0
-        ? 'Please write a title that is at least 5 chars long.'
+        ? `Please write a title that is at least ${CHAR_LIMITS.EventTitleMin} chars long.`
         : null;
   return (
     <Row>

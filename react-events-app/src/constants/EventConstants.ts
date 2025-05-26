@@ -3,5 +3,5 @@ export enum CHAR_LIMITS {
   EventDescriptionMin = 20,
   EventDescriptionMaxDisplayed = 40,
   EventTitleMax = 40,
-  EventTitleMin = 5,
+  EventTitleMin = 3,
 }
