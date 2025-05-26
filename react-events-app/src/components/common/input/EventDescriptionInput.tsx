@@ -12,7 +12,7 @@ const EventDescriptionInput: React.FC<CreateUpdateEventInputProps> = ({
   const helperText: string | null =
     value.length >= CHAR_LIMITS.EventDescriptionMax
       ? 'Decription limit is 255 characters.'
-      : value.length <= CHAR_LIMITS.EventDescriptionMin
+      : value.length <= CHAR_LIMITS.EventDescriptionMin && value.length > 0
         ? 'Please write a description that is at least 20 characters long.'
         : null;
   return (

@@ -12,11 +12,9 @@ const EventTitleInput: React.FC<CreateUpdateEventInputProps> = ({
   const helperText: string | null =
     value.length >= CHAR_LIMITS.EventTitleMax
       ? 'Title limit is 40 characters.'
-      : value.length <= CHAR_LIMITS.EventTitleMin
-        ? 'Please write a title.'
+      : value.length <= CHAR_LIMITS.EventTitleMin && value.length > 0
+        ? 'Please write a title that is at least 5 chars long.'
         : null;
-  const color: 'red' | 'primary' =
-    value.length >= CHAR_LIMITS.EventTitleMax ? 'red' : 'primary';
   return (
     <Row>
       <TextField
@@ -29,7 +27,7 @@ const EventTitleInput: React.FC<CreateUpdateEventInputProps> = ({
         margin="normal"
         required
       />
-      {helperText != null && <HelperText text={helperText} color={color} />}
+      {helperText != null && <HelperText text={helperText} color={'red'} />}
     </Row>
   );
 };
