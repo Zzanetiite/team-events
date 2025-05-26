@@ -79,6 +79,7 @@ export interface ChooseAddressProps {
   onChange: (location: LocationProps) => void;
   submitClicked: boolean;
   setSubmitClicked: React.Dispatch<React.SetStateAction<boolean>>;
+  loading: boolean;
 }
 
 export interface CreateUpdateEventInputProps {
@@ -86,11 +87,13 @@ export interface CreateUpdateEventInputProps {
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
+  loading: boolean;
 }
 
 export interface SelectInputProps {
   value: string;
   onChange: (e: SelectChangeEvent<string>) => void;
+  loading: boolean;
 }
 
 export interface EventDBProps {
@@ -214,6 +217,7 @@ export interface EventFormProps {
   submitClicked?: boolean;
   setSubmitClicked?: React.Dispatch<React.SetStateAction<boolean>>;
   handleLocationChange: (location: LocationProps) => void;
+  loading: boolean;
 }
 
 export interface TableColumnProps {

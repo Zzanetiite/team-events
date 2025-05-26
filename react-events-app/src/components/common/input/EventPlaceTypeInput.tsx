@@ -6,6 +6,7 @@ import { PlaceTypes } from '../../../constants';
 const EventPlaceTypeInput: React.FC<SelectInputProps> = ({
   value,
   onChange,
+  loading,
 }) => {
   return (
     <Box display="flex" alignItems="center" marginTop={2}>
@@ -18,6 +19,7 @@ const EventPlaceTypeInput: React.FC<SelectInputProps> = ({
         margin="dense"
         required
         displayEmpty
+        disabled={loading}
       >
         <MenuItem value="" disabled>
           <em>Select place type</em>

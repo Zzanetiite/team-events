@@ -13,6 +13,7 @@ export const useCreateEvent = (
   const [submitClicked, setSubmitClicked] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const { fetchWithTokens } = useApi();
   const {
     event,
@@ -34,6 +35,7 @@ export const useCreateEvent = (
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await fetchWithTokens(ApiEndpoints.CREATE_EVENT, {
@@ -55,6 +57,7 @@ export const useCreateEvent = (
         setSuccessMessage,
       });
     }
+    setLoading(false);
   };
 
   return {
@@ -67,5 +70,6 @@ export const useCreateEvent = (
     handleSelectChange,
     handleLocationChange,
     handleSubmit,
+    loading,
   };
 };

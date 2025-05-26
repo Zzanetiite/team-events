@@ -18,6 +18,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
     handleSelectChange,
     handleLocationChange,
     handleSubmit,
+    loading,
   } = useCreateEvent(setNewEventCreated);
 
   const invalidTextLength: boolean =
@@ -49,6 +50,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
           handleLocationChange={handleLocationChange}
           submitClicked={submitClicked}
           setSubmitClicked={setSubmitClicked}
+          loading={loading}
         />
         {successMessage && (
           <StatusAlert message={successMessage} severity="success" />
@@ -58,7 +60,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
         )}
         <FilledSubmitButton
           style={{ marginTop: '10px' }}
-          disabled={invalidTextLength}
+          disabled={invalidTextLength || loading}
         />
       </form>
     </Box>

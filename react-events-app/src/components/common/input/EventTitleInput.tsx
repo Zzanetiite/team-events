@@ -8,6 +8,7 @@ import { CHAR_LIMITS } from '../../../constants/EventConstants';
 const EventTitleInput: React.FC<CreateUpdateEventInputProps> = ({
   value,
   onChange,
+  loading,
 }) => {
   const helperText: string | null =
     value.length >= CHAR_LIMITS.EventTitleMax
@@ -26,6 +27,7 @@ const EventTitleInput: React.FC<CreateUpdateEventInputProps> = ({
         fullWidth
         margin="normal"
         required
+        disabled={loading}
       />
       {helperText != null && <HelperText text={helperText} color={'red'} />}
     </Row>

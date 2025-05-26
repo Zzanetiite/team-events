@@ -11,6 +11,7 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
   onChange,
   submitClicked,
   setSubmitClicked,
+  loading,
 }) => {
   const [inputValue, setInputValue] = useState<string>(value.address);
   const [coordinates, setCoordinates] = useState(
@@ -82,6 +83,7 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
         fullWidth
         required
         margin="normal"
+        disabled={loading}
       />
       <Typography
         variant="body2"

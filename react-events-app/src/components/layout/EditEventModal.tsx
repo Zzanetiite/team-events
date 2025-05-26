@@ -43,8 +43,14 @@ const EditEventModal = ({
     <Dialog
       open={open}
       onClose={handleClose}
-      aria-modal={true}
-      aria-hidden={false}
+      fullWidth
+      maxWidth="sm" // or "md", "lg"
+      sx={{
+        '& .MuiDialog-paper': {
+          minHeight: 400, // or fixed height if needed
+          minWidth: 500, // adjust as needed
+        },
+      }}
     >
       <DialogTitle>Edit Event</DialogTitle>
       <DialogContent>
@@ -53,6 +59,7 @@ const EditEventModal = ({
           handleChange={handleChange}
           handleSelectChange={handleSelectChange}
           handleLocationChange={handleLocationChange}
+          loading={false}
         />
       </DialogContent>
       {errorMessage && <StatusAlert message={errorMessage} severity="error" />}

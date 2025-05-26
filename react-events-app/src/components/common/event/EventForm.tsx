@@ -12,20 +12,31 @@ const EventForm: React.FC<EventFormProps> = ({
   handleLocationChange,
   submitClicked,
   setSubmitClicked,
+  loading,
 }) => {
   return (
     <>
-      <EventTitleInput value={data.eventTitle} onChange={handleChange} />
+      <EventTitleInput
+        value={data.eventTitle}
+        onChange={handleChange}
+        loading={loading}
+      />
       <EventAddressInput
         value={data.location}
         onChange={handleLocationChange}
         submitClicked={submitClicked ? submitClicked : false}
         setSubmitClicked={setSubmitClicked ? setSubmitClicked : () => {}}
+        loading={loading}
       />
-      <EventDescriptionInput value={data.description} onChange={handleChange} />
+      <EventDescriptionInput
+        value={data.description}
+        onChange={handleChange}
+        loading={loading}
+      />
       <EventPlaceTypeInput
         value={data.placeType}
         onChange={handleSelectChange}
+        loading={loading}
       />
     </>
   );

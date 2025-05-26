@@ -8,6 +8,7 @@ import { TextField } from '@mui/material';
 const EventDescriptionInput: React.FC<CreateUpdateEventInputProps> = ({
   value,
   onChange,
+  loading,
 }) => {
   const helperText: string | null =
     value.length >= CHAR_LIMITS.EventDescriptionMax
@@ -28,6 +29,7 @@ const EventDescriptionInput: React.FC<CreateUpdateEventInputProps> = ({
         fullWidth
         margin="normal"
         required
+        disabled={loading}
       />
       {helperText != null && <HelperText text={helperText} color={'red'} />}
     </Row>
