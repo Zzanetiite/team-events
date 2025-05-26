@@ -10,6 +10,7 @@ const UsernameInput: React.FC<InputProps> = ({ value, onChange }) => {
       <TextField
         label="Username"
         variant="outlined"
+        autoComplete="username"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         required

@@ -13,6 +13,7 @@ const EventPlaceTypeInput: React.FC<SelectInputProps> = ({
       <Select
         label="Place Type"
         name="placeType"
+        autoComplete="place-type"
         value={value}
         onChange={onChange}
         fullWidth

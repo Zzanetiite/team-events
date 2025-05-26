@@ -38,12 +38,20 @@ export const useNavBar = () => {
     }
   }, [fetchWithTokens, setUserToken, setLoggedIn, setUser]);
 
+  const handleHome = useCallback(() => {
+    window.location.href = '/';
+  }, []);
+
   const handleLogin = useCallback(() => {
     window.location.href = '/login';
   }, []);
 
   const handleEventsButton = useCallback(() => {
     window.location.href = '/myevents';
+  }, []);
+
+  const handleSignUpButton = useCallback(() => {
+    window.location.href = '/signup';
   }, []);
 
   const handleFilterOpen = useCallback(() => {
@@ -57,5 +65,7 @@ export const useNavBar = () => {
     handleLogin,
     handleEventsButton,
     handleFilterOpen,
+    handleSignUpButton,
+    handleHome,
   };
 };

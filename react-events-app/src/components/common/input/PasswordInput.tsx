@@ -16,8 +16,10 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
     <Box display="flex" alignItems="center">
       <KeyIcon style={{ marginRight: '10px' }} />
       <TextField
+        id="password-input"
         label={label ?? 'Password'}
         type="password"
+        autoComplete="current-password"
         variant="outlined"
         value={value}
         onChange={(e) => onChange(e.target.value)}

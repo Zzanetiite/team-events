@@ -15,6 +15,7 @@ const PasswordInputValidated: React.FC<PasswordInputProps> = ({
         <TextField
           label="Password"
           type="password"
+          autoComplete="current-password"
           variant="outlined"
           value={value}
           onChange={onChange}

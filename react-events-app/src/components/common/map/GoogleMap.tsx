@@ -122,6 +122,10 @@ const GoogleMap = ({
   };
 
   const handleSearchLocation = (location: google.maps.LatLngLiteral) => {
+    if (!map) {
+      return;
+    }
+
     if (location && window.google?.maps && map) {
       map.setCenter(location);
       map.setZoom(DEFAULT_ZOOM);

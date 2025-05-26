@@ -16,7 +16,7 @@ const HomeEventsContainer = ({
     return <LoadingWithText height={60} />;
   }
 
-  if (eventData.length === 0) {
+  if (eventData.length === 0 && !loading) {
     return (
       <Box
         sx={{

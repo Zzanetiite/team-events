@@ -21,6 +21,7 @@ const EventTitleInput: React.FC<CreateUpdateEventInputProps> = ({
       <TextField
         label="Event Title"
         name="eventTitle"
+        autoComplete="title"
         value={value}
         onChange={onChange}
         variant="outlined"

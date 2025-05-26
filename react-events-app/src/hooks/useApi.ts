@@ -8,7 +8,7 @@ interface FetchOptions extends RequestInit {
 
 export function useApi() {
   const { csrfToken, userToken } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchWithTokens = useCallback(
     async (url: string, options: FetchOptions = {}) => {
