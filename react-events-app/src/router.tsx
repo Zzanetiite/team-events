@@ -6,6 +6,7 @@ import UserEvents from './pages/UserEvents';
 import Login from './pages/Login';
 import CreateUser from './pages/CreateUser';
 import NotFound from './components/layout/NotFound';
+import Event from './pages/Event';
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
         messageForBadRequest="Invalid credentials. Please try again."
       />
     ),
+  },
+  {
+    path: '/event/:id',
+    element: <Event />,
   },
   {
     // Non-existent routes display Not Found page

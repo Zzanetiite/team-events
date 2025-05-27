@@ -33,7 +33,7 @@ const Event: React.FC<EventProps> = (event) => {
             placeType={event.placeType}
             address={event.location.address}
           />
-          <EventDescription description={event.description} />
+          <EventDescription description={event.description} id={event.id} />
           {/* <CommentsSection event={event} /> TODO: Move to page */}
           {/* TODO: Replace ratings with average value & voting to page */}
           {/* <Ratings event={event} /> */}

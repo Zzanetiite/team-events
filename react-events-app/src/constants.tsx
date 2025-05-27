@@ -1,16 +1,11 @@
 import React from 'react';
 import {
-  Brush,
   Celebration,
   DinnerDining,
   Diversity3,
-  Fastfood,
   MilitaryTech,
   NaturePeople,
-  Paid,
-  School,
   SensorDoor,
-  Signpost,
 } from '@mui/icons-material';
 
 export const DOMAIN = process.env.REACT_APP_DOMAIN || window.location.origin;
@@ -41,6 +36,7 @@ export const ApiEndpoints = {
   GET_USER_EVENTS: (username: string) => `api/events/username/${username}/`,
   GET_EVENTS_BY_TYPE: (event_types: string) =>
     `api/events/by-type/${event_types}/`,
+  GET_EVENT_BY_ID: (id: number | string) => `api/events/${id}/`,
   GET_ALL_EVENTS: 'api/events/',
   GET_LATEST_EVENTS: 'api/events/latest/',
   GET_NEARBY_EVENTS: 'api/events/nearby/',
@@ -50,7 +46,7 @@ export const ApiEndpoints = {
   SUBMIT_COMMENT: 'api/comment/',
 };
 
-export const COMMENT_LIMIT = 1;
+export const COMMENT_LIMIT = 5;
 
 export enum PlaceTypes {
   RESTAURANT = 'Restaurant',

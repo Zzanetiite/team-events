@@ -15,7 +15,7 @@ const iconStyle = {
   fontSize: 16,
 };
 
-const createStyledIcon =
+export const createStyledIcon =
   (IconComponent: React.ComponentType<SvgIconProps>) =>
   (props: SvgIconProps) => (
     <IconComponent {...props} sx={{ ...iconStyle, ...props.sx }} />

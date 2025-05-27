@@ -2,8 +2,8 @@ import * as React from 'react';
 import { RatingProps } from '../../../interfaces/types';
 import { Star, VolumeUp } from '@mui/icons-material';
 import { Box, Tooltip } from '@mui/material';
-import Row from '../../base/Row';
 import { COLOR_SCHEME } from '../../../constants/Color';
+import Row from '../../base/Row';
 
 const AverageRatings: React.FC<RatingProps> = ({ event }) => {
   const ratingItemStyle = {
@@ -17,20 +17,20 @@ const AverageRatings: React.FC<RatingProps> = ({ event }) => {
   };
 
   return (
-    <Row>
-      <Tooltip key="volume" title="Average loudness rating for this place">
-        <Box sx={ratingItemStyle} color={COLOR_SCHEME.MediumBlue}>
-          <VolumeUp fontSize="small" color="inherit" />
-          <Box ml={0.5} color="text.primary">
-            {event.loudnessRating.toFixed(1)}
-          </Box>
-        </Box>
-      </Tooltip>
+    <Row gap={1}>
       <Tooltip key="place" title="Average experience rating for this place">
         <Box sx={ratingItemStyle} color={COLOR_SCHEME.BrightYellow}>
           <Star fontSize="small" color="inherit" />
           <Box ml={0.5} color="text.primary">
             {event.placeRating.toFixed(1)}
+          </Box>
+        </Box>
+      </Tooltip>
+      <Tooltip key="volume" title="Average loudness rating for this place">
+        <Box sx={ratingItemStyle} color={COLOR_SCHEME.MediumBlue}>
+          <VolumeUp fontSize="small" color="inherit" />
+          <Box ml={0.5} color="text.primary">
+            {event.loudnessRating.toFixed(1)}
           </Box>
         </Box>
       </Tooltip>

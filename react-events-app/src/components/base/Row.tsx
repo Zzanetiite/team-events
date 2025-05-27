@@ -1,19 +1,26 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 
-const Row = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'flex-left',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-      }}
-    >
-      {children}
-    </Box>
-  );
-};
+const Row = React.forwardRef<HTMLDivElement, BoxProps>(
+  ({ children, sx, ...rest }, ref) => {
+    return (
+      <Box
+        ref={ref}
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          ...sx,
+        }}
+        {...rest}
+      >
+        {children}
+      </Box>
+    );
+  }
+);
+
+Row.displayName = 'Row';
 
 export default Row;
