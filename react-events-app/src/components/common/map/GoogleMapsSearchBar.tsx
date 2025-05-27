@@ -1,47 +1,42 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
-import { useMapsLibrary } from '@vis.gl/react-google-maps';
 import Loading from '../Loading';
 import AddressInput from '../input/AddressInput';
+import { useGooglePlacesAutocomplete } from '../../../hooks/useGooglePlacesAutocomplete';
 
 interface Props {
   setLocation: (location: google.maps.LatLngLiteral) => void;
+  loading: boolean;
 }
 
-const GoogleMapsSearchBar: React.FC<Props> = ({ setLocation }) => {
-  const [value, setValue] = useState<string>('');
-  const inputRef = useRef<HTMLInputElement>(null);
-  const placesLibrary = useMapsLibrary('places');
-
-  useEffect(() => {
-    if (placesLibrary && inputRef.current) {
-      const options = {
-        fields: ['geometry', 'name', 'formatted_address'],
+const GoogleMapsSearchBar: React.FC<Props> = ({ setLocation, loading }) => {
+  const onPlaceSelected = (place: google.maps.places.PlaceResult) => {
+    const location = place.geometry?.location;
+    if (location) {
+      const latLng = {
+        lat: location.lat(),
+        lng: location.lng(),
       };
-      const autocomplete = new placesLibrary.Autocomplete(
-        inputRef.current,
-        options
-      );
-
-      autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace();
-        if (place.formatted_address && place.geometry?.location) {
-          const lat = place.geometry.location.lat();
-          const lng = place.geometry.location.lng();
-          setLocation({ lat, lng });
-        }
-      });
+      setLocation(latLng);
     }
-  }, [placesLibrary, setLocation]);
+  };
+
+  const { inputRef, searchValue, setSearchValue, placesLibrary } =
+    useGooglePlacesAutocomplete(
+      onPlaceSelected,
+      ['geometry', 'formatted_address', 'name'],
+      loading
+    );
 
   if (!placesLibrary) return <Loading />;
 
   return (
     <Box alignItems="center" paddingRight={2} paddingLeft={2} paddingTop={1}>
       <AddressInput
+        disabled={loading}
         name="search-bar-home"
-        value={value}
-        onChange={setValue}
+        value={searchValue}
+        onChange={setSearchValue}
         ref={inputRef}
         label="Start typing to search for events near a place..."
       />

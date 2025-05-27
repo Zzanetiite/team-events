@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useApi } from '../hooks/useApi';
 import { useDataContext } from '../context/DataContext';
 import useFetchEvents from '../hooks/useFetchEvents';
-import useEventFilter from '../hooks/useEventFilter';
 import useAutoClearMessage from '../hooks/useAutoClearMessage';
 import StatusAlert from '../components/common/StatusAlert';
 import HomeEventsContainer from '../components/layout/HomeEventsContainer';
@@ -11,7 +10,6 @@ import { PlaceTypes } from '../constants';
 import { UNKNOWN_LOCATION } from '../constants/MapConstants';
 import HomeSearchingText from '../components/layout/HomeSearchingText';
 import GoogleMap from '../components/common/map/GoogleMap';
-import { FilterAlt } from '@mui/icons-material';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -21,7 +19,7 @@ const Home = () => {
   const [currentCoordinates, setCurrentCoordinates] =
     useState<google.maps.LatLngLiteral | null>(null);
   const [eventDataLoading, setEventDataLoading] = useState(true);
-  const { fetchWithTokens } = useApi();
+  const { fetchWithTokens, loading } = useApi();
   const { eventData, setEventData } = useDataContext();
   const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
   const [filterOn, setFilterOn] = useState(false);
@@ -66,12 +64,16 @@ const Home = () => {
         setCurrentLocation={setCurrentLocation}
         currentCoordinates={currentCoordinates}
         setCurrentCoordinates={setCurrentCoordinates}
+        loading={loading}
       />
       <HomeSearchingText
-        loading={eventDataLoading}
+        loading={loading || eventDataLoading}
         currentLocation={currentLocation}
       />
-      <HomeEventsContainer eventData={eventData} loading={eventDataLoading} />
+      <HomeEventsContainer
+        eventData={eventData}
+        loading={loading || eventDataLoading}
+      />
     </div>
   );
 };

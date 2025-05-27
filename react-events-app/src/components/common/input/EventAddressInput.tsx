@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { ChooseAddressProps } from '../../../interfaces/types';
 import Loading from '../Loading';
-import { useMapsLibrary } from '@vis.gl/react-google-maps';
 import DraggablePinMap from '../map/DraggablePinMap';
 import { defaultMapsContainerStartingLocation } from '../../../config';
 import AddressInput from './AddressInput';
+import { useGooglePlacesAutocomplete } from '../../../hooks/useGooglePlacesAutocomplete';
 
 const EventAddressInput: React.FC<ChooseAddressProps> = ({
   value,
@@ -18,34 +18,28 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
   const [coordinates, setCoordinates] = useState(
     defaultMapsContainerStartingLocation
   );
-  const inputRef = useRef<HTMLInputElement>(null);
-  const placesLibrary = useMapsLibrary('places');
 
-  // Set up Google Places Autocomplete on the input field
-  useEffect(() => {
-    if (placesLibrary && inputRef.current) {
-      const autocomplete = new placesLibrary.Autocomplete(inputRef.current, {
-        fields: ['geometry', 'name', 'formatted_address'],
-      });
+  const onPlaceSelected = (place: google.maps.places.PlaceResult) => {
+    if (place.formatted_address && place.geometry?.location) {
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
 
-      autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace();
-        if (place.formatted_address && place.geometry?.location) {
-          const lat = place.geometry.location.lat();
-          const lng = place.geometry.location.lng();
+      const newLocation = { lat, lng };
+      setAddress(place.formatted_address);
+      setCoordinates(newLocation);
 
-          const newLocation = { lat, lng };
-          setAddress(place.formatted_address);
-          setCoordinates(newLocation);
-
-          onChange({
-            address: place.formatted_address,
-            location: newLocation,
-          });
-        }
+      onChange({
+        address: place.formatted_address,
+        location: newLocation,
       });
     }
-  }, [placesLibrary, onChange]);
+  };
+
+  const { inputRef, placesLibrary } = useGooglePlacesAutocomplete(
+    onPlaceSelected,
+    ['geometry', 'formatted_address', 'name'],
+    loading
+  );
 
   // Whenever coordinates change (e.g., user drags the pin),
   // update parent with latest coordinates
@@ -75,6 +69,7 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
         onChange={setAddress}
         ref={inputRef}
         label="Search for an address or drag the pin..."
+        disabled={loading}
       />
       <Typography
         variant="body2"

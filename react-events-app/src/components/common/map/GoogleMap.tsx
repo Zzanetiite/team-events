@@ -16,6 +16,7 @@ const GoogleMap = ({
   setCurrentLocation,
   currentCoordinates,
   setCurrentCoordinates,
+  loading,
 }: {
   events: EventProps[];
   setCurrentLocation: React.Dispatch<React.SetStateAction<string>>;
@@ -23,6 +24,7 @@ const GoogleMap = ({
   setCurrentCoordinates: React.Dispatch<
     React.SetStateAction<google.maps.LatLngLiteral | null>
   >;
+  loading: boolean;
 }) => {
   const [locationReady, setLocationReady] = React.useState(false);
   const map = useMap();
@@ -145,7 +147,10 @@ const GoogleMap = ({
 
   return (
     <Box margin={0}>
-      <GoogleMapsSearchBar setLocation={handleSearchLocation} />
+      <GoogleMapsSearchBar
+        setLocation={handleSearchLocation}
+        loading={loading}
+      />
       <Box paddingLeft={2} paddingRight={2} paddingBottom={2} paddingTop={0}>
         <div
           className="map-container"
