@@ -1,14 +1,10 @@
 from django.urls import path
 
-from events.views.event import (
-    EventByTypeView,
-    EventByUsernameView,
-    EventViewSet,
-    LatestEventsView,
-)
+from events.views.event import EventByUsernameView, EventViewSet, LatestEventsView
 
 from .utils import ReactEnvVariableView, Utils
 from .views.comment import CommentCreateView
+from .views.event_by_type import EventByTypeView
 from .views.nearby_events import NearbyEventsView
 from .views.rating import RatingView
 from .views.security import SecurityView

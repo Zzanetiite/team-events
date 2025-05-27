@@ -51,10 +51,15 @@ const useFetchEvents = ({
 
   useEffect(() => {
     if (filterOn) {
-      fetchWithTokens(
-        ApiEndpoints.GET_EVENTS_BY_TYPE(selectedEventTypes.join(',')),
-        { method: 'GET' }
-      )
+      let url = ApiEndpoints.GET_EVENTS_BY_TYPE(selectedEventTypes.join(','));
+
+      if (currentCoordinates) {
+        const { lat, lng } = currentCoordinates;
+        const default_radius_km = 30;
+        url += `?lat=${lat}&lng=${lng}&radius_km=${default_radius_km}`;
+      }
+
+      fetchWithTokens(url, { method: 'GET' })
         .then((data: EventDBProps[]) => {
           if (data.length === 0) {
             setErrorMessage('No events found for the selected types.');
@@ -85,6 +90,7 @@ const useFetchEvents = ({
     fetchWithTokens,
     setErrorMessage,
     setEventDataLoading,
+    currentCoordinates,
   ]);
 };
 

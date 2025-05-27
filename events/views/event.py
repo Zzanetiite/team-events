@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from events.models.event import Event
-from events.models.event_type import EventType
 from events.serializers import EventSerializer
 
 
@@ -51,16 +50,6 @@ class EventViewSet(viewsets.ViewSet):
 class EventByUsernameView(APIView):
     def get(self, request, username):
         events = Event.objects.filter(user__username=username).order_by("-created_at")
-        serializer = EventSerializer(events, many=True, context={"request": request})
-        return Response(serializer.data)
-
-
-class EventByTypeView(APIView):
-    def get(self, request, event_type_names):
-        event_type_names = event_type_names.split(",")
-        event_types = EventType.objects.filter(name__in=event_type_names)
-        event_type_ids = [event_type.id for event_type in event_types]
-        events = Event.objects.filter(event_type_id__in=event_type_ids)
         serializer = EventSerializer(events, many=True, context={"request": request})
         return Response(serializer.data)
 
