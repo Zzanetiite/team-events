@@ -1,13 +1,14 @@
 import { useCallback, useState } from 'react';
-import { DOMAIN } from '../constants';
+import { ApiEndpoints, DOMAIN } from '../constants';
 import { useAuth } from '../context/AuthContext';
+import Cookies from 'js-cookie';
 
 interface FetchOptions extends RequestInit {
   body?: any;
 }
 
 export function useApi() {
-  const { csrfToken, userToken, refreshCSRFToken } = useAuth();
+  const { csrfToken, userToken } = useAuth();
   const [loading, setLoading] = useState(true);
 
   const fetchWithTokens = useCallback(
@@ -52,13 +53,26 @@ export function useApi() {
         return response.json();
       };
 
+      let hasRetried = false;
+
       try {
         try {
           return await doFetch();
         } catch (err: any) {
-          if (err.status === 403) {
-            await refreshCSRFToken();
-            return await doFetch(); // retry once
+          // Deal with old cookies (between deployments they become invalid)
+          if (
+            err.status === 403 &&
+            !hasRetried &&
+            url.includes(ApiEndpoints.GET_NEARBY_EVENTS)
+          ) {
+            hasRetried = true;
+            console.warn(
+              '403 received — clearing cookies and retrying once...'
+            );
+            Object.keys(Cookies.get()).forEach((cookie) => {
+              Cookies.remove(cookie);
+            });
+            return await doFetch();
           }
           throw err;
         }
@@ -66,7 +80,7 @@ export function useApi() {
         setLoading(false);
       }
     },
-    [csrfToken, userToken, refreshCSRFToken]
+    [csrfToken, userToken]
   );
 
   return { fetchWithTokens, loading };

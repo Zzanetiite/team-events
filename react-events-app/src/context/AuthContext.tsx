@@ -24,7 +24,6 @@ interface AuthContextType {
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   reactEnvVars: ReactEnvVars | undefined | null;
-  refreshCSRFToken: () => Promise<void>;
 }
 
 interface ReactEnvVars {
@@ -148,13 +147,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         loggedIn,
         setLoggedIn,
         reactEnvVars,
-        refreshCSRFToken: async () => {
-          const token = await fetchCSRFToken();
-          if (token) {
-            setCSRFToken(token);
-            Cookies.set('csrfToken', token, { expires: 1 });
-          }
-        },
       }}
     >
       {children}
