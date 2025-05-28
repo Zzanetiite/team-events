@@ -8,7 +8,7 @@ import { mapEventData } from '../utils/mapping';
 import NotFound from '../components/layout/NotFound';
 import StatusAlert from '../components/common/StatusAlert';
 import AverageRatings from '../components/common/rating/AverageRating';
-import CommentsSection from '../components/layout/CommentsSection';
+import CommentsSection from '../components/common/event/CommentsSection';
 import Ratings from '../components/common/rating/Ratings';
 import { Box, Paper, Typography } from '@mui/material';
 import { createStyledIcon } from '../components/common/event/EventHeader';

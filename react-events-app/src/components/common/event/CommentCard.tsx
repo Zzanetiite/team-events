@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import React from 'react';
-import { CommentCardProps } from '../../interfaces/types';
+import { CommentCardProps } from '../../../interfaces/types';
 
 const CommentCard: React.FC<CommentCardProps> = ({ username, date, text }) => {
   return (

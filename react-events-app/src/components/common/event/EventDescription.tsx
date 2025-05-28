@@ -29,18 +29,24 @@ export default function EventDescription({
             ? `${description.substring(0, CHAR_LIMITS.EventDescriptionMaxDisplayed - 1)}...`
             : description}
         </Typography>
-        <Button
-          onClick={() => navigate(`/event/${id}`)}
-          color={'primary'}
-          sx={{
-            mt: 0,
-            textTransform: 'initial',
-            padding: 0,
-            minHeight: 'auto',
-          }}
+        <a
+          href={`/event/${id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: 'none' }}
         >
-          See full event details <ChevronRightRounded />
-        </Button>
+          <Button
+            color="primary"
+            sx={{
+              mt: 0,
+              textTransform: 'initial',
+              padding: 0,
+              minHeight: 'auto',
+            }}
+          >
+            See full event details <ChevronRightRounded />
+          </Button>
+        </a>
       </Box>
     </div>
   );

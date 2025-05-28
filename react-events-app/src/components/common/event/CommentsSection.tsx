@@ -1,15 +1,15 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import CommentCard from '../common/CommentCard';
-import StatusAlert from '../common/StatusAlert';
-import useComments from '../../hooks/useComments';
-import { EventProps } from '../../interfaces/types';
-import { COMMENT_LIMIT } from '../../constants';
-import ShowCommentsButton from '../common/buttons/ShowCommentsButton';
-import AddCommentButton from '../common/buttons/AddCommentButton';
-import EmptySubmitButton from '../common/buttons/EmptySubmitButton';
-import EmptyCancelButton from '../common/buttons/EmptyCancelButton';
-import CommentInput from '../common/input/CommentInput';
+import CommentCard from './CommentCard';
+import StatusAlert from '../StatusAlert';
+import useComments from '../../../hooks/useComments';
+import { EventProps } from '../../../interfaces/types';
+import { COMMENT_LIMIT } from '../../../constants';
+import ShowCommentsButton from '../buttons/ShowCommentsButton';
+import AddCommentButton from '../buttons/AddCommentButton';
+import EmptySubmitButton from '../buttons/EmptySubmitButton';
+import EmptyCancelButton from '../buttons/EmptyCancelButton';
+import CommentInput from '../input/CommentInput';
 
 export default function CommentsSection({ event }: { event: EventProps }) {
   const {
