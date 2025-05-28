@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { Map, RenderingType, useMap } from '@vis.gl/react-google-maps';
+import { Map, useMap } from '@vis.gl/react-google-maps';
 import { DEFAULT_ZOOM_CREATE_EVENT } from '../../../constants/MapConstants';
 import { MAP_ID } from '../../../constants';
+import { defaultMapsContainerStartingLocation } from '../../../config';
 
 const DraggablePinMap = ({
   coordinates,
@@ -9,10 +10,10 @@ const DraggablePinMap = ({
   address,
   setAddress,
 }: {
-  coordinates: google.maps.LatLngLiteral;
-  setCoordinates: (coords: google.maps.LatLngLiteral) => void;
-  address: string;
-  setAddress: (address: string) => void;
+  coordinates: google.maps.LatLngLiteral | null;
+  setCoordinates: (coords: google.maps.LatLngLiteral | null) => void;
+  address: string | null;
+  setAddress: (address: string | null) => void;
   mapHeight?: string;
 }) => {
   const map = useMap();
@@ -21,7 +22,7 @@ const DraggablePinMap = ({
   );
 
   useEffect(() => {
-    if (!map || !window.google?.maps?.marker) return;
+    if (!map || !window.google?.maps?.marker || !coordinates) return;
 
     // Remove existing marker
     if (markerRef.current) {
@@ -38,10 +39,11 @@ const DraggablePinMap = ({
 
     // Listen for the dragend event
     newMarker.addListener('dragend', () => {
+      console.log('marker listener');
       const pos = newMarker.position;
       if (pos) {
         setCoordinates({ lat: Number(pos.lat), lng: Number(pos.lng) });
-        if (address.length === 0) {
+        if (address == null || address.length === 0) {
           setAddress(`lat: ${pos.lat}, lng: ${pos.lng}`);
         }
       }
@@ -49,13 +51,13 @@ const DraggablePinMap = ({
 
     markerRef.current = newMarker;
 
-    map.setCenter(coordinates);
+    map.setCenter(coordinates || defaultMapsContainerStartingLocation);
     map.setZoom(DEFAULT_ZOOM_CREATE_EVENT);
 
     return () => {
       newMarker.map = null;
     };
-  }, [address.length, coordinates, map, setAddress, setCoordinates]);
+  }, [address, coordinates, map, setAddress, setCoordinates]);
 
   return (
     <div
@@ -64,9 +66,8 @@ const DraggablePinMap = ({
     >
       <Map
         defaultZoom={DEFAULT_ZOOM_CREATE_EVENT}
-        defaultCenter={coordinates}
+        defaultCenter={coordinates || defaultMapsContainerStartingLocation}
         mapId={MAP_ID}
-        renderingType={RenderingType.UNINITIALIZED}
       />
     </div>
   );

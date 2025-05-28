@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import CreateEvent from '../components/layout/CreateEvent';
 import { Box, CircularProgress, Divider } from '@mui/material';
+import { EventProps } from '../interfaces/types';
 
 const UserEvents = () => {
   const { loggedIn } = useAuth();
   const navigate = useNavigate();
   const [initialized, setInitialized] = useState(false);
   const [newEventCreated, setNewEventCreated] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<EventProps | null>(null);
 
   useEffect(() => {
     if (loggedIn !== null) {
@@ -41,11 +43,16 @@ const UserEvents = () => {
         <EventTable
           newEventCreated={newEventCreated}
           setNewEventCreated={setNewEventCreated}
+          selectedEvent={selectedEvent}
+          setSelectedEvent={setSelectedEvent}
         />
       </Box>
       <Divider />
       <Box marginTop={1} marginBottom={1}>
-        <CreateEvent setNewEventCreated={setNewEventCreated} />
+        <CreateEvent
+          selectedEvent={selectedEvent}
+          setNewEventCreated={setNewEventCreated}
+        />
       </Box>
     </div>
   );

@@ -160,7 +160,7 @@ const GoogleMap = ({
           className="map-container"
           style={{ height: '250px', width: '100%' }}
         >
-          {locationReady && (
+          {locationReady && currentCoordinates != null && (
             <Map
               defaultZoom={DEFAULT_ZOOM}
               defaultCenter={

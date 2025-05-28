@@ -6,8 +6,12 @@ import { CreateEventProps } from '../../interfaces/types';
 import FilledSubmitButton from '../common/buttons/FilledSubmitButton';
 import { useCreateEvent } from '../../hooks/useCreateEvent';
 import { CHAR_LIMITS } from '../../constants/EventConstants';
+import Row from '../base/Row';
 
-const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
+const CreateEvent: React.FC<CreateEventProps> = ({
+  setNewEventCreated,
+  selectedEvent,
+}) => {
   const {
     successMessage,
     errorMessage,
@@ -19,7 +23,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
     handleLocationChange,
     handleSubmit,
     loading,
-  } = useCreateEvent(setNewEventCreated);
+  } = useCreateEvent(setNewEventCreated, selectedEvent);
 
   const invalidTextLength: boolean =
     event.description.length >= CHAR_LIMITS.EventDescriptionMax ||
@@ -39,7 +43,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
         }}
       >
         <Typography variant="h5" sx={{ color: 'text.primary' }}>
-          Create a new event
+          Create or Edit an event
         </Typography>
       </Box>
       <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -58,10 +62,21 @@ const CreateEvent: React.FC<CreateEventProps> = ({ setNewEventCreated }) => {
         {errorMessage && (
           <StatusAlert message={errorMessage} severity="error" />
         )}
-        <FilledSubmitButton
-          style={{ marginTop: '10px' }}
-          disabled={invalidTextLength || loading}
-        />
+        <Row gap={1}>
+          <FilledSubmitButton
+            name="create"
+            style={{ marginTop: '10px' }}
+            disabled={invalidTextLength || loading}
+            text="Create"
+          />
+          <FilledSubmitButton
+            name="update"
+            style={{ marginTop: '10px' }}
+            disabled={invalidTextLength || loading}
+            text="Update"
+            color="secondary"
+          />
+        </Row>
       </form>
     </Box>
   );

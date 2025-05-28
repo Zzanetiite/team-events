@@ -8,13 +8,14 @@ import {
   tableAdminColumns,
   tableColumns,
 } from '../../config';
-import EditEventModal from './EditEventModal';
 import EventTableHeader from '../common/EventTableHeader';
 import { useEventTableData } from '../../hooks/useEventTable';
 
 const EventTable: React.FC<NewEventCreatedProps> = ({
   newEventCreated,
   setNewEventCreated,
+  selectedEvent,
+  setSelectedEvent,
 }) => {
   const { user } = useAuth();
   const [selectionModel, setSelectionModel] =
@@ -26,18 +27,13 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
     userEvents,
     deleteSuccessMessage,
     errorMessage,
-    selectedEvent,
-    modalOpen,
     loading,
-    setDeleteSuccessMessage,
-    setSelectedEvent,
-    setModalOpen,
-    setModalUpdated,
-    handleCloseModal,
     handleBulkDelete,
   } = useEventTableData(
     newEventCreated,
     setNewEventCreated,
+    selectedEvent,
+    setSelectedEvent,
     selectionModel,
     setSelectionModel
   );
@@ -46,9 +42,8 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
     ? tableAdminColumns({
         userEvents,
         setSelectedEvent,
-        setModalOpen,
       })
-    : tableColumns({ userEvents, setSelectedEvent, setModalOpen });
+    : tableColumns({ userEvents, setSelectedEvent });
   const columnsFiltered = React.useMemo(
     () =>
       columns.filter((column) =>
@@ -89,13 +84,6 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
           />
         </div>
       </Box>
-      <EditEventModal
-        open={modalOpen}
-        handleClose={handleCloseModal}
-        selectedEvent={selectedEvent}
-        setModalUpdated={setModalUpdated}
-        setDeleteSuccessMessage={setDeleteSuccessMessage}
-      />
     </div>
   );
 };

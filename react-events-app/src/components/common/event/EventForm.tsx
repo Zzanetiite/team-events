@@ -22,7 +22,6 @@ const EventForm: React.FC<EventFormProps> = ({
         loading={loading}
       />
       <EventAddressInput
-        value={data.location}
         onChange={handleLocationChange}
         submitClicked={submitClicked ? submitClicked : false}
         setSubmitClicked={setSubmitClicked ? setSubmitClicked : () => {}}

@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { ChooseAddressProps } from '../../../interfaces/types';
 import Loading from '../Loading';
 import DraggablePinMap from '../map/DraggablePinMap';
-import { defaultMapsContainerStartingLocation } from '../../../config';
 import AddressInput from './AddressInput';
 import { useGooglePlacesAutocomplete } from '../../../hooks/useGooglePlacesAutocomplete';
+import { useDataContext } from '../../../context/DataContext';
+import { defaultMapsContainerStartingLocation } from '../../../config';
 
 const EventAddressInput: React.FC<ChooseAddressProps> = ({
-  value,
   onChange,
   submitClicked,
   setSubmitClicked,
   loading,
 }) => {
-  const [address, setAddress] = useState<string>(value.address);
-  const [coordinates, setCoordinates] = useState(
-    defaultMapsContainerStartingLocation
-  );
+  const { formAddress, setFormAddress, formCoordinates, setFormCoordinates } =
+    useDataContext();
 
   const onPlaceSelected = (place: google.maps.places.PlaceResult) => {
     if (place.formatted_address && place.geometry?.location) {
@@ -25,9 +23,8 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
       const lng = place.geometry.location.lng();
 
       const newLocation = { lat, lng };
-      setAddress(place.formatted_address);
-      setCoordinates(newLocation);
-
+      setFormAddress(place.formatted_address);
+      setFormCoordinates(newLocation);
       onChange({
         address: place.formatted_address,
         location: newLocation,
@@ -45,19 +42,19 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
   // update parent with latest coordinates
   useEffect(() => {
     onChange({
-      address: address,
-      location: coordinates,
+      address: formAddress || '',
+      location: formCoordinates || defaultMapsContainerStartingLocation,
     });
-  }, [coordinates, address, onChange]);
+  }, [formAddress, formCoordinates, onChange]);
 
   // Reset input field if the form submit button
   // was clicked and reset is triggered
   useEffect(() => {
     if (submitClicked) {
-      setAddress('');
+      setFormAddress('');
       setSubmitClicked(false);
     }
-  }, [submitClicked, setSubmitClicked]);
+  }, [submitClicked, setSubmitClicked, setFormAddress]);
 
   if (!placesLibrary) return <Loading />;
 
@@ -65,10 +62,10 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
     <Box>
       <AddressInput
         name="search-bar-create-event"
-        value={address}
-        onChange={setAddress}
+        value={formAddress}
+        onChange={(e) => setFormAddress(e)}
         ref={inputRef}
-        label="Search for an address or drag the pin..."
+        label={formAddress ? '' : 'Search for an address or drag the pin...'}
         disabled={loading}
       />
       <Typography
@@ -78,10 +75,10 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
         Drag the pin to adjust the location
       </Typography>
       <DraggablePinMap
-        coordinates={coordinates}
-        setCoordinates={setCoordinates}
-        address={address}
-        setAddress={setAddress}
+        coordinates={formCoordinates}
+        setCoordinates={setFormCoordinates}
+        address={formAddress}
+        setAddress={setFormAddress}
       />
     </Box>
   );

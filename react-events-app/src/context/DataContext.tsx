@@ -10,6 +10,12 @@ interface DataContextType {
   setCurrentCoordinates: React.Dispatch<
     React.SetStateAction<google.maps.LatLngLiteral | null>
   >;
+  formAddress: string | null;
+  setFormAddress: React.Dispatch<React.SetStateAction<string | null>>;
+  formCoordinates: google.maps.LatLngLiteral | null;
+  setFormCoordinates: React.Dispatch<
+    React.SetStateAction<google.maps.LatLngLiteral | null>
+  >;
 }
 
 const DataContext = createContext<DataContextType | null>(null);
@@ -21,6 +27,7 @@ interface DataProviderProps {
 export function DataProvider({ children }: DataProviderProps) {
   const [eventData, setEventData] = useState<EventProps[]>([]);
 
+  // Keep track of coordinates in the Home page
   const [currentLocation, setCurrentLocation] = useState<string | null>(() => {
     return localStorage.getItem('currentLocation');
   });
@@ -28,6 +35,17 @@ export function DataProvider({ children }: DataProviderProps) {
   const [currentCoordinates, setCurrentCoordinates] =
     useState<google.maps.LatLngLiteral | null>(() => {
       const stored = localStorage.getItem('currentCoordinates');
+      return stored ? JSON.parse(stored) : null;
+    });
+
+  // Keep track of coordinates in the Create or Edit form
+  const [formAddress, setFormAddress] = useState<string | null>(() => {
+    return localStorage.getItem('formAddress');
+  });
+
+  const [formCoordinates, setFormCoordinates] =
+    useState<google.maps.LatLngLiteral | null>(() => {
+      const stored = localStorage.getItem('formCoordinates');
       return stored ? JSON.parse(stored) : null;
     });
 
@@ -47,6 +65,18 @@ export function DataProvider({ children }: DataProviderProps) {
     }
   }, [currentCoordinates]);
 
+  React.useEffect(() => {
+    if (formAddress) {
+      localStorage.setItem('formAddress', formAddress);
+    }
+  }, [formAddress]);
+
+  React.useEffect(() => {
+    if (formCoordinates) {
+      localStorage.setItem('formCoordinates', JSON.stringify(formCoordinates));
+    }
+  }, [formCoordinates]);
+
   return (
     <DataContext.Provider
       value={{
@@ -56,6 +86,10 @@ export function DataProvider({ children }: DataProviderProps) {
         setCurrentCoordinates,
         currentLocation,
         setCurrentLocation,
+        formAddress,
+        setFormAddress,
+        formCoordinates,
+        setFormCoordinates,
       }}
     >
       {children}

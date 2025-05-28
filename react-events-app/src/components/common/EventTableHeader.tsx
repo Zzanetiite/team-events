@@ -38,7 +38,7 @@ const EventTableHeader = ({
         }}
       >
         <Typography variant="body2" sx={{ color: 'primary.main' }}>
-          Click on an event to edit it
+          Click on an event to edit it and use the form below to make changes
         </Typography>
 
         <Button

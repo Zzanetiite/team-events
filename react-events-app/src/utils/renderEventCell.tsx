@@ -4,11 +4,7 @@ import { Button } from '@mui/material';
 import { EventProps } from '../interfaces/types';
 
 export const renderEventCell =
-  (
-    userEvents: any[],
-    setSelectedEvent: (event: any) => void,
-    setModalOpen: (open: boolean) => void
-  ) =>
+  (userEvents: any[], setSelectedEvent: (event: any) => void) =>
   (params: GridCellParams) => {
     const value = params.value as string;
     return (
@@ -20,7 +16,6 @@ export const renderEventCell =
           if (event) {
             setSelectedEvent(event);
           }
-          setModalOpen(true);
         }}
         sx={{
           textTransform: 'none',

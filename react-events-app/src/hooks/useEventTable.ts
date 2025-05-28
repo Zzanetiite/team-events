@@ -8,8 +8,10 @@ import useAutoClearMessage from './useAutoClearMessage';
 import { GridRowSelectionModel } from '@mui/x-data-grid';
 
 export const useEventTableData = (
-  newEventCreated: boolean,
-  setNewEventCreated: (value: boolean) => void,
+  newEventCreatedUpdated: boolean,
+  setNewEventCreatedUpdated: (value: boolean) => void,
+  selectedEvent: EventProps | null,
+  setSelectedEvent: React.Dispatch<React.SetStateAction<EventProps | null>>,
   selectionModel: GridRowSelectionModel,
   setSelectionModel: React.Dispatch<React.SetStateAction<GridRowSelectionModel>>
 ) => {
@@ -18,9 +20,6 @@ export const useEventTableData = (
     string | null
   >(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [selectedEvent, setSelectedEvent] = useState<EventProps | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalUpdated, setModalUpdated] = useState(false);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   const { fetchWithTokens } = useApi();
@@ -29,7 +28,7 @@ export const useEventTableData = (
     if (!user.username) {
       setErrorMessage('Username not found. No events to display.');
     } else {
-      if (userEvents.length === 0 || newEventCreated) {
+      if (userEvents.length === 0 || newEventCreatedUpdated) {
         fetchWithTokens(
           user.isAdmin
             ? ApiEndpoints.GET_ALL_EVENTS
@@ -38,8 +37,8 @@ export const useEventTableData = (
         )
           .then((data: EventDBProps[]) => {
             setUserEvents(mapEventData(data));
-            setModalUpdated(false);
-            setNewEventCreated(false);
+            setNewEventCreatedUpdated(false);
+            setSelectedEvent(null);
             setLoading(false);
           })
           .catch((error: any) => {
@@ -50,18 +49,18 @@ export const useEventTableData = (
     }
   }, [
     user,
-    modalUpdated,
-    newEventCreated,
-    setNewEventCreated,
+    newEventCreatedUpdated,
+    setNewEventCreatedUpdated,
     fetchWithTokens,
     userEvents,
+    setSelectedEvent,
   ]);
 
   useEffect(() => {
-    if (newEventCreated || modalUpdated) {
+    if (newEventCreatedUpdated) {
       setLoading(true);
     }
-  }, [newEventCreated, modalUpdated]);
+  }, [newEventCreatedUpdated]);
 
   useEffect(() => {
     if (errorMessage) {
@@ -124,7 +123,7 @@ export const useEventTableData = (
     }
 
     if (successIds.length > 0) {
-      setModalUpdated(true); // Refresh list only if something was deleted
+      setNewEventCreatedUpdated(true); // Refresh list only if something was deleted
     }
 
     // Clear selection
@@ -136,14 +135,9 @@ export const useEventTableData = (
     deleteSuccessMessage,
     errorMessage,
     selectedEvent,
-    modalOpen,
     loading,
     setDeleteSuccessMessage,
     setSelectedEvent,
-    setModalOpen,
-    setModalUpdated,
-    setLoading,
-    handleCloseModal: () => setModalOpen(false),
     handleBulkDelete,
   };
 };

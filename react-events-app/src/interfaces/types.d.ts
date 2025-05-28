@@ -75,7 +75,6 @@ export interface InputProps {
 }
 
 export interface ChooseAddressProps {
-  value: LocationProps;
   onChange: (location: LocationProps) => void;
   submitClicked: boolean;
   setSubmitClicked: React.Dispatch<React.SetStateAction<boolean>>;
@@ -188,6 +187,8 @@ export interface EditEventModalProps {
 export interface NewEventCreatedProps {
   newEventCreated: boolean;
   setNewEventCreated: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedEvent: EventProps | null;
+  setSelectedEvent: React.Dispatch<React.SetStateAction<EventProps | null>>;
 }
 
 export interface NavBarUsernameProps {
@@ -223,11 +224,11 @@ export interface EventFormProps {
 export interface TableColumnProps {
   userEvents: EventTableProps[];
   setSelectedEvent: (event: any) => void;
-  setModalOpen: (open: boolean) => void;
 }
 
 export interface CreateEventProps {
   setNewEventCreated: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedEvent: EventProps | null;
 }
 
 export interface RatingProps {

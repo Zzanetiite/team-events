@@ -65,13 +65,12 @@ export const eventEmptyData: EventProps = {
 const baseColumns = ({
   userEvents,
   setSelectedEvent,
-  setModalOpen,
 }: TableColumnProps): GridColDef[] => [
   {
     field: 'eventTitle',
     headerName: 'Event Title',
     width: 200,
-    renderCell: renderEventCell(userEvents, setSelectedEvent, setModalOpen),
+    renderCell: renderEventCell(userEvents, setSelectedEvent),
   },
   { field: 'placeType', headerName: 'Type', width: 130 },
   {

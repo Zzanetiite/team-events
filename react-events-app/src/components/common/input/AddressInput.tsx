@@ -4,7 +4,7 @@ import { Clear } from '@mui/icons-material';
 
 interface AddressInputProps {
   name: string;
-  value: string;
+  value: string | null;
   onChange: (newValue: string) => void;
   disabled?: boolean;
   label?: string;
@@ -40,6 +40,11 @@ const AddressInput = forwardRef<HTMLInputElement, AddressInputProps>(
           fullWidth
           required
           inputRef={ref}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault(); // Prevent Autocomplete from submitting the form
+            }
+          }}
           slotProps={{
             input: {
               endAdornment: value && (
