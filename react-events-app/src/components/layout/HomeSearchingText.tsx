@@ -6,7 +6,7 @@ const HomeSearchingText = ({
   currentLocation,
 }: {
   loading: boolean;
-  currentLocation: string;
+  currentLocation: string | null;
 }) => {
   return (
     <Box
@@ -20,7 +20,8 @@ const HomeSearchingText = ({
         color: 'primary.main',
       }}
     >
-      {loading ? 'Looking for events' : 'Events found'} near {currentLocation}
+      {loading ? 'Looking for events' : 'Events found'} near{' '}
+      {currentLocation ?? ''}
       {loading ? '...' : ''}
     </Box>
   );

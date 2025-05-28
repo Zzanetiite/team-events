@@ -7,20 +7,22 @@ import StatusAlert from '../components/common/StatusAlert';
 import HomeEventsContainer from '../components/layout/HomeEventsContainer';
 import HomeEventsFilter from '../components/layout/HomeEventsFilter';
 import { PlaceTypes } from '../constants';
-import { UNKNOWN_LOCATION } from '../constants/MapConstants';
 import HomeSearchingText from '../components/layout/HomeSearchingText';
 import GoogleMap from '../components/common/map/GoogleMap';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
-  const [currentLocation, setCurrentLocation] =
-    useState<string>(UNKNOWN_LOCATION);
-  const [currentCoordinates, setCurrentCoordinates] =
-    useState<google.maps.LatLngLiteral | null>(null);
   const [eventDataLoading, setEventDataLoading] = useState(true);
   const { fetchWithTokens, loading } = useApi();
-  const { eventData, setEventData } = useDataContext();
+  const {
+    eventData,
+    setEventData,
+    currentCoordinates,
+    setCurrentCoordinates,
+    currentLocation,
+    setCurrentLocation,
+  } = useDataContext();
   const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
   const [filterOn, setFilterOn] = useState(false);
 

@@ -19,7 +19,7 @@ const GoogleMap = ({
   loading,
 }: {
   events: EventProps[];
-  setCurrentLocation: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentLocation: React.Dispatch<React.SetStateAction<string | null>>;
   currentCoordinates: google.maps.LatLngLiteral | null;
   setCurrentCoordinates: React.Dispatch<
     React.SetStateAction<google.maps.LatLngLiteral | null>
@@ -80,37 +80,41 @@ const GoogleMap = ({
     [setCurrentLocation]
   );
 
+  // Effect to find the user's location on first load
   useEffect(() => {
     const getLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const location = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-            setCurrentCoordinates(location);
-            reverseGeocode(location); // update city name
-          },
-          () => {
-            // User did not consent to sharing their location
-            console.log(
-              'Error or denied geolocation request. Setting default starting location.'
-            );
-            setCurrentCoordinates(defaultMapsContainerStartingLocation);
-            reverseGeocode(defaultMapsContainerStartingLocation);
-            setLocationReady(true);
-          }
-        );
-      } else {
-        setCurrentCoordinates(defaultMapsContainerStartingLocation);
-        reverseGeocode(defaultMapsContainerStartingLocation);
-        setLocationReady(true);
+      if (currentCoordinates == null) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const location = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+              setCurrentCoordinates(location);
+              reverseGeocode(location); // update city name
+            },
+            () => {
+              // User did not consent to sharing their location
+              console.log(
+                'Error or denied geolocation request. Setting default starting location.'
+              );
+              setCurrentCoordinates(defaultMapsContainerStartingLocation);
+              reverseGeocode(defaultMapsContainerStartingLocation);
+              setLocationReady(true);
+            }
+          );
+        } else {
+          setCurrentCoordinates(defaultMapsContainerStartingLocation);
+          reverseGeocode(defaultMapsContainerStartingLocation);
+          setLocationReady(true);
+        }
       }
+      setLocationReady(true);
     };
 
     getLocation();
-  }, [reverseGeocode, setCurrentCoordinates]);
+  }, [reverseGeocode, setCurrentCoordinates, currentCoordinates]);
 
   const handleLocationUpdate = () => {
     if (map) {
