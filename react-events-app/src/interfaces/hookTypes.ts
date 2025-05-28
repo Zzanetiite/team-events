@@ -1,3 +1,5 @@
+import { EventProps } from './types';
+
 export interface AutoClearErrorProps {
   message: string | null;
   setMessage: (value: string | null) => void;
@@ -23,7 +25,9 @@ export interface FetchEventsProps {
   filterOn: boolean;
   selectedEventTypes: string[];
   setErrorMessage: (message: string | null) => void;
+  eventData: EventProps[];
   setEventData: (data: any) => void;
+  setFilteredEventData: (data: any) => void;
   fetchWithTokens: (url: string, options: any) => Promise<any>;
   currentCoordinates: google.maps.LatLngLiteral | null;
   setEventDataLoading: (loading: boolean) => void;

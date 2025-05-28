@@ -9,6 +9,7 @@ import HomeEventsFilter from '../components/layout/HomeEventsFilter';
 import { PlaceTypes } from '../constants';
 import HomeSearchingText from '../components/layout/HomeSearchingText';
 import GoogleMap from '../components/common/map/GoogleMap';
+import { EventProps } from '../interfaces/types';
 
 const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -25,12 +26,15 @@ const Home = () => {
   } = useDataContext();
   const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
   const [filterOn, setFilterOn] = useState(false);
+  const [filteredEventData, setFilteredEventData] = useState<EventProps[]>([]);
 
   useFetchEvents({
     filterOn,
     selectedEventTypes,
     setErrorMessage,
+    eventData,
     setEventData,
+    setFilteredEventData,
     fetchWithTokens,
     currentCoordinates,
     setEventDataLoading,
@@ -62,7 +66,7 @@ const Home = () => {
       {errorMessage && <StatusAlert message={errorMessage} severity="error" />}
       {infoMessage && <StatusAlert message={infoMessage} severity="info" />}
       <GoogleMap
-        events={eventData}
+        events={filteredEventData ?? eventData}
         setCurrentLocation={setCurrentLocation}
         currentCoordinates={currentCoordinates}
         setCurrentCoordinates={setCurrentCoordinates}
@@ -73,7 +77,7 @@ const Home = () => {
         currentLocation={currentLocation}
       />
       <HomeEventsContainer
-        eventData={eventData}
+        eventData={filteredEventData ?? eventData}
         loading={loading || eventDataLoading}
       />
     </div>
