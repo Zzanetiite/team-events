@@ -4,7 +4,7 @@ import { AutoClearErrorProps } from '../interfaces/hookTypes';
 const useAutoClearMessage = ({
   message,
   setMessage,
-  timeout = 10_000, // 10 seconds
+  timeout = 30_000, // 30 seconds
 }: AutoClearErrorProps) => {
   useEffect(() => {
     if (message) {

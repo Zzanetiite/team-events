@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { ChevronRightRounded } from '@mui/icons-material';
 import { CHAR_LIMITS } from '../../../constants/EventConstants';
-import { useNavigate } from 'react-router-dom';
 
 export default function EventDescription({
   description,
@@ -11,8 +10,6 @@ export default function EventDescription({
   description: string;
   id: number;
 }) {
-  const navigate = useNavigate();
-
   return (
     <div>
       <Box height={70}>
