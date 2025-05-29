@@ -22,7 +22,7 @@ const useLogin = ({
 
   useEffect(() => {
     if (loggedIn) {
-      navigate('/');
+      navigate('/myevents');
     }
   }, [loggedIn, navigate]);
 

@@ -21,12 +21,23 @@ export function useGooglePlacesAutocomplete(
     null
   );
 
+  // Use session tokens to reduce cost
+  const sessionTokenRef =
+    useRef<google.maps.places.AutocompleteSessionToken | null>(null);
+
   useEffect(() => {
     if (!inputRef.current || !placesLibrary || loading) return;
+
+    sessionTokenRef.current = new google.maps.places.AutocompleteSessionToken();
 
     const autocomplete = new placesLibrary.Autocomplete(inputRef.current, {
       fields: options,
     });
+
+    autocomplete.setOptions({
+      sessionToken: sessionTokenRef.current,
+    } as any);
+
     autocompleteRef.current = autocomplete;
 
     placeChangedListenerRef.current = autocomplete.addListener(
@@ -36,9 +47,16 @@ export function useGooglePlacesAutocomplete(
         if (place && place.geometry?.location && place.formatted_address) {
           onPlaceSelected(place);
           setSearchValue(place.formatted_address);
+
+          sessionTokenRef.current =
+            new google.maps.places.AutocompleteSessionToken();
+          (autocomplete as any).setOptions({
+            sessionToken: sessionTokenRef.current,
+          });
         }
       }
     );
+
     return () => {
       placeChangedListenerRef.current?.remove();
     };

@@ -8,7 +8,7 @@ interface FetchOptions extends RequestInit {
 }
 
 export function useApi() {
-  const { csrfToken, userToken } = useAuth();
+  const { csrfToken, userToken, setLoggedIn } = useAuth();
   const [loading, setLoading] = useState(true);
 
   const fetchWithTokens = useCallback(
@@ -72,6 +72,7 @@ export function useApi() {
             Object.keys(Cookies.get()).forEach((cookie) => {
               Cookies.remove(cookie);
             });
+            setLoggedIn(false);
             return await doFetch();
           }
           throw err;
