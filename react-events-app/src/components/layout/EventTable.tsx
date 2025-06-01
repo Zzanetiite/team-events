@@ -82,6 +82,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
             loading={loading}
             sx={eventTableFormatting}
             checkboxSelection
+            disableRowSelectionOnClick
             onRowSelectionModelChange={(newSelection) => {
               setSelectionModel(newSelection);
             }}
