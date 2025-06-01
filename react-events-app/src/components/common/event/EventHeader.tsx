@@ -37,6 +37,7 @@ const EventHeader: React.FC<EventHeaderProps> = ({
     <div>
       <Box
         component="h4"
+        height={45}
         sx={{
           mt: 0,
           mb: 0,
@@ -44,6 +45,7 @@ const EventHeader: React.FC<EventHeaderProps> = ({
           overflowWrap: 'break-word',
           wordBreak: 'break-word',
           wordWrap: 'break-word',
+          textAlign: 'center',
         }}
       >
         {eventTitle}
@@ -63,7 +65,9 @@ const EventHeader: React.FC<EventHeaderProps> = ({
           <span>{placeType}</span>
         </Box>
         <Box color={'grey.500'} display={'flex'} alignItems={'center'} mb={1}>
-          <LocationOn sx={{ marginRight: '4px', fontSize: 16 }} />
+          <LocationOn
+            sx={{ marginRight: '4px', fontSize: 16, color: '#EA4335' }}
+          />
           <span>{extractPostcode(address)}</span>
         </Box>
       </Box>

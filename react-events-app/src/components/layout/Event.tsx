@@ -7,15 +7,26 @@ import AverageRatings from '../common/rating/AverageRating';
 
 const Event: React.FC<EventProps> = (event) => {
   return (
-    <div>
+    <a
+      href={`/event/${event.id}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ textDecoration: 'none' }}
+    >
       <Card
         elevation={0}
         sx={{
           overflow: 'initial',
           width: 270,
-          height: 200,
+          height: 210,
           display: 'flex',
           backgroundColor: 'transparent',
+          cursor: 'pointer',
+          '&:hover': {
+            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+            backgroundColor: '#f5faff',
+            transition: 'box-shadow 0.3s ease, background-color 0.3s ease',
+          },
         }}
       >
         <CardContent
@@ -37,7 +48,7 @@ const Event: React.FC<EventProps> = (event) => {
           <AverageRatings event={event} />
         </CardContent>
       </Card>
-    </div>
+    </a>
   );
 };
 

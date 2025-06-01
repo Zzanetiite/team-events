@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Button, Typography } from '@mui/material';
-import { ChevronRightRounded } from '@mui/icons-material';
+import { Box, Typography } from '@mui/material';
 import { CHAR_LIMITS } from '../../../constants/EventConstants';
 
 export default function EventDescription({
@@ -26,24 +25,6 @@ export default function EventDescription({
             ? `${description.substring(0, CHAR_LIMITS.EventDescriptionMaxDisplayed - 1)}...`
             : description}
         </Typography>
-        <a
-          href={`/event/${id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ textDecoration: 'none' }}
-        >
-          <Button
-            color="primary"
-            sx={{
-              mt: 0,
-              textTransform: 'initial',
-              padding: 0,
-              minHeight: 'auto',
-            }}
-          >
-            See full event details <ChevronRightRounded />
-          </Button>
-        </a>
       </Box>
     </div>
   );
