@@ -25,11 +25,9 @@ const Home = () => {
     setCurrentLocation,
   } = useDataContext();
   const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
-  const [filterOn, setFilterOn] = useState(false);
   const [filteredEventData, setFilteredEventData] = useState<EventProps[]>([]);
 
   useFetchEvents({
-    filterOn,
     selectedEventTypes,
     setErrorMessage,
     eventData,
@@ -48,12 +46,10 @@ const Home = () => {
       setInfoMessage('Please select at least one event type.');
       return;
     }
-    setFilterOn(true);
     setSelectedEventTypes(selectedTypes.map((key) => key.toString()));
   };
 
   const handleResetFilter = () => {
-    setFilterOn(false);
     setSelectedEventTypes([]);
   };
 

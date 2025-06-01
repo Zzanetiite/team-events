@@ -23,7 +23,7 @@ const EventTypeSelect = ({
         gap={0}
         mb={0}
         sx={{
-          maxHeight: 250,
+          maxHeight: 100,
           overflowY: 'auto',
           padding: 1,
           border: '1px solid #ccc',

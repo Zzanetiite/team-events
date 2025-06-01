@@ -6,7 +6,6 @@ import { handleError } from '../errors/handleError';
 import { FetchEventsProps } from '../interfaces/hookTypes';
 
 const useFetchEvents = ({
-  filterOn,
   selectedEventTypes,
   setErrorMessage,
   eventData,
@@ -24,7 +23,11 @@ const useFetchEvents = ({
       previousCoordinatesRef.current?.lat !== currentCoordinates?.lat ||
       previousCoordinatesRef.current?.lng !== currentCoordinates?.lng;
 
-    if (!filterOn && currentCoordinates && coordsChanged) {
+    if (
+      selectedEventTypes.length === 0 &&
+      currentCoordinates &&
+      coordsChanged
+    ) {
       const { lat, lng } = currentCoordinates;
       const default_radius_km = 30;
 
@@ -35,6 +38,7 @@ const useFetchEvents = ({
           setEventData(mappedEvents);
           setFilteredEventData(null);
           setEventDataLoading(false);
+          previousCoordinatesRef.current = currentCoordinates;
         })
         .catch((error: any) =>
           handleError({
@@ -51,67 +55,67 @@ const useFetchEvents = ({
         );
     }
   }, [
-    filterOn,
     setEventData,
     setErrorMessage,
     fetchWithTokens,
     currentCoordinates,
     setEventDataLoading,
     setFilteredEventData,
+    selectedEventTypes.length,
   ]);
 
   // Handle filtered events
   useEffect(() => {
-    if (filterOn) {
-      setEventDataLoading(true);
-
-      // If we already have data, filter it on the frontend
-      if (eventData.length > 0) {
-        const filteredEvents = eventData.filter((event) =>
+    // If we already have data, filter it on the frontend
+    if (currentCoordinates && eventData.length > 0) {
+      let filteredEvents;
+      if (selectedEventTypes.length > 0) {
+        filteredEvents = eventData.filter((event) =>
           selectedEventTypes.includes(event.placeType)
         );
-
-        if (filteredEvents.length === 0) {
-          setErrorMessage('No events found for the selected types.');
-        }
-        setFilteredEventData(filteredEvents);
-        setEventDataLoading(false);
       } else {
-        let url = ApiEndpoints.GET_EVENTS_BY_TYPE(selectedEventTypes.join(','));
-
-        if (currentCoordinates) {
-          const { lat, lng } = currentCoordinates;
-          const default_radius_km = 30;
-          url += `?lat=${lat}&lng=${lng}&radius_km=${default_radius_km}`;
-        }
-
-        fetchWithTokens(url, { method: 'GET' })
-          .then((data: EventDBProps[]) => {
-            if (data.length === 0) {
-              setErrorMessage('No events found for the selected types.');
-            }
-            const mappedEvents = mapEventData(data);
-            setEventData(mappedEvents);
-            setEventDataLoading(false);
-          })
-          .catch((error: any) =>
-            handleError({
-              error,
-              setErrorMessage,
-              messageForBadRequest: 'No events found for the selected types.',
-              overrideErrorHandlers: {
-                403: (setErrorMessage) => {
-                  setErrorMessage(
-                    'Error loading Event data. Please try clearing site cookies.'
-                  );
-                },
-              },
-            })
-          );
+        filteredEvents = eventData;
       }
+
+      if (filteredEvents.length === 0) {
+        setErrorMessage('No events found for the selected types.');
+      }
+      setFilteredEventData(filteredEvents);
+      setEventDataLoading(false);
+    } else if (selectedEventTypes.length > 0) {
+      let url = ApiEndpoints.GET_EVENTS_BY_TYPE(selectedEventTypes.join(','));
+
+      if (currentCoordinates) {
+        const { lat, lng } = currentCoordinates;
+        const default_radius_km = 30;
+        url += `?lat=${lat}&lng=${lng}&radius_km=${default_radius_km}`;
+      }
+
+      fetchWithTokens(url, { method: 'GET' })
+        .then((data: EventDBProps[]) => {
+          if (data.length === 0) {
+            setErrorMessage('No events found for the selected types.');
+          }
+          const mappedEvents = mapEventData(data);
+          setEventData(mappedEvents);
+          setEventDataLoading(false);
+        })
+        .catch((error: any) =>
+          handleError({
+            error,
+            setErrorMessage,
+            messageForBadRequest: 'No events found for the selected types.',
+            overrideErrorHandlers: {
+              403: (setErrorMessage) => {
+                setErrorMessage(
+                  'Error loading Event data. Please try clearing site cookies.'
+                );
+              },
+            },
+          })
+        );
     }
   }, [
-    filterOn,
     selectedEventTypes,
     setEventData,
     fetchWithTokens,

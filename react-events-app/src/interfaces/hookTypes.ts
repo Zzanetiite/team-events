@@ -22,7 +22,6 @@ export interface useEventFilterProps {
 }
 
 export interface FetchEventsProps {
-  filterOn: boolean;
   selectedEventTypes: string[];
   setErrorMessage: (message: string | null) => void;
   eventData: EventProps[];
