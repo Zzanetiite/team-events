@@ -1,7 +1,8 @@
 import React from 'react';
 import { GridCellParams } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
+import { Button, IconButton, Tooltip } from '@mui/material';
 import { EventProps } from '../interfaces/types';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 export const renderEventCell =
   (userEvents: any[], setSelectedEvent: (event: any) => void) =>
@@ -38,5 +39,28 @@ export const renderAddressCell =
     const event = userEvents.find((e) => e.id === params.row.id);
     return (
       <div>{event ? event.location.address : 'Address not available'}</div>
+    );
+  };
+
+export const renderLinkCell =
+  (userEvents: EventProps[]) => (params: GridCellParams<EventProps>) => {
+    const event = userEvents.find((e) => e.id === params.row.id);
+    const isDisabled = !event;
+
+    return (
+      <Tooltip title={isDisabled ? 'Event not available' : 'Open in new tab'}>
+        <span>
+          <IconButton
+            component={event ? 'a' : 'button'}
+            href={event ? `/event/${event.id}` : undefined}
+            target={event ? '_blank' : undefined}
+            rel={event ? 'noopener noreferrer' : undefined}
+            disabled={isDisabled}
+            size="small"
+          >
+            <OpenInNewIcon fontSize="small" color="primary" />
+          </IconButton>
+        </span>
+      </Tooltip>
     );
   };

@@ -66,6 +66,15 @@ export const PlaceTypeIcons: Record<PlaceTypes, React.ComponentType> = {
   [PlaceTypes.PARTY]: Celebration,
 };
 
+export const PlaceTypeColors: Record<PlaceTypes, string> = {
+  [PlaceTypes.RESTAURANT]: '#B2560D', // Warm orange — cozy, appetizing
+  [PlaceTypes.ESCAPE_ROOM]: '#7851A9', // Deep purple — mystery, intrigue
+  [PlaceTypes.OUTDOOR_ACTIVITY]: '#66BB6A', // Nature green — fresh, adventurous
+  [PlaceTypes.TEAM_BUILDING]: '#0062CC', // Friendly blue — collaboration, trust
+  [PlaceTypes.TOURNAMENT]: '#FBC02D', // Gold/yellow — competition, victory
+  [PlaceTypes.PARTY]: '#FF8FAB', // Bright pink — festive, energetic
+};
+
 export const MINIMUM_PASSWORD_LENGTH = 8;
 export const USER_COOKIE_LENGTH_DAYS = 7;
 

@@ -47,9 +47,14 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
   const columnsFiltered = React.useMemo(
     () =>
       columns.filter((column) =>
-        ['user', 'eventTitle', 'placeType', 'address', 'description'].includes(
-          column.field
-        )
+        [
+          'user',
+          'eventTitle',
+          'placeType',
+          'address',
+          'description',
+          'link',
+        ].includes(column.field)
       ),
     [columns]
   );

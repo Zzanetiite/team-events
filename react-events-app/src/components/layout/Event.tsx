@@ -34,9 +34,6 @@ const Event: React.FC<EventProps> = (event) => {
             address={event.location.address}
           />
           <EventDescription description={event.description} id={event.id} />
-          {/* <CommentsSection event={event} /> TODO: Move to page */}
-          {/* TODO: Replace ratings with average value & voting to page */}
-          {/* <Ratings event={event} /> */}
           <AverageRatings event={event} />
         </CardContent>
       </Card>

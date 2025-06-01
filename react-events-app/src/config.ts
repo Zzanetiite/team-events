@@ -1,7 +1,11 @@
 import { GridColDef } from '@mui/x-data-grid';
 import { PlaceTypes } from './constants';
 import { EventProps, TableColumnProps } from './interfaces/types';
-import { renderAddressCell, renderEventCell } from './utils/renderEventCell';
+import {
+  renderAddressCell,
+  renderEventCell,
+  renderLinkCell,
+} from './utils/renderEventCell';
 import styled from '@emotion/styled';
 import { Rating } from '@mui/material';
 import { Libraries } from '@react-google-maps/api';
@@ -72,6 +76,12 @@ const baseColumns = ({
     width: 200,
     renderCell: renderEventCell(userEvents, setSelectedEvent),
   },
+  {
+    field: 'link',
+    headerName: 'Link',
+    width: 50,
+    renderCell: renderLinkCell(userEvents),
+  },
   { field: 'placeType', headerName: 'Type', width: 130 },
   {
     field: 'address',
@@ -93,13 +103,13 @@ export const tableColumns = (props: TableColumnProps): GridColDef[] => {
 export const tableAdminColumns = (props: TableColumnProps): GridColDef[] => {
   const columns = baseColumns(props);
   return [
-    ...columns.slice(0, 1), // Include 'eventTitle' column
+    ...columns.slice(0, 2), // Include first 2 columns
     {
       field: 'user',
       headerName: 'Creator',
       width: 130,
     },
-    ...columns.slice(1), // Include remaining columns
+    ...columns.slice(2), // Include remaining columns
   ];
 };
 

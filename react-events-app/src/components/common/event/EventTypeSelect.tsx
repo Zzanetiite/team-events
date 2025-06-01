@@ -1,6 +1,10 @@
 import React from 'react';
-import { Box, Checkbox, FormControlLabel } from '@mui/material';
-import { PlaceTypeIcons, PlaceTypes } from '../../../constants';
+import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
+import {
+  PlaceTypeColors,
+  PlaceTypeIcons,
+  PlaceTypes,
+} from '../../../constants';
 
 interface EventTypeSelectProps {
   selectedTypes: { [key in PlaceTypes]?: boolean };
@@ -30,6 +34,8 @@ const EventTypeSelect = ({
         {Object.keys(PlaceTypes).map((key) => {
           const type = PlaceTypes[key as keyof typeof PlaceTypes];
           const Icon = PlaceTypeIcons[type];
+          const color = PlaceTypeColors[type];
+
           return (
             <FormControlLabel
               key={type}
@@ -38,8 +44,16 @@ const EventTypeSelect = ({
                   size="small"
                   checked={!!selectedTypes[type]}
                   onChange={() => handleCheckboxChange(type)}
-                  icon={<Icon />}
-                  checkedIcon={<Icon />}
+                  icon={
+                    <Typography>
+                      <Icon />
+                    </Typography>
+                  }
+                  checkedIcon={
+                    <Typography color={color}>
+                      <Icon />
+                    </Typography>
+                  }
                 />
               }
               label={type}

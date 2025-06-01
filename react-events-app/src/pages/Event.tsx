@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ApiEndpoints, PlaceTypeIcons } from '../constants';
+import { ApiEndpoints, PlaceTypeColors, PlaceTypeIcons } from '../constants';
 import { EventDBProps, EventProps } from '../interfaces/types';
 import LoadingWithText from '../components/common/LoadingWithText';
 import { useApi } from '../hooks/useApi';
@@ -59,7 +59,10 @@ const Event: React.FC = () => {
         display="flex"
         alignItems="center"
       >
-        {createStyledIcon(PlaceTypeIcons[event.placeType])({})}
+        {createStyledIcon(
+          PlaceTypeIcons[event.placeType],
+          PlaceTypeColors[event.placeType]
+        )({})}
         <span>{event.placeType}</span>
       </Typography>
       <Typography

@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { LocationOn } from '@mui/icons-material';
 import { Box, SvgIconProps } from '@mui/material';
-import { PlaceTypeIcons, PlaceTypes } from '../../../constants';
+import {
+  PlaceTypeColors,
+  PlaceTypeIcons,
+  PlaceTypes,
+} from '../../../constants';
 import { extractPostcode } from '../../../utils/address';
 
 interface EventHeaderProps {
@@ -16,9 +20,12 @@ const iconStyle = {
 };
 
 export const createStyledIcon =
-  (IconComponent: React.ComponentType<SvgIconProps>) =>
+  (IconComponent: React.ComponentType<SvgIconProps>, color: string) =>
   (props: SvgIconProps) => (
-    <IconComponent {...props} sx={{ ...iconStyle, ...props.sx }} />
+    <IconComponent
+      {...props}
+      sx={{ ...iconStyle, color, ...props.sx }} // move `color` earlier
+    />
   );
 
 const EventHeader: React.FC<EventHeaderProps> = ({
@@ -49,7 +56,10 @@ const EventHeader: React.FC<EventHeaderProps> = ({
         }}
       >
         <Box color={'grey.500'} display={'flex'} alignItems={'center'} mb={1}>
-          {createStyledIcon(PlaceTypeIcons[placeType])({})}
+          {createStyledIcon(
+            PlaceTypeIcons[placeType],
+            PlaceTypeColors[placeType]
+          )({})}
           <span>{placeType}</span>
         </Box>
         <Box color={'grey.500'} display={'flex'} alignItems={'center'} mb={1}>
