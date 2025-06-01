@@ -21,12 +21,19 @@ const GoogleMapsSearchBar: React.FC<Props> = ({ setLocation, loading }) => {
     }
   };
 
-  const { inputRef, searchValue, setSearchValue, placesLibrary } =
-    useGooglePlacesAutocomplete(
-      onPlaceSelected,
-      ['geometry', 'formatted_address', 'name'],
-      loading
-    );
+  const {
+    inputRef,
+    searchValue,
+    setSearchValue,
+    suggestions,
+    suppressAutocomplete,
+    selectPlace,
+    placesLibrary,
+  } = useGooglePlacesAutocomplete(
+    onPlaceSelected,
+    ['geometry', 'formatted_address'],
+    loading
+  );
 
   if (!placesLibrary) return <Loading />;
 
@@ -39,6 +46,9 @@ const GoogleMapsSearchBar: React.FC<Props> = ({ setLocation, loading }) => {
         onChange={setSearchValue}
         ref={inputRef}
         label="Start typing to search for events near a place..."
+        suggestions={suggestions}
+        suppressAutocomplete={suppressAutocomplete}
+        selectPlace={selectPlace}
       />
     </Box>
   );

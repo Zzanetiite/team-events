@@ -17,7 +17,7 @@ console.warn = (...args) => {
       'As of March 1st, 2025, google.maps.places.Autocomplete'
     ) ||
       args[0].includes(
-        'As of March 1st, 2025, google.maps.places.Autocomplete'
+        'As of March 1st, 2025, google.maps.places.PlacesService'
       ))
   ) {
     return;

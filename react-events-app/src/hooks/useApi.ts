@@ -81,7 +81,7 @@ export function useApi() {
         setLoading(false);
       }
     },
-    [csrfToken, userToken]
+    [csrfToken, userToken, setLoggedIn]
   );
 
   return { fetchWithTokens, loading };
