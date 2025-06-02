@@ -7,6 +7,12 @@ import {
   NaturePeople,
   SensorDoor,
 } from '@mui/icons-material';
+import restaurantImage from './assets/restaurant.jpg';
+import escapeRoomImage from './assets/escape-room.jpg';
+import outdoorActivityImage from './assets/outdoors.jpg';
+import teamBuildingImage from './assets/team-building.jpg';
+import tournamentImage from './assets/tournament.jpg';
+import partyImage from './assets/party.jpg';
 
 export const DOMAIN = process.env.REACT_APP_DOMAIN || window.location.origin;
 
@@ -73,6 +79,15 @@ export const PlaceTypeColors: Record<PlaceTypes, string> = {
   [PlaceTypes.TEAM_BUILDING]: '#0062CC', // Friendly blue — collaboration, trust
   [PlaceTypes.TOURNAMENT]: '#FBC02D', // Gold/yellow — competition, victory
   [PlaceTypes.PARTY]: '#FF8FAB', // Bright pink — festive, energetic
+};
+
+export const PlaceTypeImages: Record<PlaceTypes, string> = {
+  [PlaceTypes.RESTAURANT]: restaurantImage,
+  [PlaceTypes.ESCAPE_ROOM]: escapeRoomImage,
+  [PlaceTypes.OUTDOOR_ACTIVITY]: outdoorActivityImage,
+  [PlaceTypes.TEAM_BUILDING]: teamBuildingImage,
+  [PlaceTypes.TOURNAMENT]: tournamentImage,
+  [PlaceTypes.PARTY]: partyImage,
 };
 
 export const MINIMUM_PASSWORD_LENGTH = 8;

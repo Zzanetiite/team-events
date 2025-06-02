@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ApiEndpoints, PlaceTypeColors, PlaceTypeIcons } from '../constants';
+import {
+  ApiEndpoints,
+  PlaceTypeColors,
+  PlaceTypeIcons,
+  PlaceTypeImages,
+} from '../constants';
 import { EventDBProps, EventProps } from '../interfaces/types';
 import LoadingWithText from '../components/common/LoadingWithText';
 import { useApi } from '../hooks/useApi';
@@ -50,6 +55,9 @@ const Event: React.FC = () => {
       <Typography variant="h4" align="center" padding={2} color="primary">
         {event.eventTitle}
       </Typography>
+      <div className="event-section">
+        <img src={PlaceTypeImages[event.placeType]} alt={event.placeType} />
+      </div>
       <Typography
         variant="body2"
         align="left"
