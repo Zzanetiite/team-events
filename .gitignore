@@ -168,6 +168,7 @@ cython_debug/
 # React build artefacts
 /events/static/css/*
 /events/static/js/*
+/events/static/media/*
 events/asset-manifest.json
 events/index.html
 react-events-app/package-lock.json

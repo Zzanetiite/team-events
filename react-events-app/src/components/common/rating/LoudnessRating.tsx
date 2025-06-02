@@ -5,6 +5,7 @@ import { RatingProps } from '../../../interfaces/types';
 import { RatingTypes } from '../../../constants';
 import { useRating } from '../../../hooks/useRating';
 import RatingBox from './RatingBox';
+import { Tooltip } from '@mui/material';
 
 const LoudnessRating: React.FC<RatingProps> = ({ event }) => {
   const { userRating, submissionStatus, handleRatingChange, disabled } =
@@ -14,16 +15,26 @@ const LoudnessRating: React.FC<RatingProps> = ({ event }) => {
       eventRating={event.loudnessRating || 0}
       submissionStatus={submissionStatus}
     >
-      <StyledLoudnessRating
-        name="loudness-rating"
-        defaultValue={event.loudnessRating}
-        icon={<VolumeUp fontSize="inherit" />}
-        emptyIcon={<VolumeMute fontSize="inherit" />}
-        size="small"
-        disabled={disabled}
-        value={userRating}
-        onChange={handleRatingChange}
-      />
+      <Tooltip
+        title={
+          disabled
+            ? "You've already voted"
+            : 'Rate how loud this place is for a team event. Can you have a conversation without shouting?'
+        }
+      >
+        <span style={{ display: 'inline-block', cursor: 'not-allowed' }}>
+          <StyledLoudnessRating
+            name="loudness-rating"
+            defaultValue={event.loudnessRating}
+            icon={<VolumeUp fontSize="inherit" />}
+            emptyIcon={<VolumeMute fontSize="inherit" />}
+            size="small"
+            disabled={disabled}
+            value={userRating}
+            onChange={handleRatingChange}
+          />
+        </span>
+      </Tooltip>
     </RatingBox>
   );
 };

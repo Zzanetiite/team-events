@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import RatingSuccess from './RatingSuccess';
 import RatingForbidden from './RatingForbidden';
 
@@ -10,19 +10,12 @@ interface RatingBoxProps {
 }
 
 const RatingBox = ({
-  eventRating,
   submissionStatus,
   children,
 }: React.PropsWithChildren<RatingBoxProps>) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       {children}
-      <Typography
-        variant="body2"
-        sx={{ fontWeight: 'bold', marginTop: '2px', ml: 1 }}
-      >
-        {eventRating}
-      </Typography>
       <RatingSuccess submissionStatus={submissionStatus} />
       <RatingForbidden submissionStatus={submissionStatus} />
     </Box>

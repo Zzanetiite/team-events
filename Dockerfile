@@ -42,8 +42,10 @@ RUN npm install && npm run build
 WORKDIR /app
 RUN mkdir -p events/static/js && \
     mkdir -p events/static/css && \
+    mkdir -p events/static/media && \
     cp -r react-events-app/build/static/js/* events/static/js/ && \
     cp -r react-events-app/build/static/css/* events/static/css/ && \
+    cp -r react-events-app/build/static/media/* events/static/media/ && \
     cp react-events-app/build/asset-manifest.json events/
 
 # Default command to run the app: can be overridden by Render or locally

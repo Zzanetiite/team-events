@@ -15,6 +15,7 @@ mkdir -p $DJANGO_STATIC_PATH/css
 
 cp -r $REACT_BUILD_PATH/static/js/* $DJANGO_STATIC_PATH/js/
 cp -r $REACT_BUILD_PATH/static/css/* $DJANGO_STATIC_PATH/css/
+cp -r $REACT_BUILD_PATH/static/media/* $DJANGO_STATIC_PATH/media/
 cp $REACT_BUILD_PATH/asset-manifest.json $DJANGO_APP_PATH/
 
 echo "Build artifacts have been copied to Django static directory."

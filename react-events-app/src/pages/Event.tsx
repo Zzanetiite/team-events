@@ -15,8 +15,11 @@ import StatusAlert from '../components/common/StatusAlert';
 import AverageRatings from '../components/common/rating/AverageRating';
 import CommentsSection from '../components/common/event/CommentsSection';
 import Ratings from '../components/common/rating/Ratings';
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { createStyledIcon } from '../components/common/event/EventHeader';
+import Row from '../components/base/Row';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Link from '@mui/material/Link';
 
 const Event: React.FC = () => {
   const { id } = useParams();
@@ -55,74 +58,74 @@ const Event: React.FC = () => {
       <Typography variant="h4" align="center" padding={2} color="primary">
         {event.eventTitle}
       </Typography>
-      <div className="event-section">
-        <img src={PlaceTypeImages[event.placeType]} alt={event.placeType} />
-      </div>
+
       <Typography
         variant="body2"
-        align="left"
-        paddingLeft={2}
-        paddingRight={2}
         color="grey"
+        align="left"
         display="flex"
         alignItems="center"
-      >
-        {createStyledIcon(
-          PlaceTypeIcons[event.placeType],
-          PlaceTypeColors[event.placeType]
-        )({})}
-        <span>{event.placeType}</span>
-      </Typography>
-      <Typography
-        variant="body2"
-        align="left"
-        paddingLeft={2}
         paddingRight={2}
-        color="grey"
+        paddingLeft={2}
+        paddingBottom={1}
       >
-        Address: {event.location.address},{` `}
-        <a
+        {event.description}
+      </Typography>
+
+      <Row
+        sx={{ justifyContent: 'space-between' }}
+        paddingRight={2}
+        paddingLeft={2}
+      >
+        <Typography
+          variant="body2"
+          color="dark-grey"
+          display={'flex'}
+          alignItems={'center'}
+        >
+          {createStyledIcon(
+            PlaceTypeIcons[event.placeType],
+            PlaceTypeColors[event.placeType]
+          )({})}
+          <span>{event.placeType}</span>
+        </Typography>
+
+        <Link
           href={`https://www.google.com/maps?q=${event.location.location.lat},${event.location.location.lng}`}
           target="_blank"
           rel="noreferrer"
+          underline="none"
+          display="flex"
+          alignItems="center"
+          color="primary"
+          sx={{ gap: 0.5 }}
         >
-          view on Google Maps.
-        </a>
-      </Typography>
-      <Box padding={2}>
-        <Paper
-          elevation={1}
-          sx={{
-            backgroundColor: 'grey.100',
-            p: 2,
-            maxWidth: '100%',
-          }}
-        >
-          <Typography
-            variant="body2"
-            align="left"
-            display="flex"
-            alignItems="center"
-          >
-            {event.description}
-          </Typography>
-        </Paper>
-      </Box>
+          <LocationOnIcon fontSize="small" />
+          <Typography variant="body2">View in Maps</Typography>
+        </Link>
+      </Row>
+
+      <div className="event-section">
+        <img src={PlaceTypeImages[event.placeType]} alt={event.placeType} />
+      </div>
+
       <Box paddingLeft={2} paddingRight={2}>
         <Typography variant="h6" color="primary">
-          Ratings
+          Rate this place
         </Typography>
-        <Typography variant="body2" color="primary">
-          Leave a rating (once per user)
-        </Typography>
-        <Ratings event={event} />
         <Typography variant="body2" color="primary">
           Average ratings
         </Typography>
         <AverageRatings event={event} />
+
+        <Typography variant="body2" color="primary" paddingTop={2}>
+          Leave a rating (once per user)
+        </Typography>
+        <Ratings event={event} />
       </Box>
+
       <Box padding={2}>
-        <Typography variant="h6" color="primary">
+        <Typography variant="h6" color="grey">
           Comments
         </Typography>
         <CommentsSection event={event} />
