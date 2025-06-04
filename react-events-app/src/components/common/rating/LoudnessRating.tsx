@@ -18,7 +18,7 @@ const LoudnessRating: React.FC<RatingProps> = ({ event }) => {
       <Tooltip
         title={
           disabled
-            ? "You've already voted"
+            ? "You've already voted" // TODO: Please Login to vote!
             : 'Rate how loud this place is for a team event. Can you have a conversation without shouting?'
         }
       >

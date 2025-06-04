@@ -63,7 +63,9 @@ export function useApi() {
           if (
             err.status === 403 &&
             !hasRetried &&
-            url.includes(ApiEndpoints.GET_NEARBY_EVENTS)
+            (url.includes(ApiEndpoints.GET_NEARBY_EVENTS) ||
+              url.includes(ApiEndpoints.CREATE_ADMIN_USER) ||
+              url.includes(ApiEndpoints.CREATE_USER))
           ) {
             hasRetried = true;
             console.warn(

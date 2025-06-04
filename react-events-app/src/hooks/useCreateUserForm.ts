@@ -14,7 +14,6 @@ const useFormLogic = ({
   messageForBadRequest,
   method,
   loginPage,
-  adminPage,
 }: UseUserFormProps) => {
   const [newUsername, setNewUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
