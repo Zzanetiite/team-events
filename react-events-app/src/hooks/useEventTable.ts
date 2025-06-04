@@ -25,9 +25,9 @@ export const useEventTableData = (
   const { fetchWithTokens } = useApi();
 
   useEffect(() => {
-    if (!user.username) {
+    if (!loading && !user.username) {
       setErrorMessage('Username not found. No events to display.');
-    } else {
+    } else if (user.username) {
       if (userEvents.length === 0 || newEventCreatedUpdated) {
         fetchWithTokens(
           user.isAdmin
@@ -54,6 +54,7 @@ export const useEventTableData = (
     fetchWithTokens,
     userEvents,
     setSelectedEvent,
+    loading,
   ]);
 
   useEffect(() => {
