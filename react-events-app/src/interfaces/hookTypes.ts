@@ -16,11 +16,6 @@ export interface UseUserFormProps {
   adminPage?: boolean;
 }
 
-export interface useEventFilterProps {
-  homePageFilterOpen: boolean;
-  selectedEventTypes: string[];
-}
-
 export interface FetchEventsProps {
   selectedEventTypes: string[];
   setErrorMessage: (message: string | null) => void;

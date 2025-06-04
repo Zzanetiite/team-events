@@ -18,7 +18,7 @@ export const useRating = (event: EventProps, ratingType: RatingTypes) => {
   const disabled = !loggedIn || userRating > 0;
   const tooltipText = disabled
     ? loggedIn
-      ? "You've already voted"
+      ? 'You already voted'
       : 'Please login to vote'
     : 'Click on the highlighted level to leave a rating';
 
