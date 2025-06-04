@@ -2,6 +2,8 @@ import json
 import os
 
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -43,6 +45,9 @@ class Utils:
             )
 
         try:
+            # Validate the password using Django's validators
+            validate_password(password)
+
             if is_superuser:
                 User.objects.create_superuser(
                     username=username, email=email, password=password
@@ -59,6 +64,8 @@ class Utils:
                     {"success": "User created successfully."},
                     status=status.HTTP_201_CREATED,
                 )
+        except ValidationError as ve:
+            return Response({"error": ve.messages}, status=status.HTTP_400_BAD_REQUEST)
         except IntegrityError:
             return Response(
                 {"error": "Username already exists."}, status=status.HTTP_409_CONFLICT

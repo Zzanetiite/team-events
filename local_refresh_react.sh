@@ -12,6 +12,7 @@ echo "Copying build files to the Django's static directory..."
 
 mkdir -p $DJANGO_STATIC_PATH/js
 mkdir -p $DJANGO_STATIC_PATH/css
+mkdir -p $DJANGO_STATIC_PATH/media
 
 cp -r $REACT_BUILD_PATH/static/js/* $DJANGO_STATIC_PATH/js/
 cp -r $REACT_BUILD_PATH/static/css/* $DJANGO_STATIC_PATH/css/

@@ -2,7 +2,6 @@ asgiref==3.8.1
 black==24.4.2
 blinker==1.8.2
 Brotli==1.1.0
-certifi==2023.7.22
 cfgv==3.4.0
 charset-normalizer==3.3.0
 click==8.1.7
@@ -14,6 +13,7 @@ distlib==0.3.8
 dj-database-url==2.3.0
 Django==5.0.7
 django-cors-headers==4.4.0
+django-csp==4.0
 django-environ==0.11.2
 djangorestframework==3.15.2
 docutils==0.20.1
@@ -41,8 +41,8 @@ more-itertools==10.1.0
 mypy-extensions==1.0.0
 nh3==0.2.14
 nodeenv==1.9.1
-numpy==1.26.4
-package-name==0.1
+numpy @ file:///D:/bld/numpy_1682210442656/work
+package_name==0.1
 packaging==24.1
 pandas==2.2.2
 pathspec==0.12.1
@@ -69,6 +69,7 @@ rfc3986==2.0.0
 rich==13.3.3
 six==1.16.0
 sqlparse==0.5.1
+tomli==2.2.1
 twine==4.0.2
 typing_extensions==4.13.2
 tzdata==2024.1

@@ -39,10 +39,10 @@ const useFormLogic = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (passwordFeedback) {
-      setErrorMessage('Password is too weak. Please update and try again.');
-      return;
-    }
+    // if (passwordFeedback) {
+    //   setErrorMessage('Password is too weak. Please update and try again.');
+    //   return;
+    // }
     try {
       const response = await fetchWithTokens(apiEndpoint, {
         method: method || 'POST',
