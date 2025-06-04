@@ -15,8 +15,8 @@ const PlaceRating: React.FC<RatingProps> = ({ event }) => {
   } = useRating(event, RatingTypes.PLACE);
   return (
     <RatingBox
-      eventRating={event.placeRating || 0}
       submissionStatus={submissionStatus}
+      titleText="The overall suitability for team events of this place?"
     >
       <Tooltip title={tooltipText}>
         <span style={{ display: 'inline-block', cursor: 'not-allowed' }}>

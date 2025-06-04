@@ -114,14 +114,9 @@ const Event: React.FC = () => {
         <Typography variant="h6" color="primary">
           Rate this place
         </Typography>
-        <Typography variant="body2" color="primary">
-          Average ratings
-        </Typography>
+        <Typography variant="body2">Average ratings</Typography>
         <AverageRatings event={event} />
 
-        <Typography variant="body2" color="primary" paddingTop={2}>
-          Leave a rating (once per user)
-        </Typography>
         <Ratings event={event} />
       </Box>
 

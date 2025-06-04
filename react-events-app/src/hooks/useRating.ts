@@ -20,7 +20,7 @@ export const useRating = (event: EventProps, ratingType: RatingTypes) => {
     ? loggedIn
       ? "You've already voted"
       : 'Please login to vote'
-    : 'Rate the overall experience of this place for a team event.';
+    : 'Click on the highlighted level to leave a rating';
 
   useEffect(() => {
     if (submissionStatus) {

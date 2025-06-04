@@ -14,6 +14,7 @@ const Ratings: React.FC<RatingProps> = ({ event }) => {
         flexWrap: 'wrap',
         gap: 2,
         padding: 0,
+        paddingTop: 1,
       }}
     >
       <PlaceRating event={event} />

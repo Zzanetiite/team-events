@@ -17,8 +17,8 @@ const LoudnessRating: React.FC<RatingProps> = ({ event }) => {
   } = useRating(event, RatingTypes.LOUDNESS);
   return (
     <RatingBox
-      eventRating={event.loudnessRating || 0}
       submissionStatus={submissionStatus}
+      titleText="How loud is this place? Is it possible to have a conversation without raising the voice?"
     >
       <Tooltip title={tooltipText}>
         <span style={{ display: 'inline-block', cursor: 'not-allowed' }}>
