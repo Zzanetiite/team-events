@@ -121,7 +121,7 @@ const Event: React.FC = () => {
       </Box>
 
       <Box padding={2}>
-        <Typography variant="h6" color="grey">
+        <Typography variant="h6" color="primary">
           Comments
         </Typography>
         <CommentsSection event={event} />

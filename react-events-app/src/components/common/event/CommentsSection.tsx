@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import CommentCard from './CommentCard';
 import StatusAlert from '../StatusAlert';
 import useComments from '../../../hooks/useComments';
@@ -10,6 +10,7 @@ import AddCommentButton from '../buttons/AddCommentButton';
 import EmptySubmitButton from '../buttons/EmptySubmitButton';
 import EmptyCancelButton from '../buttons/EmptyCancelButton';
 import CommentInput from '../input/CommentInput';
+import { CHAR_LIMITS } from '../../../constants/EventConstants';
 
 export default function CommentsSection({ event }: { event: EventProps }) {
   const {
@@ -25,16 +26,19 @@ export default function CommentsSection({ event }: { event: EventProps }) {
     handleCloseCommentAdd,
     displayedComments,
   } = useComments(event);
+  const disabled = newComment.length > CHAR_LIMITS.CommentMax;
   return (
     <Box sx={{ marginTop: 1 }}>
-      {displayedComments.map((comment, index) => (
-        <CommentCard
-          key={index}
-          username={comment.username}
-          date={comment.date}
-          text={comment.text}
-        />
-      ))}
+      <Grid container spacing={1} justifyContent="left">
+        {displayedComments.map((comment, index) => (
+          <CommentCard
+            key={index}
+            username={comment.username}
+            date={comment.date}
+            text={comment.text}
+          />
+        ))}
+      </Grid>
       <Box
         sx={{
           display: 'flex',
@@ -54,7 +58,10 @@ export default function CommentsSection({ event }: { event: EventProps }) {
       {showCommentInput && (
         <Box sx={{ marginTop: 1 }}>
           <CommentInput newComment={newComment} setNewComment={setNewComment} />
-          <EmptySubmitButton handleSubmit={handleCommentSubmit} />
+          <EmptySubmitButton
+            handleSubmit={handleCommentSubmit}
+            disabled={disabled}
+          />
           <EmptyCancelButton
             handleClose={handleCloseCommentAdd}
             text="Cancel"

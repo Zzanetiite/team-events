@@ -4,4 +4,5 @@ export enum CHAR_LIMITS {
   EventDescriptionMaxDisplayed = 80,
   EventTitleMax = 40,
   EventTitleMin = 3,
+  CommentMax = 500,
 }
