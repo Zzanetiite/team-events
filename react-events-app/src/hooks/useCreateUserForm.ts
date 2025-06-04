@@ -18,19 +18,18 @@ const useFormLogic = ({
   const [newUsername, setNewUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordFeedback, setPasswordFeedback] = useState('');
-  const [adminPassword, setAdminPassword] = useState('');
   const [email, setEmail] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { fetchWithTokens } = useApi();
-  const { setUserToken, loggedIn } = useAuth();
+  const { setUserToken, loggedIn, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedIn) {
+    if (loggedIn && !user.isAdmin) {
       navigate('/');
     }
-  }, [loggedIn, navigate]);
+  }, [loggedIn, navigate, user]);
 
   useAutoClearMessage({
     message: successMessage,
@@ -50,7 +49,6 @@ const useFormLogic = ({
         body: JSON.stringify({
           username: newUsername,
           password: password,
-          secret_admin_password: adminPassword,
         }),
       });
 
@@ -59,7 +57,6 @@ const useFormLogic = ({
         setErrorMessage(null);
         setNewUsername('');
         setPassword('');
-        setAdminPassword('');
         setEmail('');
         if (loginPage) {
           setUserToken(response.token);
@@ -95,8 +92,6 @@ const useFormLogic = ({
     setPassword,
     passwordFeedback,
     setPasswordFeedback,
-    adminPassword,
-    setAdminPassword,
     email,
     setEmail,
     successMessage,

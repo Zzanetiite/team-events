@@ -35,7 +35,6 @@ Then populate `.env` file under `team_events/team_events` with
 ```bash
 SECRET_KEY=[ASK_ADMIN]
 ALLOWED_HOSTS=localhost,127.0.0.1
-ADMIN_CREATE_PAGE_PASSWORD=[ASK_ADMIN]
 GOOGLE_MAPS_API_KEY=[ASK_ADMIN]
 DOMAIN=http://localhost:8000
 DATABASE_URL=[ASK_ADMIN]

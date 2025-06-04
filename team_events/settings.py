@@ -23,7 +23,6 @@ SITE = "https://team-events-8xoz.onrender.com"
 # Environment variables
 DOMAIN = os.environ.get("DOMAIN", SITE)
 SECRET_KEY = os.environ.get("SECRET_KEY")
-ADMIN_CREATE_PAGE_PASSWORD = os.environ.get("ADMIN_CREATE_PAGE_PASSWORD")
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "False") == "True"
 SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "False") == "True"

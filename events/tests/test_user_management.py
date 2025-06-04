@@ -1,5 +1,3 @@
-from unittest.mock import patch
-
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -15,6 +13,12 @@ class UserManagementViewTests(APITestCase):
             username=self.username, password=self.password
         )
         self.token, _ = Token.objects.get_or_create(user=self.user)
+
+        self.admin_user = User.objects.create_superuser(
+            username="admin", password="adminpass", email="admin@example.com"
+        )
+        self.admin_token, _ = Token.objects.get_or_create(user=self.admin_user)
+
         self.base_url = "/api/user/"
 
     def tearDown(self):
@@ -28,34 +32,50 @@ class UserManagementViewTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {"success": "User created successfully."})
 
-    @patch("events.views.user_management.ADMIN_CREATE_PAGE_PASSWORD", "testpassword")
-    def test_create_admin(self):
+    def test_create_admin_as_admin(self):
         url = self.base_url + "create-admin/"
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.admin_token.key)
         response = self.client.post(
             url,
             {
                 "username": "adminuser",
                 "password": "adminpassword",
                 "email": "admin@example.com",
-                "secret_admin_password": "testpassword",
             },
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {"success": "Admin user created successfully."})
 
-    def test_create_admin_invalid_secret_password(self):
+    def test_create_admin_as_non_admin(self):
+        url = self.base_url + "create-admin/"
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
+        response = self.client.post(
+            url,
+            {
+                "username": "shouldfail",
+                "password": "password",
+                "email": "fail@example.com",
+            },
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            response.data, {"error": "Only admin users can create admin accounts."}
+        )
+
+    def test_create_admin_unauthenticated(self):
         url = self.base_url + "create-admin/"
         response = self.client.post(
             url,
             {
-                "username": "adminuser",
-                "password": "adminpassword",
-                "email": "admin@example.com",
-                "secret_admin_password": "wrongpassword",
+                "username": "unauth",
+                "password": "password",
+                "email": "unauth@example.com",
             },
         )
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-        self.assertEqual(response.data, {"error": "Invalid secret admin password"})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            response.data, {"error": "Only admin users can create admin accounts."}
+        )
 
     def test_login(self):
         url = self.base_url + "login/"
