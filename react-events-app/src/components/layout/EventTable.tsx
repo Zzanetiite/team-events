@@ -70,7 +70,7 @@ const EventTable: React.FC<NewEventCreatedProps> = ({
         />
         <div style={{ height: 600, width: '100%' }}>
           <DataGrid
-            rows={userEvents}
+            rows={userEvents ?? []}
             rowHeight={120}
             columns={columnsFiltered}
             initialState={{

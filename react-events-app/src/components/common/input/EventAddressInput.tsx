@@ -71,7 +71,7 @@ const EventAddressInput: React.FC<ChooseAddressProps> = ({
     <Box>
       <AddressInput
         name="search-bar-create-event"
-        value={formAddress}
+        value={formAddress ?? ''}
         onChange={(newValue) => {
           setFormAddress(newValue); // For context memory
           setSearchValue(newValue); // For autocomplete

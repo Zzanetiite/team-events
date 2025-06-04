@@ -15,7 +15,7 @@ export const useEventTableData = (
   selectionModel: GridRowSelectionModel,
   setSelectionModel: React.Dispatch<React.SetStateAction<GridRowSelectionModel>>
 ) => {
-  const [userEvents, setUserEvents] = useState<EventProps[]>([]);
+  const [userEvents, setUserEvents] = useState<EventProps[] | null>(null);
   const [deleteSuccessMessage, setDeleteSuccessMessage] = useState<
     string | null
   >(null);
@@ -28,7 +28,7 @@ export const useEventTableData = (
     if (!loading && !user.username) {
       setErrorMessage('Username not found. No events to display.');
     } else if (user.username) {
-      if (userEvents.length === 0 || newEventCreatedUpdated) {
+      if (userEvents == null || newEventCreatedUpdated) {
         fetchWithTokens(
           user.isAdmin
             ? ApiEndpoints.GET_ALL_EVENTS
@@ -89,9 +89,9 @@ export const useEventTableData = (
 
     if (selectedIds.size === 0) return;
 
-    const selectedEvents = userEvents.filter((event) =>
-      selectedIds.has(event.id)
-    );
+    const selectedEvents = userEvents
+      ? userEvents.filter((event) => selectedIds.has(event.id))
+      : [];
 
     const successIds: (string | number)[] = [];
     const failedIds: (string | number)[] = [];

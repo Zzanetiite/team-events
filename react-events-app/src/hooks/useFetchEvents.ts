@@ -46,13 +46,14 @@ const useFetchEvents = ({
             setErrorMessage,
             overrideErrorHandlers: {
               403: (setErrorMessage) => {
-                setErrorMessage(
-                  'Error loading Event data. Please try clearing site cookies.'
-                );
+                setErrorMessage('Error loading Event data.');
               },
             },
           })
-        );
+        )
+        .finally(() => {
+          setEventDataLoading(false);
+        });
     }
   }, [
     setEventData,

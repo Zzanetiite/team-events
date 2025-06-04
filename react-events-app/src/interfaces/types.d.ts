@@ -222,7 +222,7 @@ export interface EventFormProps {
 }
 
 export interface TableColumnProps {
-  userEvents: EventTableProps[];
+  userEvents: EventTableProps[] | null;
   setSelectedEvent: (event: any) => void;
 }
 

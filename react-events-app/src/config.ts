@@ -74,20 +74,20 @@ const baseColumns = ({
     field: 'eventTitle',
     headerName: 'Event Title',
     width: 200,
-    renderCell: renderEventCell(userEvents, setSelectedEvent),
+    renderCell: renderEventCell(userEvents ?? [], setSelectedEvent),
   },
   {
     field: 'link',
     headerName: 'Link',
     width: 50,
-    renderCell: renderLinkCell(userEvents),
+    renderCell: renderLinkCell(userEvents ?? []),
   },
   { field: 'placeType', headerName: 'Type', width: 130 },
   {
     field: 'address',
     headerName: 'Address',
     width: 250,
-    renderCell: renderAddressCell(userEvents),
+    renderCell: renderAddressCell(userEvents ?? []),
   },
   {
     field: 'description',
