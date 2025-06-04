@@ -76,6 +76,7 @@ const Event: React.FC = () => {
         sx={{ justifyContent: 'space-between' }}
         paddingRight={2}
         paddingLeft={2}
+        paddingBottom={1}
       >
         <Typography
           variant="body2"

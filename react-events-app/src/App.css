@@ -108,10 +108,11 @@
 }
 
 .event-section img {
-  width: 100%;
+  width: 96%;
   height: auto; /* Maintains aspect ratio */
   display: block; /* Removes extra space below the image */
   margin-bottom: 20px;
+  margin: 0 auto 20px auto; /* Center image horizontally and add bottom margin */
   border-radius: 6px; /* Slightly rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   align-items: center;
