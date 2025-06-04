@@ -8,20 +8,19 @@ import RatingBox from './RatingBox';
 import { Tooltip } from '@mui/material';
 
 const LoudnessRating: React.FC<RatingProps> = ({ event }) => {
-  const { userRating, submissionStatus, handleRatingChange, disabled } =
-    useRating(event, RatingTypes.LOUDNESS);
+  const {
+    userRating,
+    submissionStatus,
+    handleRatingChange,
+    disabled,
+    tooltipText,
+  } = useRating(event, RatingTypes.LOUDNESS);
   return (
     <RatingBox
       eventRating={event.loudnessRating || 0}
       submissionStatus={submissionStatus}
     >
-      <Tooltip
-        title={
-          disabled
-            ? "You've already voted" // TODO: Please Login to vote!
-            : 'Rate how loud this place is for a team event. Can you have a conversation without shouting?'
-        }
-      >
+      <Tooltip title={tooltipText}>
         <span style={{ display: 'inline-block', cursor: 'not-allowed' }}>
           <StyledLoudnessRating
             name="loudness-rating"

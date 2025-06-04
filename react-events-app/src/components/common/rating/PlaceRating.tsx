@@ -6,20 +6,19 @@ import { RatingTypes } from '../../../constants';
 import RatingBox from './RatingBox';
 
 const PlaceRating: React.FC<RatingProps> = ({ event }) => {
-  const { userRating, submissionStatus, handleRatingChange, disabled } =
-    useRating(event, RatingTypes.PLACE);
+  const {
+    userRating,
+    submissionStatus,
+    handleRatingChange,
+    disabled,
+    tooltipText,
+  } = useRating(event, RatingTypes.PLACE);
   return (
     <RatingBox
       eventRating={event.placeRating || 0}
       submissionStatus={submissionStatus}
     >
-      <Tooltip
-        title={
-          disabled
-            ? "You've already voted"
-            : 'Rate the overall experience of this place for a team event.'
-        }
-      >
+      <Tooltip title={tooltipText}>
         <span style={{ display: 'inline-block', cursor: 'not-allowed' }}>
           <Rating
             name="place-rating"

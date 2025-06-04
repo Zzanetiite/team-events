@@ -15,6 +15,13 @@ export const useRating = (event: EventProps, ratingType: RatingTypes) => {
   const { loggedIn, user } = useAuth();
   const { fetchWithTokens } = useApi();
 
+  const disabled = !loggedIn || userRating > 0;
+  const tooltipText = disabled
+    ? loggedIn
+      ? "You've already voted"
+      : 'Please login to vote'
+    : 'Rate the overall experience of this place for a team event.';
+
   useEffect(() => {
     if (submissionStatus) {
       const timer = setTimeout(() => {
@@ -57,7 +64,8 @@ export const useRating = (event: EventProps, ratingType: RatingTypes) => {
     userRating,
     submissionStatus,
     handleRatingChange,
-    disabled: !loggedIn || userRating > 0,
+    disabled: disabled,
+    tooltipText,
   };
 };
 
