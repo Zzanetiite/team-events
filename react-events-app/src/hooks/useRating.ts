@@ -46,7 +46,7 @@ export const useRating = (event: EventProps, ratingType: RatingTypes) => {
         {
           method: 'POST',
           body: JSON.stringify(
-            mapEventToRatingDBFormat(event, newValue, user.userId, ratingType)
+            mapEventToRatingDBFormat(event, newValue, ratingType)
           ),
         }
       );

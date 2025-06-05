@@ -164,7 +164,6 @@ export interface CommentCardProps {
 
 export interface RatingDBProps {
   event: number;
-  user: number;
   rating_type: RatingTypes;
   score: number | null;
 }

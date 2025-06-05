@@ -57,7 +57,7 @@ class SerializerTests(TestCase):
         }
         serializer = RatingSerializer(data=rating_data)
         self.assertTrue(serializer.is_valid(), serializer.errors)
-        rating = serializer.save()
+        rating = serializer.save(user=self.user)
         self.assertEqual(rating.score, 4)
 
         # Test update score

@@ -29,8 +29,8 @@ class EventTypeSerializer(serializers.ModelSerializer):
 
 class RatingSerializer(serializers.ModelSerializer):
     event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     rating_type = serializers.PrimaryKeyRelatedField(queryset=RatingType.objects.all())
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Rating

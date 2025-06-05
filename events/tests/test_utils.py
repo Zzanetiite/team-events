@@ -54,23 +54,25 @@ class UtilsTests(TestCase):
         MockUser.objects.create_superuser = MagicMock(return_value=mock_user)
 
         # Test creating a regular user
-        response = Utils.create_user_internal("username", "password")
+        response = Utils.create_user_internal("username", "Str0ngP@ssw0rd!")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {"success": "User created successfully."})
 
         # Test creating a superuser
-        response = Utils.create_user_internal("username", "password", is_superuser=True)
+        response = Utils.create_user_internal(
+            "username", "Str0ngP@ssw0rd!", is_superuser=True
+        )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {"success": "Admin user created successfully."})
 
         # Test when user already exists
         MockUser.objects.create_user.side_effect = IntegrityError("User already exists")
-        response = Utils.create_user_internal("username", "password")
+        response = Utils.create_user_internal("username", "Str0ngP@ssw0rd!")
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
         self.assertEqual(response.data, {"error": "Username already exists."})
 
         # Test when an unexpected error occurs
         MockUser.objects.create_user.side_effect = Exception("Unexpected error")
-        response = Utils.create_user_internal("username", "password")
+        response = Utils.create_user_internal("username", "Str0ngP@ssw0rd!")
         self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
         self.assertEqual(response.data, {"error": "Unexpected error"})

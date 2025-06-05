@@ -70,12 +70,10 @@ export const mapCreateEventToDBFormat = (
 export const mapEventToRatingDBFormat = (
   event: EventProps,
   rating: number,
-  votingUserID: number,
   ratingType: RatingTypes
 ): RatingDBProps => {
   return {
     event: event.id,
-    user: votingUserID,
     rating_type: ratingType,
     score: rating,
   };

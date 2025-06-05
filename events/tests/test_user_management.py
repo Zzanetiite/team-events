@@ -8,14 +8,14 @@ class UserManagementViewTests(APITestCase):
 
     def setUp(self):
         self.username = "testuser"
-        self.password = "testpassword"
+        self.password = "Str0ngP@ssw0rd!"
         self.user = User.objects.create_user(
             username=self.username, password=self.password
         )
         self.token, _ = Token.objects.get_or_create(user=self.user)
 
         self.admin_user = User.objects.create_superuser(
-            username="admin", password="adminpass", email="admin@example.com"
+            username="admin", password="Str0ngP@ssw0rd!", email="admin@example.com"
         )
         self.admin_token, _ = Token.objects.get_or_create(user=self.admin_user)
 
@@ -27,7 +27,7 @@ class UserManagementViewTests(APITestCase):
     def test_create_user(self):
         url = self.base_url + "create-user/"
         response = self.client.post(
-            url, {"username": "newuser", "password": "newpassword"}
+            url, {"username": "newuser", "password": "Str0ngP@ssw0rd!"}
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {"success": "User created successfully."})
@@ -53,7 +53,7 @@ class UserManagementViewTests(APITestCase):
             url,
             {
                 "username": "shouldfail",
-                "password": "password",
+                "password": "Str0ngP@ssw0rd!",
                 "email": "fail@example.com",
             },
         )
@@ -68,7 +68,7 @@ class UserManagementViewTests(APITestCase):
             url,
             {
                 "username": "unauth",
-                "password": "password",
+                "password": "Str0ngP@ssw0rd!",
                 "email": "unauth@example.com",
             },
         )

@@ -1,5 +1,6 @@
 from django.db.models import Avg
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -9,11 +10,13 @@ from events.serializers import RatingSerializer
 
 
 class RatingView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, *args, **kwargs):
         serializer = RatingSerializer(data=request.data)
         if serializer.is_valid():
             validated_data = serializer.validated_data
-            user = validated_data["user"]
+            user = request.user
             event_id = validated_data["event"].id
             rating_type = validated_data["rating_type"]
             score = validated_data["score"]
