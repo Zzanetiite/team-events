@@ -41,7 +41,7 @@ more-itertools==10.1.0
 mypy-extensions==1.0.0
 nh3==0.2.14
 nodeenv==1.9.1
-numpy @ file:///D:/bld/numpy_1682210442656/work
+numpy==1.26.4
 package_name==0.1
 packaging==24.1
 pandas==2.2.2
