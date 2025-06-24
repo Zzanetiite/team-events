@@ -1,38 +1,52 @@
 # Team Events
 
-A full-stack web application to help organise team events. This app is a DEMO, it does not support real client base because it is not attached to a hosted database. The database used in this DEMO gets cleared at each deployment.
+A full-stack web application to help organise team events.
+
+## Table of Contents
+
+- [Development Instructions](#development-instructions)
+  - [Prerequisites](#prerequisites)
+  - [Setting up](#setting-up)
+  - [Running the Project](#running-the-project)
+  - [Creating an Admin Account](#creating-an-admin-account)
+  - [Docker Usage](#docker)
+  - [React Usage](#react)
+  - [Django Usage](#django)
+  - [Database Access](#database)
+- [Development](#development)
+- [Updating Packages](#updating-packages)
+- [Unit Testing](#unit-testing)
+- [Pre-deployment steps](#pre-deployment-steps)
+
+---
 
 ## Development instructions
 
 ### Prerequisites
 
-- `pip` installed -> [pip installation](https://pip.pypa.io/en/stable/installation/)
-- `python` installed -> [python installation](https://www.python.org/downloads/)
-- `git` installed -> [git installation](https://github.com/git-guides/install-git)
-- macOS, Linux or Windows machine is being used.
-- IDE installed. Recommendation is to use Visual Studio.
-- Docker installed -> [docker installation](https://www.docker.com/products/docker-desktop)
-- For local development, install GDAL libraries -> https://pypi.org/project/GDAL/
+Ensure the following are installed:
+
+- [Python](https://www.python.org/downloads/)
+- [pip](https://pip.pypa.io/en/stable/installation/)
+- [Git](https://github.com/git-guides/install-git)
+- [Docker](https://www.docker.com/products/docker-desktop)
+- GDAL libraries for local development: https://pypi.org/project/GDAL/
+- IDE (e.g., Visual Studio Code)
+
+---
 
 ### Setting up
 
-Download the repository from git using:
+Clone the repository:
 
 ```bash
 git clone https://github.com/Zzanetiite/team-events.git
+cd team-events
 ```
 
-This application runs with Python. Therefore, it requires Python environment on the machine it is being ran. Ensure `pip` and `python` are installed on the machine prior to following
+Set up a .env file at team_events/team_events/.env with the following (ask admin for secrets):
 
-1. Set up environment variables. Please ask administrator for the secret key. Firstly, create `.env` file in the main application directory like so
-
-```bash
-team_events/.env
 ```
-
-Then populate `.env` file under `team_events/team_events` with
-
-```bash
 SECRET_KEY=[ASK_ADMIN]
 ALLOWED_HOSTS=localhost,127.0.0.1
 GOOGLE_MAPS_API_KEY=[ASK_ADMIN]
@@ -50,6 +64,65 @@ Project is ran using docker. Start Docker, e.g., in Windows open "Docker Desktop
 
 ```bash
 docker-compose up --build
+```
+
+### Creating an Admin Account
+
+Only admins are allowed to create admin via the websites create admin page.
+
+The alternative, programmatically, is to create an admin via the server.
+After starting the Django server (via Docker or locally), run:
+
+```bash
+docker exec -it team_events-web-1 python manage.py createsuperuser
+```
+
+Follow prompts to create a username, email, and password.
+
+To access the admin panel:
+
+Open browser: http://localhost:8000/admin/
+
+Login using the newly created superuser credentials.
+
+#### Docker
+
+To build application with Docker:
+
+```bash
+docker build --no-cache -t team_events .
+```
+
+To start Docker:
+
+```bash
+docker-compose up --build
+```
+
+OR to include newest React changes (requires exported env variables `export $(grep -v '^#' .env | xargs)`)
+
+```
+docker run -e PORT=8000 -p 8000:8000 team_events:latest
+```
+
+To stop Docker:
+
+```bash
+docker-compose down
+```
+
+To migrate database changes in Docker.
+Create a container interactive shell session and then run Django migrations commands from shell.
+
+```bash
+docker run --rm -it -v "${PWD}:/app" team_events bash
+```
+
+To clean up Docker resources (needed if device is low on CPU):
+
+```bash
+docker-compose down --volumes --remove-orphans
+docker system prune -a --volumes
 ```
 
 #### React
@@ -98,46 +171,6 @@ Run tests with
 
 ```bash
 python manage.py test --keepdb
-```
-
-#### Docker
-
-To build application with Docker:
-
-```bash
-docker build --no-cache -t team_events .
-```
-
-To start Docker:
-
-```bash
-docker-compose up --build
-```
-
-OR to include newest React changes (requires exported env variables `export $(grep -v '^#' .env | xargs)`)
-
-```
-docker run -e PORT=8000 -p 8000:8000 team_events:latest
-```
-
-To stop Docker:
-
-```bash
-docker-compose down
-```
-
-To migrate database changes in Docker.
-Create a container interactive shell session and then run Django migrations commands from shell.
-
-```bash
-docker run --rm -it -v "${PWD}:/app" team_events bash
-```
-
-To clean up Docker resources (needed if device is low on CPU):
-
-```bash
-docker-compose down --volumes --remove-orphans
-docker system prune -a --volumes
 ```
 
 #### Database
